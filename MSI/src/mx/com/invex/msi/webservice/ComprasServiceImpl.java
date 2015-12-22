@@ -438,7 +438,7 @@ public class ComprasServiceImpl{
 						 inqCustInfo.setInqCustInfoRequest(inqCustInfoReq);
 						 com.tsys.xmlmessaging.ch.TSYSprofileType tp2 = new com.tsys.xmlmessaging.ch.TSYSprofileType();
 						 tp2.setClientID("7401");
-						 tp2.setUserID("gp5rwf");
+						 tp2.setUserID("invdev");
 						 tp2.setVendorID("00000000");
 						 logger.info("custInfoResp");
 						 ClientTS2 cts2= new ClientTS2();
@@ -531,7 +531,7 @@ public class ComprasServiceImpl{
 				ClientTS2 cts2= new ClientTS2();
 				 TSYSprofileType tp = new TSYSprofileType();
 				 tp.setClientID("7401");
-				 tp.setUserID("gp5rwf");
+				 tp.setUserID("invdev");
 				 tp.setVendorID("00000000");
 				InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
 	           	 req.setVersion("2.19.0");
@@ -618,7 +618,7 @@ public class ComprasServiceImpl{
 		ClientTS2 cts2= new ClientTS2();
 		 TSYSprofileType tp = new TSYSprofileType();
 		 tp.setClientID("7401");
-		 tp.setUserID("gp5rwf");
+		 tp.setUserID("invdev");
 		 tp.setVendorID("00000000");
 		InqPmtInfo inqPmtInfo = new InqPmtInfo();
   		 InqPmtInfoRequestType inqPmtInfoReq = new InqPmtInfoRequestType();
@@ -651,7 +651,7 @@ public class ComprasServiceImpl{
 			ClientTS2 cts2= new ClientTS2();
 			 TSYSprofileType tp = new TSYSprofileType();
 			 tp.setClientID("7401");
-			 tp.setUserID("gp5rwf");
+			 tp.setUserID("invdev");
 			 tp.setVendorID("00000000");
 			 InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
            	 req.setVersion("2.19.0");
@@ -687,7 +687,7 @@ public class ComprasServiceImpl{
 
 		 TSYSprofileType tp = new TSYSprofileType();
 		 tp.setClientID("7401");
-		 tp.setUserID("gp5rwf");
+		 tp.setUserID("invdev");
 		 tp.setVendorID("00000000");
 		String res=null;
 		logger.info("inqAcctAvailTLPOpt assesfee false tlptype Installment tbal code 0001 amtToMove "+compra.getMontoPromo());
@@ -823,7 +823,7 @@ public class ComprasServiceImpl{
 				ClientTS2 cts2= new ClientTS2();
 				 TSYSprofileType tp = new TSYSprofileType();
 				 tp.setClientID("7401");
-				 tp.setUserID("gp5rwf");
+				 tp.setUserID("invdev");
 				 tp.setVendorID("00000000");
 				 InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
 	           	 req.setVersion("2.19.0");

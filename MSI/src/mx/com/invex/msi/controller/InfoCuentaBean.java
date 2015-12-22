@@ -455,7 +455,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				ClientTS2 cts2= new ClientTS2();
 				 TSYSprofileType tp = new TSYSprofileType();
 				 tp.setClientID("7401");
-				 tp.setUserID("Invex");
+				 tp.setUserID("invdev");
 				 tp.setVendorID("00000000");
 				 InqAcctStatus inqAcctStatus = new InqAcctStatus();
 				 InqAcctStatusRequestType inqAcctStatusReq = new InqAcctStatusRequestType();
@@ -1783,7 +1783,7 @@ private List<Compra> getComprasts2(String account,double monto,String codigo,Dat
 	ClientTS2 cts2= new ClientTS2();
 	 TSYSprofileType tp = new TSYSprofileType();
 	 tp.setClientID("7401");
-	 tp.setUserID("gp5rwf");
+	 tp.setUserID("invdev");
 	 tp.setVendorID("00000000");
 	InqTrans inqTrans = new InqTrans();
 	InqTransRequestType reqInqTrans = new InqTransRequestType();

@@ -640,7 +640,7 @@ public class MSIHelper {
 				ClientTS2 cts2= new ClientTS2();
 				 TSYSprofileType tp = new TSYSprofileType();
 				 tp.setClientID("7401");
-				 tp.setUserID("gp5rwf");
+				 tp.setUserID("invdev");
 				 tp.setVendorID("00000000");
 				InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
 	           	 req.setVersion("2.19.0");

@@ -12,7 +12,7 @@ public static final String TRANS_CODIGO_COMPRAS_INTER_10001 = "1001";
 public static final String TRANS_CODIGO_COMPRAS_INTER_30001 = "3001";
 public static final String TRANS_CODIGO_PRG0_COMPRAS_NAL = "7140";
 
-public static final boolean desa = false;
+public static final boolean desa = true;
 
 //public static final String TSYSWS_ENDPOINT = desa?"http://172.16.18.13:9080/TsysWS/services/LSWS":"http://172.16.18.185:9083/TsysWS/services/LSWS";
 //public static final String TSYSWS_SI02_ENDPOINT = desa?"http://172.16.18.13:9080/TsysWS/services/SI02WS":"http://172.16.18.185:9083/TsysWS/services/SI02WS";
