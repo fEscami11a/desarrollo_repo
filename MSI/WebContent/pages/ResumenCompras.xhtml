@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"> 
+
+ <body>
+	 <ui:composition template="/template/common.xhtml">	
+         <ui:define name="content">	
+           <h:form>
+						<h:commandLink action="MSIConsultaClienteMovs" value="Volver" />
+					</h:form>
+		  <rich:panel id="resPanel">
+         <h:form> 
+          <h:messages infoStyle="color:green" errorStyle="color:darkred"/>
+          
+          
+           <rich:dataTable id="tablaCompras"  value="#{resPromosBean.compras}" var="compra" rows="0">
+  <f:facet name="header">
+		<h:outputText value="Resumen de compras para promocion"/>
+	</f:facet>
+	
+		<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Fecha" />
+		</f:facet>
+		<h:outputText value="#{compra.fecha}"  converter="fechaConverter"/>
+	</rich:column>
+	
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Codigo transaccion"/>
+		</f:facet>
+		<h:outputText value="#{compra.codigo}" />
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Descripcion"/>
+		</f:facet>
+		<h:outputText value="#{compra.descripcion}"  />
+	</rich:column>
+	
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Corte"/>
+		</f:facet>
+		<h:outputText value="Corte actual" rendered="#{compra.tipo eq 'ITA' }"/>
+		<h:outputText value="Corte anterior" rendered="#{compra.tipo eq 'IPS' }"/>
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Monto"/>
+		</f:facet>
+		<h:outputText value="#{compra.monto}"  >
+			
+			<f:convertNumber type="currency" currencySymbol="$"  pattern="#,##0.00"/> 
+			
+		</h:outputText>
+	</rich:column>
+	
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Meses"/>
+		</f:facet>
+			<h:outputText value="#{compra.meses}"  />
+	
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Folio"/>
+		</f:facet>
+			<h:outputText value="#{compra.folio}"  />
+	
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Status"/>
+		</f:facet>
+			<h:outputText value="Aplicado"  rendered="#{compra.enPromocion}"/>
+			<h:outputText value="Pendiente"  rendered="#{not compra.enPromocion}"/>
+	
+	</rich:column>
+		
+  </rich:dataTable>
+  <br></br>
+  <rich:dataTable value="#{resPromosBean.mesesPromos}" var="item"
+        id="datatable">
+   <f:facet name="header">
+		<h:outputText value="Información de las promociones por aplicar"/>
+	</f:facet>
+          <rich:column width="190px" sortable="false" >
+            <f:facet name="header">
+            	<h:outputText value="Meses" />
+            </f:facet>
+            <h:outputText value="#{item.meses}" />
+            
+             <f:facet name="footer">
+             	<h:outputText value="Totales" />
+             </f:facet>
+        </rich:column>
+        <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Compras" />
+            </f:facet>
+            <h:outputText value="#{item.numCompras}" />
+            
+             <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.comprasTot}" />
+             </f:facet>
+        </rich:column>
+         <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Monto" />
+            </f:facet>
+            <h:outputText value="#{item.monto}" >
+            	<f:convertNumber type="currency" currencySymbol="$"/> 
+            </h:outputText>
+              <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.montoTotal}" >
+             		<f:convertNumber type="currency" currencySymbol="$"/> 
+             	</h:outputText>
+             </f:facet>
+        </rich:column>
+        <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Mensualidad" />
+            </f:facet>
+            <h:outputText value="#{item.monto/item.meses}" >
+            	<f:convertNumber type="currency" currencySymbol="$"/> 
+            </h:outputText>
+             <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.totMensualidad}" >
+             		<f:convertNumber type="currency" currencySymbol="$"/> 
+             	</h:outputText>
+             </f:facet>
+        </rich:column>
+        
+      </rich:dataTable>
+<br></br>
+<h:outputText value="Saldo para no generar intereses: " />
+<h:outputText value="#{resPromosBean.saldoNoInt}" />
+<br></br>
+  
+  <h:commandButton action="#{resPromosBean.aplicarMSI}"  value="Aceptar"  ignoreDupResponses="true"/>
+  
+   </h:form>
+   </rich:panel>
+   
+                   
+	</ui:define>
+	</ui:composition>
+</body>
+
+
+</html>

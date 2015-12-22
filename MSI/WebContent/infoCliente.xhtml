@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:a4j="http://richfaces.org/a4j"
+ xmlns:rich="http://richfaces.org/rich">
+
+ <f:view>
+	<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</h:head>
+ <h:body>
+
+<rich:panel header="Datos del Cliente" >
+				<h:panelGrid columns="2" columnClasses="gridContent">
+				<rich:column>
+				
+					<rich:panel>
+						<h:panelGrid columns="2" columnClasses="gridContent">
+
+							<h:outputText value="Nombre: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoDemograficaINA.nombreCompleto}"
+								 />
+
+							<h:outputText value="RFC: " />
+							<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.rfc}" />
+
+							<h:outputText value="Fecha nacimiento: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoDemograficaINA.fechaNacimiento}"
+								/>
+
+
+							<h:outputText value="Calle número: " />
+							<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.direccion1}" />
+
+							<h:outputText value="Colonia: " />
+							<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.direccion2}" />
+
+							<h:outputText value="Municipo/Estado: " />
+							<h:column>
+								<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.ciudad}" />
+								<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.estado}" />
+							</h:column>
+							<h:outputText value="Código postal: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoDemograficaINA.codigoPostal}" />
+
+							<h:outputText value="Email: " />
+							<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.email}" />
+
+							<h:outputText value="Tel celular: " />
+							<h:outputText value="#{clientBean.infoCliente.infoDemograficaINA.telCelular}" />
+
+						</h:panelGrid>
+					</rich:panel>
+					
+				</rich:column>
+				<rich:column>
+				
+					<rich:panel>
+						<h:panelGrid columns="2" columnClasses="gridContent">
+							<h:outputText value="# cuenta: " />
+							<h:outputText value="#{clientBean.cuenta}" />
+							<h:outputText value="Límite crédito: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoGeneralTHIGB.creditLimit}">
+								
+							</h:outputText>
+							<h:outputText value="Banco: " />
+							<h:outputText value="#{clientBean.tipoProd}" />
+
+							<h:outputText value="Disponible: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoEncabezado.creditoDisponible}">
+								
+							</h:outputText>
+							<h:outputText value="Pago mínimo: " />
+							<h:outputText value="#{clientBean.infoCliente.infoEncabezado.pagoMinimo}">
+								
+							</h:outputText>
+
+							<h:outputText value="Saldo al día: " />
+							<h:outputText value="#{clientBean.infoCliente.infoEncabezado.saldoDia}">
+								
+							</h:outputText>
+							<h:outputText value="Pago no interes: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoEncabezado.saldoNoIntereses}">
+								
+							</h:outputText>
+
+							<h:outputText value="Fecha límite pago: " />
+							<h:outputText
+								value="#{clientBean.infoCliente.infoEncabezado.fechaLimPago}"/>
+
+							<h:outputText value="Programa Cero: " />
+							<h:outputText value="Si" rendered="#{clientBean.prog0}" />
+							<h:outputText value="No"
+								rendered="#{not clientBean.prog0}" />
+
+						</h:panelGrid>
+					</rich:panel>
+					
+				</rich:column>
+</h:panelGrid>
+</rich:panel>
+  </h:body>
+ </f:view>
+
+</ui:composition>

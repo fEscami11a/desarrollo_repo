@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >   
+<h:body> 
+<h:head></h:head>
+      <div class="logo">
+<table>
+	         <tr>
+	             <td valign="bottom" style="width: 20%;">
+	             <h:outputLink id="home_link" value="${facesContext.externalContext.requestContextPath}/faces/pages/home.xhtml">
+	                <h:graphicImage value='/images/invex.png' style="border: none;"/>
+	                </h:outputLink>
+	                <br></br>
+					<h:outputText value="MSI" style="font: AVENIR; font-size: 20px; text-align: top; color: #a2a5a4"/>
+					<c:if test="${sessionScope.desa != null}">
+					
+    <h:outputText value="Desarrollo" style="font: AVENIR; font-size: 20px; text-align: top; color: #a2a5a4"/>
+					</c:if>
+				</td>
+				<td style="width: 20%; vertical-align: middle">
+					<table>
+						<tr>
+							<td align="right">
+							
+								<h:outputFormat value="usr" style="margin-right: 5px"/>
+							</td>
+							<td style="width: 20px">
+								<h:outputLink id="logout_link" value="MSI/j_spring_security_logout">
+					                <h:graphicImage value='/img/logout.png' style="height: 24px;"/>
+								</h:outputLink>
+							</td>
+						</tr>
+					</table>
+				</td>
+	           </tr>
+</table>
+
+</div>
+</h:body> 
+</html>

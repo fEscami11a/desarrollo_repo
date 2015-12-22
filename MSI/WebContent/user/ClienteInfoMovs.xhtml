@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<f:metadata>
+  <f:viewParam name="cuenta" value="#{infoCuentaBean.cuentaPU}"/>
+  
+    <f:event type="preRenderView" listener="#{infoCuentaBean.preRenderEvent()}" />
+    
+   
+</f:metadata>
+<h:body>
+
+	<ui:composition template="/template/common.xhtml">
+		 <ui:param name="hideHeader" value="#{infoCuentaBean.cuentaPU}"/>
+		<ui:define name="content">
+		
+			<rich:panel header="Información de cuenta compras" rendered="#{empty infoCuentaBean.cuentaPU}">
+			<h:form>
+			  
+				<h:commandLink action="ConsultaCuentaForm" value="Consulta Cuenta" />
+			 
+			</h:form>
+				<h:panelGrid columns="2">
+				
+				<rich:panel>
+						<h:panelGrid columns="2">
+
+							<h:outputText value="Nombre: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoDemo.nombreCompleto}" converter="nameConverter"/>
+
+							<h:outputText value="RFC: " />
+							<h:outputText value="#{infoCuentaBean.infoDemo.rfc}" />
+
+							<h:outputText value="Fecha nacimiento: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoDemo.fechaNacimiento}" converter="fechaConverter"/>
+
+
+							<h:outputText value="Calle numero: " />
+							<h:outputText value="#{infoCuentaBean.infoDemo.direccion1}" />
+
+							<h:outputText value="Colonia: " />
+							<h:outputText value="#{infoCuentaBean.infoDemo.direccion2}" />
+
+							<h:outputText value="Municipo/Estado: " />
+							<h:column>
+								<h:outputText value="#{infoCuentaBean.infoDemo.ciudad}" />
+								<h:outputText value="#{infoCuentaBean.infoDemo.estado}" />
+							</h:column>
+							<h:outputText value="Codigo postal: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoDemo.codigoPostal}" />
+
+							<h:outputText value="Email: " />
+							<h:outputText value="#{infoCuentaBean.infoDemo.email}" />
+
+							<h:outputText value="Tel Celular: " />
+							<h:outputText value="#{infoCuentaBean.infoDemo.telCelular}" />
+
+						</h:panelGrid>
+					</rich:panel>
+
+				<rich:panel>
+						<h:panelGrid columns="2" >
+							<h:outputText value="# cuenta: " />
+							<h:outputText value="#{infoCuentaBean.cuenta}" />
+
+							<h:outputText value="Límite Credito: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoCuenta.creditLimit}">
+								<f:converter converterId="strCurrency" />
+							</h:outputText>
+							<h:outputText value="Banco: " />
+							<h:outputText value="#{infoCuentaBean.tipoProd}" />
+
+							<h:outputText value="Disponible: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoEnca.creditoDisponible}">
+								<f:converter converterId="strCurrency" />
+							</h:outputText>
+							<h:outputText value="Pago mínimo: " />
+							<h:outputText value="#{infoCuentaBean.infoEnca.pagoMinimo}">
+								<f:converter converterId="strCurrency" />
+							</h:outputText>
+
+							<h:outputText value="Saldo al día: " />
+							<h:outputText value="#{infoCuentaBean.infoEnca.saldoDia}">
+								<f:converter converterId="strCurrency" />
+							</h:outputText>
+							<h:outputText value="Pago no interes: " />
+							<h:outputText
+								value="#{infoCuentaBean.saldoNoIntereses}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+
+							<h:outputText value="Fecha límite pago: " />
+							<h:outputText
+								value="#{infoCuentaBean.infoEnca.fechaLimPago}"
+								converter="fechaConverter" />
+
+							<h:outputText value="Programa Cero: " />
+							<h:outputText value="Si" rendered="#{infoCuentaBean.prog0}" />
+							<h:outputText value="No"
+								rendered="#{not infoCuentaBean.prog0}" />
+
+						</h:panelGrid>
+					</rich:panel>
+				</h:panelGrid>
+			</rich:panel>
+			
+				<h:form id="movs_list_Form">
+			<rich:tabPanel switchType="client">
+        <rich:tab header="Compras">
+		
+		<rich:panel>
+				<h:panelGrid columns="2">
+			
+			
+			<rich:panel>
+					<f:facet name="header">
+								<h:outputText value="Movimientos sujetos a promoción" />
+							</f:facet>
+						
+						<rich:messages style="color:darkred"></rich:messages>
+						<rich:dataTable id="tablaCompras"
+							value="#{infoCuentaBean.compras}" var="compra" iterationStatusVar="it"
+							rows="0" rendered="#{not empty infoCuentaBean.compras}">
+							
+							<rich:column>
+							
+								<h:selectBooleanCheckbox value="#{compra.selected}" id="select_compra"
+									rendered="#{empty compra.idEdoPromocion}"
+									binding="#{infoCuentaBean.chkSelect}" 
+									disabled="#{not compra.selected and ( (compra.tipoTransaccion eq 'ITA' and infoCuentaBean.saldoRev le 0) or (compra.tipoTransaccion eq 'IPS' and infoCuentaBean.saldoRevAnterior le 0) )}">
+									
+									<a4j:ajax listener="#{infoCuentaBean.habilita(it.index)}" render="tablaCompras"/>
+										
+								</h:selectBooleanCheckbox>
+							
+								<h:outputText value="Promocion #{compra.statusDesc}" style="color:darkred"
+									rendered="#{not empty compra.idEdoPromocion}" />
+							</rich:column>
+							<rich:column sortBy="#{compra.fechaCompra}" sortOrder="#{SortOrder.ASCENDING}">
+								<f:facet name="header">
+									<h:outputText value="Fecha" />
+								</f:facet>
+								<h:outputText value="#{compra.fechaCompra}" >
+									<f:convertDateTime locale="es_HN" pattern="dd 'de' MMMM 'de' yyyy"/>
+								</h:outputText>
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Codigo transaccion" />
+								</f:facet>
+								<h:outputText value="#{compra.codigoTransaccion}" />
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Descripcion" />
+								</f:facet>
+								<h:outputText value="#{compra.descripcion}" />
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Corte" />
+								</f:facet>
+								<h:outputText value="Corte actual"
+									rendered="#{compra.tipoTransaccion eq 'ITA' }" />
+								<h:outputText value="Corte anterior"
+									rendered="#{compra.tipoTransaccion eq 'IPS' }" />
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Monto" />
+								</f:facet>
+								<h:outputText value="#{compra.monto}">
+									<f:convertNumber type="currency" currencySymbol="$" />
+
+								</h:outputText>
+							</rich:column>
+							
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Monto a promocion" />
+								</f:facet>
+								<h:outputText value="#{compra.montoPromo}" id="montoPr">
+									<f:convertNumber type="currency" currencySymbol="$" />
+
+								</h:outputText>
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Parcialidades" />
+								</f:facet>
+								<h:selectOneListbox value="#{compra.promocion}" size="1"
+									id="comboMeses" disabled="#{not compra.selected}"
+									rendered="#{empty compra.idEdoPromocion }" binding="#{infoCuentaBean.cmbPromos}">
+									<f:selectItem itemLabel="----" itemValue="0" />
+
+									<f:selectItems value="#{compra.promosCombo}" />
+									<f:converter converterId="promosConverter" />
+									<f:ajax listener="#{infoCuentaBean.setValorComboPromo(it.index)}"></f:ajax>
+								</h:selectOneListbox>
+							</rich:column>
+						</rich:dataTable>	
+						<br></br>
+						
+						<h:commandButton value="Aplicar promocion(es)"  onclick="#{rich:component('popup')}.show()" 
+							action="#{resPromosBean.resumenCompras(infoCuentaBean.compras,infoCuentaBean.saldoNoIntereses,infoCuentaBean.infoEnca.fechaLimPago)}">
+									 
+						</h:commandButton>
+						
+					</rich:panel>
+					
+					<rich:panel bodyClass="inpanelBody" style="width:200px;">
+						<f:facet name="header">
+							<h:outputText value="Saldo sujeto a promoción" />
+						</f:facet>
+						<h:outputText value="Corte actual:" />
+						<br></br>
+						<a4j:outputPanel ajaxRendered="true">
+							<h:outputText value="#{infoCuentaBean.saldoRev}" >
+							<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</a4j:outputPanel>
+						<br></br>
+						<h:outputText value="Corte anterior:" />
+						<br></br>
+						<a4j:outputPanel ajaxRendered="true">
+							<h:outputText value="#{infoCuentaBean.saldoRevAnterior}" >
+							<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</a4j:outputPanel>
+					</rich:panel>
+					
+				</h:panelGrid>
+			</rich:panel>	
+		
+			</rich:tab>
+			
+			 <rich:tab header="Movimientos ITH">
+			 
+			 <h:outputText value="No se encontraron movimientos" style="color:darkred"  rendered="#{empty infoCuentaBean.movsITH}"/>
+			 
+            <rich:dataTable value="#{infoCuentaBean.movsITH}" var="movITH" 
+							rows="0" rendered="#{not empty infoCuentaBean.movsITH}">
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Codigo de Transaccion" />
+								</f:facet>
+								<h:outputText value="#{movITH.INC_TRAN_CODE}" >
+									
+
+								</h:outputText>
+							</rich:column>
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Fecha de Transaccion" />
+								</f:facet>
+								<h:outputText value="#{movITH.DATE_TRAN}" converter="fechaConverter">
+									
+								</h:outputText>
+							</rich:column>
+						
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Monto" />
+								</f:facet>
+								<h:outputText value="#{movITH.PROMOTION_BALANCE}" >
+									<f:convertNumber type="currency" currencySymbol="$" />
+
+								</h:outputText>
+							</rich:column>
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Tipo" />
+								</f:facet>
+								<h:outputText value="#{movITH.TYPE_RECORD}" >
+								
+								</h:outputText>
+							</rich:column>
+							
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Promo ID" />
+								</f:facet>
+								<h:outputText value="#{movITH.PROMOTION_ID}" >
+								
+								</h:outputText>
+							</rich:column>
+							
+							
+							
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Min Pay Due" />
+								</f:facet>
+								<h:outputText value="#{movITH.MIN_PAY_DUE}" >
+								<f:convertNumber type="currency" currencySymbol="$" />
+								</h:outputText>
+							</rich:column>
+							
+								<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Fix Pay Due" />
+								</f:facet>
+								<h:outputText value="#{movITH.FIXED_PAYMENT_AMOUNT}" >
+								<f:convertNumber type="currency" currencySymbol="$" />
+								</h:outputText>
+							</rich:column>
+			</rich:dataTable>
+        </rich:tab>
+			
+			</rich:tabPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			<rich:panel styleClass="panel">
+				<f:facet name="header">
+					<h:outputText value="Modificar Promoción" />
+				</f:facet>
+				<h:messages infoClass="info" errorClass="error" globalOnly="true"/>
+				<h:form>
+				<h:inputHidden value="#{altaPromoBean.promo.idPromocion}" />
+				<h:panelGrid columns="3">
+					
+
+
+						<h:outputLabel value="Id Promocion: " for="idPromo" />
+						<h:inputText value="#{altaPromoBean.promo.idPromocion}" id="idPromo" required="true" readonly="true">
+							
+						</h:inputText>
+						<h:message for="idPromo" errorStyle="color:red; display:block" />
+						
+						<h:outputLabel value="Descripcion: " for="desc" />
+						<h:inputText value="#{altaPromoBean.promo.descripcion}" id="desc" required="true"/>
+						<h:message for="desc" errorStyle="color:red; display:block" />
+						
+						<h:outputLabel value="Meses: " for="meses" />
+						<h:inputText value="#{altaPromoBean.promo.plazoMeses}" id="meses" required="true">
+							<f:validateLongRange minimum="2" maximum="24"></f:validateLongRange>
+						</h:inputText>
+						<h:message for="meses" errorStyle="color:red; display:block" />
+						
+						<h:outputLabel value="Programa Cero: " for="progCero" />
+						<h:selectOneMenu value="#{altaPromoBean.promo.programaCero}" required="true" id="progCero">
+							<f:selectItem  itemLabel="---" itemValue=""/>
+							<f:selectItem itemValue="si" itemLabel="si"/>
+							<f:selectItem itemValue="no" itemLabel="no"/>
+						</h:selectOneMenu> 
+							<h:message for="progCero" errorStyle="color:red; display:block" />
+							
+						<h:outputLabel value="Monto:" for="monto" />
+						<h:inputText value="#{altaPromoBean.promo.monto}" id="monto" required="true">
+						<f:validateDoubleRange minimum="0" maximum="99999999"/>
+						</h:inputText>	
+						<h:message for="monto" errorStyle="color:red; display:block" />
+							
+						<h:commandButton value="Guardar Cambios"
+							action="#{altaPromoBean.modificarPromo}"
+							style="align:center" onclick="#{rich:component('popup')}.show()" rendered="#{not altaPromoBean.saved}"/>
+
+
+						
+						
+					
+				</h:panelGrid>
+				</h:form>
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</body>
+
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Consulta Campaña" />
+				</f:facet>
+
+				<h:form>
+					
+					<h:messages errorClass="error" infoClass="info"/>
+					<h:panelGrid columns="2">
+						
+						<h:outputText value="Tipo de Campaña:" />
+						<h:selectOneListbox
+							value="#{consultaCampaniaBean.tipoCamp}" size="1"
+							id="tipoCampania" valueChangeListener="#{consultaCampaniaBean.tipoCampChanged}">
+						<f:ajax render="comboCamps fechas" />
+
+							<f:selectItem itemLabel="Todas" itemValue="0" />
+
+							<f:selectItem itemLabel="Masiva" itemValue="masiva" />
+							<f:selectItem itemLabel="Segmentada" itemValue="segmentada" />
+							<f:selectItem itemLabel="Permanente" itemValue="permanente" />
+						</h:selectOneListbox>
+						
+						<h:outputText value="Campaña:" />
+						<h:selectOneListbox value="#{consultaCampaniaBean.idCamp}" size="1" id="comboCamps">
+
+							<f:selectItem itemLabel="----" itemValue="" />
+							<f:selectItems value="#{consultaCampaniaBean.camps}" />
+						</h:selectOneListbox>
+						</h:panelGrid>
+						
+						<a4j:outputPanel id="fechas">
+					
+						 <h:panelGroup rendered="#{consultaCampaniaBean.tipoCamp != 'permanente'}" >
+						 <h:panelGrid columns="2">
+						<h:outputText value="Fecha Inicio:" />
+						<rich:calendar popup="true" enableManualInput="false"
+							value="#{consultaCampaniaBean.fechaIn}"
+							datePattern="yyyy/MM/dd"  label="Fecha Inicio"
+							id="idFechaInicial" />
+
+						<h:outputText value="Fecha Fin:" />
+						<rich:calendar popup="true" enableManualInput="false"
+							value="#{consultaCampaniaBean.fechaFin}"
+							datePattern="yyyy/MM/dd"  label="Fecha Fin"
+							id="idFechaFin" />
+</h:panelGrid>
+</h:panelGroup>
+</a4j:outputPanel>						
+							<h:commandButton action="#{consultaCampaniaBean.buscarCampanias}" value="Buscar" onclick="#{rich:component('popup')}.show()"/>
+					
+				</h:form>
+				
+				<h:form>
+				<rich:dataTable id="tablaCamps" value="#{consultaCampaniaBean.listCamp}" var="campania" rows="100" rendered="#{not empty consultaCampaniaBean.listCamp}" width="700px">
+	  <f:facet name="header">
+		<h:outputText value="Campañas"/>
+	</f:facet>
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Campaña"/>
+		</f:facet>
+		<h:outputText value="#{campania.nombre}" />
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Fecha Inicio"/>
+		</f:facet>
+		<h:outputText value="#{campania.fechaInicial}" >
+			<f:convertDateTime pattern="yyyy/MM/dd"/>
+		</h:outputText>
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Fecha Termino"/>
+		</f:facet>
+		<h:outputText value="#{campania.fechaFinal}">	
+			<f:convertDateTime pattern="yyyy/MM/dd"/>	
+		</h:outputText>
+	</rich:column>
+	
+		
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Fecha Máxima Registro"/>
+		</f:facet>
+		<h:outputText value="#{campania.fechaMaximaRegistro}">
+			<f:convertDateTime pattern="yyyy/MM/dd"/>
+		</h:outputText>
+	</rich:column>	
+
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Código Transacción"/>
+		</f:facet>
+		<h:outputText value="#{campania.codigoTransaccion1}" />
+	</rich:column>
+		
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Tipo Campaña"/>
+		</f:facet>
+		<h:outputText value="#{campania.tipoCampania}" />
+	</rich:column>
+	
+		
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value=""/>
+		</f:facet>
+		<h:commandLink
+					action="#{altaCampaniaBean.modificarCamp}" type="submit" onclick="#{rich:component('popup')}.show()">
+					<f:setPropertyActionListener target="#{altaCampaniaBean.campania}" value="#{campania}" />
+					<h:graphicImage value='/images/edit.gif'
+								style="border: none;" />
+		</h:commandLink> 
+	</rich:column>	
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value=""/>
+		</f:facet>
+		<h:commandLink action="InfoCampania"> 
+			<f:setPropertyActionListener target="#{infoCampaniaBean.campania}" value="#{campania}" />
+			<h:graphicImage value='/images/consulta.gif'
+								style="border: none;" />
+		</h:commandLink> 
+	</rich:column>	
+	
+  </rich:dataTable>
+				</h:form>
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

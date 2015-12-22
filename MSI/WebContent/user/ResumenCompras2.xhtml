@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition template="/template/common.xhtml">
+	 <ui:param name="hideHeader" value="#{infoCuentaBean.cuentaPU}"/>
+		<ui:define name="content">
+		
+		<rich:panel header="Compras seleccionadas">
+		  <h:messages infoStyle="color:green" errorStyle="color:darkred"/>
+		<h:form>
+			<h:commandLink action="ConsultaCuentaForm" value="Consulta Cuenta" />--><h:commandLink action="ClienteInfoMovs" value="Seleccionar Compras" rendered="#{not aplicarPromosBean.comprasEnviadas}"/>
+		</h:form>
+		<br></br>
+			<rich:dataTable id="tablaCompras"  value="#{resPromosBean.compras}" var="compra" rows="0">
+	
+		<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Fecha" />
+		</f:facet>
+		<h:outputText value="#{compra.fechaCompra}" >
+				<f:convertDateTime locale="es_HN" pattern="dd 'de' MMMM 'de' yyyy"/>
+		</h:outputText>
+	</rich:column>
+	
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Codigo transaccion"/>
+		</f:facet>
+		<h:outputText value="#{compra.codigoTransaccion}" />
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Descripcion"/>
+		</f:facet>
+		<h:outputText value="#{compra.descripcion}"  />
+	</rich:column>
+	
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Corte"/>
+		</f:facet>
+		<h:outputText value="Corte actual" rendered="#{compra.tipoTransaccion eq 'ITA' }"/>
+		<h:outputText value="Corte anterior" rendered="#{compra.tipoTransaccion eq 'IPS' }"/>
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Monto"/>
+		</f:facet>
+		<h:outputText value="#{compra.montoPromo}">
+			<f:convertNumber type="currency" currencySymbol="$" />
+
+		</h:outputText>
+	</rich:column>
+	
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Meses"/>
+		</f:facet>
+			<h:outputText value="#{compra.promocion.plazoMeses}"  />
+	
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header">
+			<h:outputText value="Folio"/>
+		</f:facet>
+			<h:outputText value="#{compra.folio}"  />
+	
+	</rich:column>
+	
+		
+  </rich:dataTable>
+  </rich:panel>
+  <br></br>
+  <rich:panel header="Resumen compras">
+  <rich:dataTable value="#{resPromosBean.mesesPromos}" var="item"
+        id="datatable">
+  
+          <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Meses" />
+            </f:facet>
+            <h:outputText value="#{item.meses}" />
+            
+             <f:facet name="footer">
+             	<h:outputText value="Totales" />
+             </f:facet>
+        </rich:column>
+        <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Compras" />
+            </f:facet>
+            <h:outputText value="#{item.numCompras}" />
+            
+             <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.comprasTot}" />
+             </f:facet>
+        </rich:column>
+         <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Monto" />
+            </f:facet>
+            <h:outputText value="#{item.monto}" >
+            	<f:convertNumber type="currency" currencySymbol="$"/> 
+            </h:outputText>
+              <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.montoTotal}" >
+             		<f:convertNumber type="currency" currencySymbol="$"/> 
+             	</h:outputText>
+             </f:facet>
+        </rich:column>
+        <rich:column width="190px" sortable="false">
+            <f:facet name="header">
+            	<h:outputText value="Mensualidad" />
+            </f:facet>
+            <h:outputText value="#{item.monto/item.meses}" >
+            	<f:convertNumber type="currency" currencySymbol="$"/> 
+            </h:outputText>
+             <f:facet name="footer">
+             	<h:outputText value="#{resPromosBean.totMensualidad}" >
+             		<f:convertNumber type="currency" currencySymbol="$"/> 
+             	</h:outputText>
+             </f:facet>
+        </rich:column>
+        
+      </rich:dataTable>
+  	
+	<h:form id="formaPromos">
+			
+			<a4j:commandButton value="Aplicar promociones"
+				oncomplete="#{rich:component('confirmPanel')}.show()"  rendered="#{not aplicarPromosBean.comprasEnviadas}"/>
+				
+	</h:form>
+	
+		</rich:panel>	
+		
+		
+		
+			 <rich:popupPanel id="confirmPanel" autosized="true" modal="true"  width="300">
+				<f:facet name="header">
+					<h:outputText value="Confirmar Cambio" />
+				</f:facet>
+				<h:form>
+
+					<h:outputText value="Esta seguro que desea enviar las compras a promoción?" />
+					<br></br>
+					<h:panelGrid columns="2">
+					<h:commandButton value="Aceptar"  onclick="#{rich:component('popup')}.show()" 
+							action="#{aplicarPromosBean.aplicarPromos2(resPromosBean.compras,resPromosBean.folio,infoCuentaBean.email,infoCuentaBean.nombreCompleto,resPromosBean.msgICM,resPromosBean.msgICM2)}"  >
+									 <f:setPropertyActionListener target="#{aplicarPromosBean.saldoNoInt}" value="#{resPromosBean.sldoNoInt}" />
+									  <f:setPropertyActionListener target="#{aplicarPromosBean.tipoProd}" value="#{infoCuentaBean.tipoProd}" />
+						</h:commandButton>
+					<a4j:commandButton value="Salir"
+						onclick="#{rich:component('confirmPanel')}.hide();return false;"
+						style="background-color:#{a4jSkin.additionalBackgroundColor}" />
+					</h:panelGrid>
+
+				</h:form>
+			</rich:popupPanel>
+			
+			<a4j:status name="waitModalStatus">
+
+    <f:facet name="start">
+
+        <rich:componentControl event="start" operation="show" target="popup" />
+
+    </f:facet>    
+
+    <f:facet name="stop">
+
+        <rich:componentControl event="stop" operation="hide" target="waitModal" />
+
+    </f:facet>
+
+</a4j:status>
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

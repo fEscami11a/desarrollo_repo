@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="Inscripcion a Programa Cero" />
+					</f:facet>
+					<h:form>
+						<h:commandLink action="/home" value="Inicio" />
+					</h:form>
+					<p>
+
+					
+					</p>
+					<h:form>
+					
+					<h:messages globalOnly="true"/>
+					<h:message id="cuentaError" for="cuenta" errorClass="error" />
+						<h:panelGrid columns="3">
+
+							<h:outputText value="Cuenta:" />
+							<h:inputText label="Cuenta" id="cuenta" required="true"
+								value="#{cuentaFormBean.cuenta}" size="20" maxlength="16">
+								<f:validateBean />
+								<f:ajax render="cuentaError" />
+							</h:inputText>
+							<h:commandButton value="Buscar"  id="searchButton"  onclick="#{rich:component('popup')}.show()" action="#{prog0Bean.buscarPorNoCuenta(cuentaFormBean.cuenta)}">
+									 
+								</h:commandButton>
+						</h:panelGrid>
+							
+
+					</h:form>
+					<rich:hotKey key="return"
+						handler="#{rich:element('searchButton')}.click()"
+						selector="#cuenta" />
+				</rich:panel>
+				
+				<rich:panel rendered="#{prog0Bean.showInfoPanel}">
+				<f:facet name="header">
+						<h:outputText value="Datos del cliente" />
+				</f:facet>
+				<h:form>
+					<h:inputHidden value="#{prog0Bean.monto}" />
+					<h:inputHidden value="#{prog0Bean.cuenta}" />
+					<h:inputHidden value="#{prog0Bean.nombre}" />
+						<h:message id="telcelError" for="idcell" errorClass="error" />
+					<h:panelGrid columns="2">
+					<h:outputText value="Número de tarjeta: " />
+								<h:outputText value="#{prog0Bean.cuenta}" />
+					<h:outputText value="Monto de inscripción: " /> 
+					<h:outputText value="#{prog0Bean.monto}" >
+						<f:convertNumber type="currency" currencySymbol="$" />
+					</h:outputText>
+					<h:outputLabel value="Nombre completo: "/>							
+								<h:outputText value="#{prog0Bean.nombre}"/>
+					
+						<h:outputLabel value="Número de celular (10 dígitos) : " for="idcell"  />
+							    <h:inputText label="telcel" id="idcell" maxlength="10" size="13"
+							                   value="#{prog0Bean.telcel}" required="true" >
+							        <f:validateBean />
+									<f:ajax render="telcelError" />
+							    </h:inputText>
+					
+					</h:panelGrid>
+					<h:commandButton action="#{prog0Bean.inscribir}" value="Inscribir" rendered="#{not prog0Bean.inscrito}"/>
+				</h:form>
+				</rich:panel>
+				
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

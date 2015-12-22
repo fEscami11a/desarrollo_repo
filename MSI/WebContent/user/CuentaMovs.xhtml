@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<f:metadata>
+  <f:viewParam name="cuenta" value="#{cuentaMovsBean.cuenta}"/>
+</f:metadata>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			
+				<rich:panel styleClass="panel">
+					<f:facet name="header">
+						<h:outputText value="Consulta compras" />
+					</f:facet>
+				
+					<p>
+
+					
+					</p>
+					<h:form>
+					<h:messages globalOnly="true" errorClass="error"/>
+					<h:message id="cuentaError" for="cuenta" errorClass="error" />
+						<h:panelGrid columns="3">
+
+							<h:outputText value="Cuenta:" />
+							<h:inputText label="Cuenta" id="cuenta" required="true"
+								value="#{cuentaMovsBean.cuenta}" size="20" maxlength="16">
+								<f:validateBean />
+								<f:ajax render="cuentaError" />
+							</h:inputText>
+							<h:commandButton value="Buscar Compras"  id="searchButton"  onclick="#{rich:component('popup')}.show()" action="#{infoCuentaBean.buscarPorNoCuenta(cuentaMovsBean.cuenta)}">
+									 <f:setPropertyActionListener target="#{infoCuentaBean.pantallaUnica}" value="true" />
+									 
+								</h:commandButton>
+						</h:panelGrid>
+							
+
+					</h:form>
+					<rich:hotKey key="return"
+						handler="#{rich:element('searchButton')}.click()"
+						selector="#cuenta" />
+				</rich:panel>
+				
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

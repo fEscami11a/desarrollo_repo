@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+    <!-- <security-domain>sso</security-domain>
+          <valve>
+        <class-name>org.apache.catalina.authenticator.SingleSignOn</class-name>
+    </valve> -->
+    <!-- <security-domain>java:/jaas/form-auth</security-domain> -->
+    <security-domain flushOnSessionInvalidation="true">java:/jaas/form-auth</security-domain>
+    <valve>
+        <class-name>org.apache.catalina.authenticator.SingleSignOn</class-name>
+    </valve>
+</jboss-web>

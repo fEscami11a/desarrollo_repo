@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Modificacion Campaña" />
+				</f:facet>
+
+				<h:form>
+
+					<h:commandLink action="ConsultaCampaniaForm"
+						value="--> Consulta Campania"
+						rendered="#{not empty altaCampaniaBean.campania.idCampania}" />
+
+				</h:form>
+
+				<h:form>
+					<h:inputHidden value= "#{altaCampaniaBean.campania.tipoCampania}" />
+					<h:inputHidden value= "#{altaCampaniaBean.campania.codigoTransaccion1}" />
+					<rich:messages />
+					
+					<h:panelGrid columns="2">
+						<h:outputText value="Nombre Campaña:" />
+						<h:inputText label="Nombre Campaña" id="nombre" required="true"
+							value="#{altaCampaniaBean.campania.nombre}" maxlength="30"
+							size="30" readonly="true">
+						</h:inputText>
+						
+						<h:outputText value="Código Transacción:" />
+						<h:outputText value="#{altaCampaniaBean.campania.codigoTransaccion1}" />
+						
+						
+						<h:outputText value="Tipo de Campaña:" />
+						<h:outputText value="#{altaCampaniaBean.campania.tipoCampania}" />
+						
+						</h:panelGrid>
+							
+					 <h:panelGroup rendered="#{altaCampaniaBean.campania.tipoCampania != 'masiva' and altaCampaniaBean.campania.tipoCampania != 'segmentada'}" >
+						<h:outputText value="Duración de campaña en días:" />
+						<h:inputText value="#{altaCampaniaBean.campania.numMaxDiasRegistro}" required="true" />
+						</h:panelGroup>
+					
+					
+					
+						 <h:panelGroup rendered="#{altaCampaniaBean.campania.tipoCampania == 'masiva' || altaCampaniaBean.campania.tipoCampania == 'segmentada'}" >
+						 <h:panelGrid columns="2">
+       <h:outputText value="Fecha Inicio:"  />
+						<rich:calendar popup="true" enableManualInput="false"
+							value="#{altaCampaniaBean.campania.fechaInicial}"
+							datePattern="yyyy/MM/dd" required="true" label="Fecha Inicio"
+							id="idFechaInicial" />
+
+						<h:outputText value="Fecha Fin:" />
+						<rich:calendar popup="true" enableManualInput="false"
+							value="#{altaCampaniaBean.campania.fechaFinal}"
+							datePattern="yyyy/MM/dd" required="true" label="Fecha Fin"
+							id="idFechaFin" />
+
+						<h:outputText value="Fecha Máxima Registro:" />
+						<rich:calendar popup="true" enableManualInput="false"
+							value="#{altaCampaniaBean.campania.fechaMaximaRegistro}"
+							datePattern="yyyy/MM/dd" required="true"
+							label="Fecha Máxima Registro" />
+</h:panelGrid>
+</h:panelGroup>
+
+    <br/>
+  
+					
+
+					<h:outputText value="Productos que aplican:" />
+					<br></br>
+					<rich:pickList value="#{altaCampaniaBean.listProdValues}">
+						<f:selectItems value="#{altaCampaniaBean.prodList}" />
+					</rich:pickList>
+					<br></br>
+					
+					<h:outputText value="Productos Ts2 que aplican:" />
+					<br></br>
+					<rich:pickList value="#{altaCampaniaBean.listProdts2Values}">
+						<f:selectItems value="#{altaCampaniaBean.prodts2List}" />
+					</rich:pickList>
+					<br></br>
+					
+					<a4j:outputPanel id="addPromos">
+						<h:outputText value="Seleccionar parcialidad(es):" />
+						<br></br>
+						<h:selectOneMenu value="#{altaCampaniaBean.parcialidad}"
+							valueChangeListener="#{altaCampaniaBean.mesesChanged}">
+							<f:ajax render="comboPromos" />
+							<f:selectItems value="#{altaCampaniaBean.mesesList}" />
+						</h:selectOneMenu>
+
+						<h:selectOneMenu value="#{altaCampaniaBean.promoVal}"
+							id="comboPromos">
+							<f:selectItems value="#{altaCampaniaBean.promos}" />
+							<f:converter converterId="promosConvAC" />
+						</h:selectOneMenu>
+
+						
+						<a4j:commandButton value="Agregar Promocion"
+							action="#{altaCampaniaBean.agregarPromocion}" execute="addPromos"
+							render="zonaPromos" />
+					</a4j:outputPanel>
+					<a4j:outputPanel id="zonaPromos">
+						<rich:dataTable id="tablaPromos"
+							value="#{altaCampaniaBean.promosCamp}" var="promocion" rows="10"
+							width="700px" iterationStatusVar="it"
+							rendered="#{not empty altaCampaniaBean.promosCamp}">
+							<f:facet name="header">
+								<h:outputText value="Promociones" />
+							</f:facet>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Seleccionar" />
+								</f:facet>
+
+								<a4j:commandLink styleClass="no-decor" execute="@this"
+									render="zonaPromos" action="#{altaCampaniaBean.remove}"
+									>
+									<h:graphicImage value='/images/eliminar.jpg'
+								style="border: none;" />
+									<a4j:param value="#{it.index}"
+										assignTo="#{altaCampaniaBean.currentPromoIndex}" />
+								</a4j:commandLink>
+
+							</rich:column>
+
+							<rich:column sortable="true" sortBy="#{promocion.idPromocion}">
+								<f:facet name="header">
+									<h:outputText value="ID Promoción" />
+								</f:facet>
+								<h:outputText value="#{promocion.idPromocion}" />
+							</rich:column>
+
+							<rich:column sortable="true" sortBy="#{promocion.descripcion}">
+								<f:facet name="header">
+									<h:outputText value="Promoción" />
+								</f:facet>
+								<h:outputText value="#{promocion.descripcion}" />
+							</rich:column>
+
+							<rich:column sortable="true" sortBy="#{promocion.plazoMeses}">
+								<f:facet name="header">
+									<h:outputText value="Tipo Parcialidad" />
+								</f:facet>
+								<h:outputText value="#{promocion.plazoMeses}" />
+							</rich:column>
+
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Monto" />
+								</f:facet>
+
+								<h:outputText value="#{promocion.monto}">
+								</h:outputText>
+
+							</rich:column>
+
+							<f:facet name="footer">
+
+							</f:facet>
+
+						</rich:dataTable>
+						<h:commandButton value="Guardar"
+							action="#{altaCampaniaBean.guardarCampania}" bypassUpdates="true"
+							onclick="if (! confirm('Seguro que desea crear/modificar la campaña?')) return false"
+							rendered="#{not altaCampaniaBean.campGuardada and not empty altaCampaniaBean.promosCamp}" />
+
+					</a4j:outputPanel>
+				</h:form>
+
+
+
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

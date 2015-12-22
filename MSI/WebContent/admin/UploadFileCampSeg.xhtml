@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Carga archivo para Campañas segmentadas" />
+				</f:facet>
+				<h:messages infoClass="info" errorClass="error"/>
+				<h:form>
+					<h:panelGrid columns="2" columnClasses="top,top">
+						<rich:fileUpload fileUploadListener="#{fileUploadBean.listener}"
+							id="upload" acceptedTypes="txt">
+							<a4j:ajax event="uploadcomplete" execute="@none"
+								render="tablaDetalles" />
+						</rich:fileUpload>
+
+					</h:panelGrid>
+
+					<a4j:outputPanel id="tablaDetalles">
+						<rich:dataTable value="#{fileUploadBean.infoArchivo}" var="detalle"
+							rendered="#{not empty fileUploadBean.infoArchivo}">
+							<f:facet name="header">
+								<h:outputText value="Archivo Detalle" />
+							</f:facet>
+
+							<rich:column>
+							
+								<h:outputText value="#{detalle}">
+								</h:outputText>
+							</rich:column>
+
+
+						</rich:dataTable>
+					</a4j:outputPanel>
+					<br></br>
+					<h:outputText value="El archivo debe ser .txt y contenter un header." />
+					<br></br>
+					<h:outputText value="Los registros deben tener los siguientes datos separados por tabs:" />
+					<br></br>
+					<ul>
+						<li type="disc">Shot</li>
+						<li type="disc">Cuenta</li>
+						<li type="disc">Fecha inicio en formato dd/mm/yyyy</li>
+						<li type="disc">Fecha final en formato dd/mm/yyyy</li>
+					</ul>
+					<br></br>
+					<h:outputText value="Campaña:" />
+					<h:selectOneListbox value="#{cuentasCampSegBean.idCamp}" size="1"
+						id="comboCamps" disabled="#{cuentasCampSegBean.guardado}" required="true">
+
+						<f:selectItem itemLabel="----" itemValue="" />
+						<f:selectItems value="#{cuentasCampSegBean.camps}" />
+					</h:selectOneListbox>
+
+					<br></br>
+					<br></br>
+					<h:commandButton
+						action="#{cuentasCampSegBean.guardarArchivo(fileUploadBean.detalles,fileUploadBean.nombreArchivo)}"
+						value="Cargar" rendered="#{not cuentasCampSegBean.guardado}" onclick="#{rich:component('popup')}.show()"/>
+				</h:form>
+			</rich:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

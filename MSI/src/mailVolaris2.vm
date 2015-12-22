@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>mailing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#FFFFFF" topmargin="0">
+
+<table width="650" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="650" align="right" bgcolor="#000" colspan="3">
+        	<table width="650" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="287" height="110" bgcolor="#000000"><img src="http://www.invextarjetas.com.mx/msi/head02v.jpg" width="287" height="110" border="0"></td>
+    <td width="361" valign="top" bgcolor="#000000"><table width="361" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="361" bgcolor="#000000"><img src="http://www.invextarjetas.com.mx/msi/head01.jpg" width="361" height="49" border="0"></td>
+  </tr>
+  <tr>
+    <td bgcolor="#000000"><p style="font-size:15px; text-align:right; color:#FFF; font-family:Arial, Helvetica, sans-serif; margin-right:20px; margin-top:5px;">${mailParams.fecha}</p>
+      <p style="font-size:15px; text-align:right; color:#FFF; font-family:Arial, Helvetica, sans-serif; margin-right:20px; margin-top:0px; margin-bottom:1px">Apreciable ${mailParams.nombre}:</p></td>
+  </tr>
+</table>
+</td>
+  </tr>
+</table>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#595a5c" colspan="3" height="8"></td>
+	</tr>
+    
+ 
+  <tr>
+    
+    <td bgcolor="#D0D1D3" colspan="3"><img src="https://www.invextarjetas.com.mx/msi/blanco.gif" width="10" height="10" border="0"></td>
+</tr>
+
+  <tr>
+    
+    <td bgcolor="#D0D1D3" width="10"><img src="https://www.invextarjetas.com.mx/msi/blanco.gif" width="10" height="10" border="0"></td>
+    <td bgcolor="#ffffff" width="630"><table width="630" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><img src="http://www.invextarjetas.com.mx/msi/foto-invex.jpg" width="630" height="234"></td>
+      </tr>
+      <tr>
+        <td>
+        <p style="color:000; font-family:Arial, Helvetica, sans-serif; font-size:26px; margin:20 0px 20 0px; text-align:center;">Se han registrado las compras de su<br> tarjeta terminaci&oacute;n ${mailParams.terminacion} a<br> <span style="color:#595a5c; font-size:28px; font-weight:bold;">meses sin intereses</span><br />con el folio: ${mailParams.folio}</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+        
+        </td>
+      </tr>
+      <tr>
+        <td align="center"><table width="500" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="30" width="90" style="background:#595a5c;">
+            <p style="color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;">Fecha</p>
+            </td>
+            <td height="30" width="90" style="background:#595a5c;">
+            <p style="color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;">Descripci&oacute;n</p>
+            </td>
+            <td height="30" width="90" style="background:#595a5c;">
+            <p style="color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;">Monto</p>
+            </td>
+			<td height='30' width='90' style="background:#595a5c;">
+			<p style='color: #FFF; font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 5 0px 5 0px; text-align:center;'>Monto a promoci&oacute;n</p>
+			</td>
+            <td height="30" width="90" style="background:#595a5c;">
+            <p style="color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;">Plazo</p>
+            </td>
+            <td height="30" width="140" style="background:#595a5c;">
+            <p style="color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;">Pago mensual</p>
+            </td>
+          </tr>
+          
+            #foreach( ${compra} in ${mailParams.compras} )
+          <tr>
+            <td>
+            <p style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;">${compra.fechaCompra}</p>
+            </td>
+            <td>
+            <p style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;">${compra.descripcion}</p>
+            </td>
+ 			<td>
+            <p style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;">${compra.montoOriginal}</p>
+            </td>    
+            <td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.monto}</p>
+ 	</td>        
+ <td>
+            <p style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;">${compra.meses}</p>
+            </td>
+ <td>
+            <p style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;">${compra.pagoMensual}</p>
+            </td>
+          </tr>
+       #end   
+          
+        
+		<tr>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>TOTALES</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${mailParams.montoTotal}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${mailParams.montoAPagar}</p>
+ 	</td>
+ </tr>  
+		 
+        </table></td>
+      </tr>
+      <tr>
+         <td>
+        <p style="color:000; font-family:Arial, Helvetica, sans-serif; 	font-size:19px; margin:30 0px 0 0px; text-align:center;">
+       
+        Para cualquier duda o aclaraci&oacute;n de la notificaci&oacute;n<br />comun&iacute;quese con nosotros.
+          <br /><br />
+          &iexcl;Aproveche todos los beneficios que su tarjeta le ofrece!
+          </p>
+          </td>
+      </tr>
+      </table>
+    
+    
+    
+    </td>
+      
+      
+      
+    <td bgcolor="#D0D1D3" width="10"><img src="https://www.invextarjetas.com.mx/msi/blanco.gif" width="10" height="10" border="0"></td>
+  </tr>
+    
+        <tr>
+    
+    <td bgcolor="#FFFFFF" colspan="3"><img src='http://www.invextarjetas.com.mx/notif/pmts/volaris2/footes.jpg' width='100%' height='159' style='margin:0; padding:0' border='0'></td>
+</tr>
+
+<tr>
+<td colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><p style="font-family: Arial, sans-serif; color:#000000; font-size:10px; text-align:justify; margin-right:15px;  margin-left:15px; margin-bottom:10px; margin-top:10px;">
+    <b>CAT Promedio Volaris INVEX 61.3% sin IVA</b>. Informativo. Fecha de c&aacute;lculo Abril 2015. Tasa Variable. Tasa Anual. Tasa de inter&eacute;s promedio ponderada por saldo 45.00%, comisi&oacute;n anual $2,000.00 pesos sin IVA. Consulta requisitos de contrataci&oacute;n y comisiones en <a href="http://tarjetavolaris-invex.com" style="color:#000; text-decoration:none;">tarjetavolaris-invex.com</a>.</p>
+        <p style="font-family: Arial, sans-serif; color:#000000; font-size:10px; text-align:right; margin-right:15px; margin-bottom:0px;  margin-left:15px; padding:0px; line-height:30px; margin-top:0px;">Banco INVEX S.A., Instituci&oacute;n de Banca M&uacute;ltiple, INVEX Grupo Financiero.</p></td>
+     <td width='221'><img src='http://www.invextarjetas.com.mx/notif/pmts/volaris2/foot_2.jpg' width='231' height='119' border='0'></td>
+  </tr>
+</table></td>
+<tr>
+ 
+    
+	
+</table>
+<!-- End Save for Web Slices -->
+</body>
+</html>

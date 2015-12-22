@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<sec:http entry-point-ref="casEntryPoint" auto-config="true" path-type="ant" >
+  <sec:custom-filter before="CAS_FILTER" ref="casSingleSignOutFilter"/>
+  <sec:custom-filter after="CAS_FILTER"  ref="casFilter"/>
+  <sec:intercept-url pattern="/login.jsp" />
+  <sec:intercept-url pattern="/**" access="ROLE_USER" />
+
+  <sec:logout logout-success-url="https://tbcbd-1566js1:8443/cas/logout" invalidate-session="true" />
+</sec:http>
+ 
+<!-- which application am I authenticating 
+<param-value>https://172.16.18.52:8443/cas/login</param-value>-->
+<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
+    <property name="service" value="https://tbcbd-1566js1:8443/MSI/j_spring_cas_security_check"/>
+    <property name="sendRenew" value="false"/>
+</bean>
+    
+<!-- where do I go when I need authentication -->
+<bean id="casEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+    <property name="loginUrl" value="https://tbcbd-1566js1:8443/cas/login"/>
+    <property name="serviceProperties" ref="serviceProperties"/>
+</bean>
+ 
+<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+<bean id="casSingleSignOutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+<bean id="casFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager"/>
+</bean>
+    
+<sec:authentication-manager alias="authenticationManager">
+    <sec:authentication-provider ref="casAuthenticationProvider" />
+</sec:authentication-manager>
+    
+    
+<bean id="casAuthenticationProvider" class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+  <property name="userDetailsService" ref="umsUserDetailsService"/>
+  <property name="serviceProperties" ref="serviceProperties"/>
+  <property name="ticketValidator">
+    <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+       <constructor-arg index="0" value="https://tbcbd-1566js1:8443/cas"/>
+    </bean>
+  </property>
+  <property name="key" value="my_password_for_this_auth_provider_only"/>
+</bean>
+   
+   <bean id="umsUserDetailsService"
+		class="com.tinywebgears.samples.customauth.service.UmsUserDetailsService">
+		
+		 <property name="dsJndiName" value="java:jboss/datasources/dsMSI"/>
+		 <property name="rolesQuery" value="select AUTHORITY from  AUTHORITIES where  USERNAME=?"/>
+	</bean>
+
+
+</beans>

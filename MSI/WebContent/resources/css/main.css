@@ -1,0 +1,216 @@
+body {
+	margin : 0px;
+	padding: 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* LABEL */
+form label.required {
+	font-weight: bold;
+}
+
+form .required-pseudo-label {
+	font-weight: bold;    
+}
+
+#secambiaraestacosa_dvLoadingzzzzz {
+   background:#eeeeee url("#{resource['icons/ajaxloading.gif']}") no-repeat center center;
+   opacity:0.6;
+   filter:alpha(opacity=60);
+   height: 100%;
+   width: 100%;
+   position: fixed;
+   z-index: 1000;
+   left: 0%;
+   top: 0%;
+   margin: -25px 0 0 -25px;
+}
+
+/* usability: right align labels */
+.ui-fieldset-content td label {
+	display: block;
+	text-align: right;
+}
+
+.ui-fieldset-content td td label {
+	text-align: left;
+}
+
+/* usability */
+.ui-button {
+	margin: 0em !important;
+}
+
+/* action column in datatable */
+
+.actions-column {
+	width: 110px !important;
+}
+
+/* error messages */
+.ui-error-message {
+	display: inline-block;
+}
+
+/* aria live region for search results */
+#searchResultsRegion {
+	margin: 0px 0px 5px 5px;;
+	display: inline-block;
+}
+
+/* alternate dataTable row color */
+.ui-datatable-odd {
+	background: none repeat scroll 0 0 #F2F5F9;
+}
+
+/* change dataTable row color when mouse goes over it and keep the selected line text black */
+.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
+	background: #BDE5F8;
+	color: black !important;
+}
+
+/* ICONS for p:commandButon. Note the usage of JSF2 resource facility :-) */
+.iconView { 
+	background-image: url("#{resource['icons/eye.png']}") !important;
+}
+.iconEdit { 
+	background-image: url("#{resource['icons/pencil.png']}") !important;
+}
+.iconDelete { 
+	background-image: url("#{resource['icons/cross.png']}") !important;
+}
+.iconSelect { 
+	background-image: url("#{resource['icons/accept.png']}") !important;
+}
+.iconSearch { 
+	background-image: url("#{resource['icons/find.png']}") !important;
+}
+.iconAdd { 
+	background-image: url("#{resource['icons/add.png']}") !important;
+}
+.iconMotoboy { 
+	background-image: url("#{resource['icons/motorcycle2.png']}") !important;
+}
+.iconRuta { 
+	background-image: url("#{resource['icons/ruta.png']}") !important;
+}
+
+/* p:fieldSet */
+.ui-fieldset {
+	text-align: left;
+ 	margin-top:0.2em;
+ 	margin-bottom:1.2em;
+}
+
+.ui-fieldset-legend {
+	padding: 0.2em 0.2em !important;
+}
+
+/* p:dataTable*/
+.ui-datatable .ui-datatable-data td,
+.ui-datatable .ui-datatable-data-empty td {
+	text-align: center;
+}
+
+/* p:layout*/
+.ui-layout-north {
+	z-index:20 !important;
+	overflow:visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	padding-top: 0em  !important;
+	overflow:visible !important;
+}
+
+.ui-layout-south .ui-layout-unit-content {
+	text-align: center;
+}
+
+.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd{
+	border: none;
+	padding: 0em !important;
+}
+
+/* p:panel */
+.ui-panel {
+	border: none;
+	margin-bottom: 0.6em;
+}
+
+.ui-panel-content {
+	width: 98%; 
+	margin:0 auto;
+}
+
+/* header */
+.userInfo-user {
+	padding: 5px 5px 5px 5px;
+	text-decoration: none;
+	color: white;
+}
+
+/* login page */
+.loginBox {
+	width:450px;
+	margin:10px auto;
+	background-color: #EFEBE1;
+}
+
+.loginBox .rich-panel-header  {
+	background-image: -webkit-linear-gradient(top, #931638, #931638)  !important;
+	background-color: #931638;
+	color: #FFFFFF;
+}
+
+
+.loginButton {	
+	margen: 1em;
+	height: 30px;
+	width: 65px;
+	color: #FFFFFF !important;
+	background-image: -webkit-linear-gradient(top, #931638, #931638)  !important;
+	background-color: #931638  !important;
+}
+
+#header {
+	color: #AAAAAA;
+	height: 42px;
+    width:100%;
+	margin: 0 auto;
+}
+
+.logo table {
+    width:100%;
+    border:0;
+}
+
+#header .logo {
+	width: 100%;
+	height: 30px;
+	float: left;
+}
+
+#header .logo img {
+	height: 30px;
+	float: left;
+	margin: 5px;
+}
+
+.versionEnv {
+	position: fixed;
+	top: 0px;
+	legt: 0px;
+	z-index: 1000;
+}
+
+.content_links {
+	
+}

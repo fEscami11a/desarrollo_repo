@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel styleClass="panel">
+			<f:facet name="header">
+				<h:outputText value="Información de Campañas MSI" />
+			</f:facet>
+<h:form>
+<h:commandLink value="Inicio" action="/home" />
+	<h:commandLink action="ConsultaCampaniaForm" value="--> Consulta Campania" />
+</h:form>
+				
+			<h:panelGrid columns="2">
+				<h:outputText value="Nombre:" />
+				<h:outputText value="#{infoCampaniaBean.campania.nombre}" />
+				
+				<h:outputText value="Tipo:" />
+				<h:outputText value="#{infoCampaniaBean.campania.tipoCampania}" />
+				
+				<h:outputText value="Fecha Incio:" />
+				<h:outputText value="#{infoCampaniaBean.campania.fechaInicial}" >
+					<f:convertDateTime pattern="yyyy/MM/dd" />
+				</h:outputText>
+				
+				
+				<h:outputText value="Fecha Fin:" />
+				<h:outputText value="#{infoCampaniaBean.campania.fechaFinal}">
+					<f:convertDateTime pattern="yyyy/MM/dd" />
+				</h:outputText>
+				
+				<h:outputText value="Código Transacción:" />
+				<h:outputText value="#{infoCampaniaBean.campania.codigoTransaccion1}" />
+
+				
+				<h:outputText value="Fecha Máxima Registro:"/>
+				<h:outputText value="#{infoCampaniaBean.campania.fechaMaximaRegistro}" >
+					<f:convertDateTime pattern="yyyy/MM/dd" />
+				</h:outputText>
+				
+			</h:panelGrid>
+		
+		
+			<rich:dataTable value="#{infoCampaniaBean.promosCamp}" var="pc" rendered="#{not empty infoCampaniaBean.promosCamp}">
+				<f:facet name="header">
+					<h:outputText value="Promociones" />
+				</f:facet>
+				<rich:column>
+				<f:facet name="header">
+							<h:outputText value="Promocion" />
+						</f:facet>
+				<h:outputText value="#{pc.descripcion}" />
+				</rich:column>
+				<rich:column>
+				<f:facet name="header">
+							<h:outputText value="Id promocion" />
+						</f:facet>
+				<h:outputText value="#{pc.idPromocion}" />
+				</rich:column>
+				<rich:column>
+				<f:facet name="header">
+							<h:outputText value="Monto" />
+						</f:facet>
+
+				<h:outputText value="#{pc.monto}" />
+				</rich:column>
+			</rich:dataTable>
+			<br></br>
+			<rich:dataTable value="#{infoCampaniaBean.prods}" var="prod" rendered="#{not empty infoCampaniaBean.prods}">
+				<f:facet name="header">
+					<h:outputText value="ProductosTsl" />
+				</f:facet>
+				<rich:column>
+				
+				<h:outputText value="#{prod.campania}" />
+				</rich:column>
+			</rich:dataTable>
+			
+			<br></br>
+			<rich:dataTable value="#{infoCampaniaBean.prodsTs2}" var="prodts2" rendered="#{not empty infoCampaniaBean.prodsTs2}">
+				<f:facet name="header">
+					<h:outputText value="Productos Ts2" />
+				</f:facet>
+				<rich:column>
+				
+				<h:outputText value="#{prodts2.producto}" />
+				</rich:column>
+			</rich:dataTable>
+			
+		</rich:panel>
+		
+		
+			
+		
+		
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

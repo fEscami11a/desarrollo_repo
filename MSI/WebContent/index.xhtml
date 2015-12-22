@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:a4j="http://richfaces.org/a4j"
+ 	  	xmlns:rich="http://richfaces.org/rich"> 
+
+<h:head>
+    <title>Spring + JSF</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</h:head>
+    <h:body>
+    <h:form>
+      <h:messages />
+<h:outputLabel value="Add User" for="addButton"/>
+<h:commandButton id="addButton" action="#{userBean.newButtonPressed}" value="+" />
+       <rich:panel header="ASSET 3000" style="width: 350;">
+      <h:form prependId="false">
+        <rich:dataTable id="basic" var="usr" value="#{userBean.userList}">
+          <rich:column id="nameHeader">
+            <f:facet name="header"> Employee Name </f:facet>
+            <h:outputText value="#{usr.username}" />
+          </rich:column>
+          <rich:column>
+            <f:facet name="header"> Emp Number </f:facet>
+            <h:outputText value="#{usr.nombreCompleto}" />
+          </rich:column>
+          <rich:column>
+            <f:facet name="header"> Email </f:facet>
+            <h:outputText value="#{usr.password}" />
+          </rich:column>
+            <h:column>
+        	<f:facet name="header">Edit</f:facet>
+        	<h:commandButton action="#{userBean.editButtonPressed}"
+                    value="Edit">
+                    <f:setPropertyActionListener value="#{usr}"
+                        target="#{userBean.user}" />
+            </h:commandButton>
+        </h:column>
+        <h:column>
+        	<f:facet name="header">Delete</f:facet>
+        	<h:commandButton action="#{userBean.deleteUser}"
+                    value="Delete">
+                    <f:setPropertyActionListener value="#{usr}"
+                        target="#{userBean.user}" />
+            </h:commandButton>
+        </h:column>
+        </rich:dataTable>
+      </h:form>
+    </rich:panel>
+    
+    </h:form>
+    </h:body>
+</html>

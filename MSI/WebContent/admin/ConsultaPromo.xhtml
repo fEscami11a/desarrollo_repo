@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			<rich:panel styleClass="panel">
+				<f:facet name="header">
+					<h:outputText value="Consulta Promocion" />
+				</f:facet>
+
+				<h:messages infoClass="info" errorClass="error" globalOnly="true"/>
+				<h:form>
+				
+				<h:panelGrid columns="3">
+				<h:outputLabel value="Id Promocion:" for="promoId"/>	
+				<h:inputText value="#{consultaPromoBean.promoId}" id="promoId">
+				<f:validateLongRange minimum="0" maximum="999999999"></f:validateLongRange>
+						</h:inputText>
+				<h:message for="promoId" errorStyle="color:red; display:block" />
+				
+				<h:outputLabel value="Meses: " for="meses" />
+						<h:inputText value="#{consultaPromoBean.meses}" id="meses" >
+							<f:validateLongRange minimum="0" maximum="24"></f:validateLongRange>
+						</h:inputText>
+						<h:message for="meses" errorStyle="color:red; display:block" />
+						<h:commandButton value="Buscar"
+							action="#{consultaPromoBean.buscarPromo}"
+							style="align:center" onclick="#{rich:component('popup')}.show()"/>
+	</h:panelGrid>
+				</h:form>
+
+						<br> </br>
+						<h:form>
+						<rich:dataTable value="#{consultaPromoBean.promos}"
+							var="promo"
+							rendered="#{not empty consultaPromoBean.promos}">
+							<f:facet name="header">
+								<h:outputText value="Archivos" />
+							</f:facet>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Id Promocion" />
+								</f:facet>
+								<h:commandLink action="#{altaPromoBean.modificarPromo(promo)}" value="#{promo.idPromocion}" type="submit"/>
+								
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Descripcion" />
+								</f:facet>
+								<h:outputText value="#{promo.descripcion}">
+									
+								</h:outputText>
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Meses" />
+								</f:facet>
+									<h:outputText value="#{promo.plazoMeses}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Programa Cero" />
+								</f:facet>
+									<h:outputText value="#{promo.programaCero}" />
+							</rich:column>
+						</rich:dataTable>
+					</h:form>
+			
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</body>
+
+
+</html>

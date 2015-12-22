@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			
+				<rich:panel styleClass="panel">
+					<f:facet name="header">
+						<h:outputText value="Consulta cliente" />
+					</f:facet>
+					<h:form>
+						<h:commandLink action="home" value="Volver" />
+					</h:form>
+					<p>
+
+						<rich:messages style="color:darkred"></rich:messages>
+					</p>
+					<h:form>
+					
+						<h:panelGrid columns="3">
+
+							<h:outputText value="Cuenta:" />
+							<h:inputText label="Cuenta" id="cuenta" required="true"
+								value="#{clientBean.cuenta}" size="20" maxlength="16">
+								<f:validateLength minimum="16" maximum="16" />
+							</h:inputText>
+
+							<f:facet name="footer">
+								<h:commandButton value="Buscar" id="searchButton"
+									action="#{ConsultaClienteBean.buscarPorNoCuenta}">
+								 <f:setPropertyActionListener value="#{clientBean.cuenta}"
+                        target="#{ConsultaClienteBean.cuenta}" />	
+								</h:commandButton>
+							</f:facet>
+						</h:panelGrid>
+						
+					</h:form>
+					<rich:hotKey key="return"
+						handler="#{rich:element('searchButton')}.click()"
+						selector="#cuenta" />
+				</rich:panel>
+				
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Detalle archivo" />
+				</f:facet>
+				<h:form>
+
+					<h:commandLink value="Consulta Archivo" action="ConsultaArchivo" />
+				</h:form>
+				<h:messages infoClass="info" errorClass="error" />
+				<h:outputText value="Campania:" />#{consultaArchivoBean.nombreCamp}
+				<br></br>
+				<h:form>
+					<br></br>
+					<rich:dataTable id="tablaArchivos"
+						value="#{consultaArchivoBean.detalles}" var="archivo"  rows="20">
+						<f:facet name="header">
+							<h:outputText value="#{consultaArchivoBean.archivo.nombre}" />
+						</f:facet>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Shot" />
+							</f:facet>
+							<h:outputText value="#{archivo.shot}">
+							</h:outputText>
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Número Cuenta" />
+							</f:facet>
+							<h:outputText value="#{archivo.cuenta}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Vigencia Inicial" />
+							</f:facet>
+							<h:outputText value="#{archivo.fechaInicio}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Vigencia Final" />
+							</f:facet>
+							<h:outputText value="#{archivo.fechaFin}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</rich:column>
+						<f:facet name="footer">
+								<rich:dataScroller for="tablaArchivos" pageIndexVar="pageIndex"
+									pagesVar="pages">
+
+									<f:facet name="pages">
+
+										<h:outputText value="#{pageIndex} / #{pages}" />
+
+									</f:facet>
+
+								</rich:dataScroller>
+							</f:facet>
+					</rich:dataTable>
+					<a4j:commandButton value="Eliminar"
+						oncomplete="#{rich:component('confirmPane')}.show()" />
+				</h:form>
+
+				<rich:popupPanel id="confirmPane" autosized="true">
+					<h:form>
+            Esta seguro que desear eliminar el archivo?
+            <br></br>
+						<a4j:commandButton value="Cancelar"
+							onclick="#{rich:component('confirmPane')}.hide(); return false;" />
+						<h:commandButton value="Aceptar"
+							action="#{consultaArchivoBean.borrarArchivo}"
+							onclick="#{rich:component('popup')}.show()" />
+					</h:form>
+				</rich:popupPanel>
+
+			</rich:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

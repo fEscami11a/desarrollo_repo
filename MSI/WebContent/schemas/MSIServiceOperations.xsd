@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+ <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://mx/com/invex/msi/webservice" targetNamespace="http://mx/com/invex/msi/webservice" elementFormDefault="qualified">   
+     
+      
+      
+       <xsd:element name="GetSPNGIRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="cuenta" type="xsd:string"/>   
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="GetSPNGIResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="resp" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+      
+ </xsd:schema>

@@ -1,0 +1,75 @@
+
+ li.ui-menu-child
+{
+    white-space: pre-line;
+    width: 125px !important;
+    text-align: center;
+}
+
+.ui-menuitem
+{
+    white-space: pre-line;
+    width: 125px !important;
+    text-align: center;
+}
+
+.ui-menuitem-text
+{
+	font-size: 90% !important;
+}
+
+.msgRojo {
+	color: #840925;
+	text-align: center;	
+	font-weight: bold;
+	font-size: 1.17em;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+}
+
+.datoRojo {
+	color: #840925;
+	text-align: left;	
+	/*padding-left: 5px;
+	margin-left: 25px;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px; */
+}
+
+.titulo
+{
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: left;
+    font-weight: bold;
+    font-size: 80% !important;
+}
+
+.dato
+{
+    text-align: right;
+    font-size: 80% !important;
+}
+
+.tituloCentro
+{
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    font-size: 80% !important;
+}
+
+.datoCentro
+{
+    text-align: center;
+    font-size: 80% !important;
+}
+
+.datoL
+{
+    text-align: left;
+    font-size: 80% !important;
+}
