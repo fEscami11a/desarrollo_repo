@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>Editar password</title>
+</h:head>
+<h:body bgcolor="white">
+<ui:composition template="/template/common/commonLayout.xhtml">
+<ui:define name="title"></ui:define>
+<ui:define name="content">
+	<f:view>
+	<rich:panel>
+        <f:facet name="header">
+        Modificar Usuario
+        </f:facet>
+		<h:form>
+		 <h:messages errorClass="errorMessage" infoClass="infoMessage"
+            warnClass="warnMessage" errorStyle="color:red" infoStyle="color:green"></h:messages>
+            <h:commandButton type="submit" value="Desbloquear"
+					action="#{editarPassUsuarioBean.desbloquearUsuario}" immediate="true" rendered="#{editarPassUsuarioBean.usrBloqueado}"></h:commandButton>
+					<br></br>
+			<h:outputText value="Nombre completo: #{editarPassUsuarioBean.usrSeleccionado.nombre} #{editarPassUsuarioBean.usrSeleccionado.apellidopaterno} #{editarPassUsuarioBean.usrSeleccionado.apellidomaterno}" rendered="#{not empty editarPassUsuarioBean.usrSeleccionado}"/>
+			<br></br>
+			<h:outputText value="Rfc: #{editarPassUsuarioBean.usrSeleccionado.rfc}"/>
+			<br></br>
+			<h:outputText value="Usuario web: #{editarPassUsuarioBean.webUsr}"/>
+			
+				<h:panelGrid columns="3" rendered="#{not empty editarPassUsuarioBean.usrSeleccionado}">
+					<h:outputText value="Contraseña:" />
+					<h:inputSecret id="password" value="#{editarPassUsuarioBean.password}" size="20" required="true" label="Password" />
+					<h:message for="password" style="color:red" />
+					<h:outputText value="Confirmar contraseña:" />
+					<h:inputSecret id="confPassword" value="#{editarPassUsuarioBean.confPassword}" 
+						size="20" label="Confirm Password">
+						<f:validateRequired />	
+					</h:inputSecret>
+					<h:message for="confPassword" style="color:red" />
+					
+					<h:commandButton  value="Regresar"
+					action="listaUsuarios" immediate="true"></h:commandButton>
+					<h:commandButton type="submit" value="Guardar"
+					action="#{editarPassUsuarioBean.guardarPassword}" onclick="return confirm('Esta seguro de modficar la contraseña?');"></h:commandButton>
+					<h:commandButton type="submit" value="Eliminar Usuario"
+					action="#{editarPassUsuarioBean.borrarUsuario}" immediate="true" onclick="return confirm('Esta seguro de eliminar al usuario?');"></h:commandButton>
+					
+				</h:panelGrid>
+				<h:outputText value="No ha ingresado el usuario para realizar el cambio de contraseña" rendered="#{empty editarPassUsuarioBean.usrSeleccionado}"/>
+			<h:commandLink action="consultaUsuario" value="Consulta Usuario" immediate="true" rendered="#{empty editarPassUsuarioBean.usrSeleccionado}"/>
+			
+		</h:form>
+		</rich:panel>
+	</f:view>
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>

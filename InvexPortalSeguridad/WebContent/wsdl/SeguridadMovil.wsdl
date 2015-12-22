@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ws.seguridad.invex.com.mx" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ws.seguridad.invex.com.mx" xmlns:intf="http://ws.seguridad.invex.com.mx" xmlns:tns1="http://exception.bmovil.invex.com.mx" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://ws.seguridad.invex.com.mx" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://exception.bmovil.invex.com.mx"/>
+   <element name="autentificarUsuario">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="autentificarUsuarioResponse">
+    <complexType>
+     <sequence>
+      <element name="autentificarUsuarioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="fault" type="tns1:WSSeguridadException"/>
+   <element name="autentificar">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="contrasenia" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="autentificarResponse">
+    <complexType>
+     <sequence>
+      <element name="autentificarReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="Autorizar">
+    <complexType>
+     <sequence>
+      <element name="idSesion" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="AutorizarResponse">
+    <complexType>
+     <sequence>
+      <element name="AutorizarReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="CerrarSession">
+    <complexType>
+     <sequence>
+      <element name="idSesion" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="CerrarSessionResponse">
+    <complexType>
+     <sequence>
+      <element name="CerrarSessionReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://exception.bmovil.invex.com.mx" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="WSSeguridadException">
+    <sequence>
+     <element name="faultInfo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="autentificarRequest">
+
+      <wsdl:part element="impl:autentificar" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="CerrarSessionRequest">
+
+      <wsdl:part element="impl:CerrarSession" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="CerrarSessionResponse">
+
+      <wsdl:part element="impl:CerrarSessionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="autentificarUsuarioRequest">
+
+      <wsdl:part element="impl:autentificarUsuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="autentificarResponse">
+
+      <wsdl:part element="impl:autentificarResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="autentificarUsuarioResponse">
+
+      <wsdl:part element="impl:autentificarUsuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AutorizarRequest">
+
+      <wsdl:part element="impl:Autorizar" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="WSSeguridadException">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AutorizarResponse">
+
+      <wsdl:part element="impl:AutorizarResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="SeguridadMovil">
+
+      <wsdl:operation name="autentificarUsuario">
+
+         <wsdl:input message="impl:autentificarUsuarioRequest" name="autentificarUsuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:autentificarUsuarioResponse" name="autentificarUsuarioResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:WSSeguridadException" name="WSSeguridadException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="autentificar">
+
+         <wsdl:input message="impl:autentificarRequest" name="autentificarRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:autentificarResponse" name="autentificarResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:WSSeguridadException" name="WSSeguridadException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="Autorizar">
+
+         <wsdl:input message="impl:AutorizarRequest" name="AutorizarRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:AutorizarResponse" name="AutorizarResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:WSSeguridadException" name="WSSeguridadException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CerrarSession">
+
+         <wsdl:input message="impl:CerrarSessionRequest" name="CerrarSessionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:CerrarSessionResponse" name="CerrarSessionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="SeguridadMovilSoapBinding" type="impl:SeguridadMovil">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="autentificarUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="autentificarUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="autentificarUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSSeguridadException">
+
+            <wsdlsoap:fault name="WSSeguridadException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="autentificar">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="autentificarRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="autentificarResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSSeguridadException">
+
+            <wsdlsoap:fault name="WSSeguridadException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="Autorizar">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="AutorizarRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="AutorizarResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSSeguridadException">
+
+            <wsdlsoap:fault name="WSSeguridadException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CerrarSession">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="CerrarSessionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="CerrarSessionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="SeguridadMovilService">
+
+      <wsdl:port binding="impl:SeguridadMovilSoapBinding" name="SeguridadMovil">
+
+         <wsdlsoap:address location="http://localhost:8080/InvexPortalSeguridad/services/SeguridadMovil"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

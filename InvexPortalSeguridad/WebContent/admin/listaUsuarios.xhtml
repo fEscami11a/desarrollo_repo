@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>Lista Usuario</title>
+</h:head>
+<h:body bgcolor="white">
+<ui:composition template="/template/common/commonLayout.xhtml">
+<ui:define name="title"></ui:define>
+<ui:define name="content">
+	<f:view>
+	<rich:panel>
+        <f:facet name="header">
+      	Registros de usuarios encontrados
+        </f:facet>
+       <h:form>
+		<rich:dataTable  value="#{consultaUsuarioBean.usersDTO}" var="usr" rendered="#{not empty consultaUsuarioBean.usersDTO}" border="1" first="#{consultaUsuarioBean.first}" rows="50">>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:outputText value="#{usr.nombre}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">RFC</f:facet>
+				<h:outputText value="#{usr.rfc}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cuenta</f:facet>
+				<h:outputText value="#{usr.cuenta}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Usuario Web</f:facet>
+				<h:commandLink value="#{usr.webuser}" action="#{editarPassUsuarioBean.usuarioSeleccionado(usr.identificador)}" ></h:commandLink>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Correo</f:facet>
+				<h:outputText value="#{usr.email}" />
+			</h:column>
+				<f:facet name="footer">
+					<h:panelGroup>
+						<h:commandButton value="Pag Anterior" action="#{consultaUsuarioBean.pagAnterior}"
+							rendered="#{not consultaUsuarioBean.primerPag}"/>
+						<h:commandButton value="Pag Siguiente" action="#{consultaUsuarioBean.pagSiguiente}"
+							 rendered="#{not consultaUsuarioBean.ultimaPag}"/>
+					</h:panelGroup>
+				</f:facet>
+			</rich:dataTable >
+		<br></br>
+		
+		<h:commandButton  value="Regresar"
+					action="consultaUsuario" immediate="true"></h:commandButton>
+		</h:form>
+    </rich:panel>
+	
+	</f:view>
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>

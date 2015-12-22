@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ <context-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>/WEB-INF/applicationContext.xml</param-value>
+ </context-param>
+ <context-param>
+  <param-name>javax.faces.CONFIG_FILES</param-name>
+  <param-value>/WEB-INF/faces-config.xml</param-value>
+ </context-param>
+ <context-param>
+  <param-name>javax.faces.PROJECT_STAGE</param-name>
+  <param-value>Development</param-value>
+ </context-param>
+ <context-param>
+  <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+  <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+  <param-value>client</param-value>
+ </context-param>
+ <context-param>
+  <param-name>org.richfaces.CONTROL_SKINNING</param-name>
+  <param-value>enable</param-value>
+ </context-param>
+ <context-param>
+  <param-name>org.richfaces.skin</param-name>
+  <param-value>ruby</param-value>
+ </context-param>
+ <!-- <filter>
+  <filter-name>Security Filter</filter-name>
+  <filter-class>org.securityfilter.filter.SecurityFilter</filter-class>
+  <init-param>
+   <param-name>config</param-name>
+   <param-value>/WEB-INF/securityfilter-config.xml</param-value>
+  </init-param>
+  <init-param>
+   <param-name>validate</param-name>
+   <param-value>true</param-value>
+  </init-param>
+ </filter> 
+ <filter-mapping>
+  <filter-name>Security Filter</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping> -->
+ <listener>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+ </listener>
+ <listener>
+  <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+ </listener>
+ <servlet>
+  <servlet-name>SeguridadWeb</servlet-name>
+  <servlet-class>mx.com.invex.seguridad.ws.SeguridadWeb</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>SeguridadMobil</servlet-name>
+  <servlet-class>mx.com.invex.seguridad.ws.SeguridadMovil</servlet-class>
+ </servlet>
+ <!--  <servlet>
+  <description>inicializa el log</description>
+  <display-name>Log4jInit</display-name>
+  <servlet-name>Log4jInit</servlet-name>
+  <servlet-class>mx.com.invex.seguridad.servlet.Log4jInit</servlet-class>
+  <init-param>
+   <param-name>log4j-init-file</param-name>
+   <param-value>WEB-INF/XML/log4j.config.xml</param-value>
+  </init-param>
+ </servlet> -->
+ <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
+ <!-- <servlet-mapping>
+  <servlet-name>Log4jInit</servlet-name>
+  <url-pattern>/Log4jInit</url-pattern>
+ </servlet-mapping> -->
+ <servlet-mapping>
+  <servlet-name>SeguridadWeb</servlet-name>
+  <url-pattern>/seguridadPortalWeb</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>SeguridadMobil</servlet-name>
+  <url-pattern>/seguridadPortalMobil</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>/faces/*</url-pattern>
+ </servlet-mapping>
+ <welcome-file-list>
+  <welcome-file>/index.jsp</welcome-file>
+ </welcome-file-list>
+ <error-page>
+  <error-code>403</error-code>
+  <location>/errorPermiso.xhtml</location>
+ </error-page>
+ <security-constraint>
+  <display-name>Admin Area</display-name>
+  <web-resource-collection>
+   <web-resource-name>admin_resources</web-resource-name>
+   <url-pattern>/faces/admin/*</url-pattern>
+   <http-method>GET</http-method>
+   <http-method>POST</http-method>
+  </web-resource-collection>
+  <auth-constraint>
+   <description>For admin role only</description>
+   <role-name>ROLE_USER</role-name>
+  </auth-constraint>
+  <user-data-constraint>
+   <transport-guarantee>NONE</transport-guarantee>
+  </user-data-constraint>
+ </security-constraint>
+ <login-config>
+  <auth-method>FORM</auth-method>
+  <form-login-config>
+   <form-login-page>/faces/login/login.xhtml</form-login-page>
+   <form-error-page>/error.xhtml</form-error-page>
+  </form-login-config>
+ </login-config>
+ <security-role>
+  <description>Administrador</description>
+  <role-name>ROLE_ADMIN</role-name>
+ </security-role>
+ <security-role>
+  <description>Operador</description>
+  <role-name>ROLE_USER</role-name>
+ </security-role>
+</web-app>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+ 
+ <!-- Cambio mduran 04/04/2011 se modifica el tipo de logger -->
+ <appender name="fileAppender" class="org.apache.log4j.DailyRollingFileAppender">  
+	<param name="file" value="/jbosslogs/invexPortalSeg.log" />  
+	<param name="DatePattern" value="'.'yyyy-MM-dd" /> 
+    <layout class="org.apache.log4j.TTCCLayout">
+      <param name="dateFormat" value="yyyy/MM/dd HH:mm:ss.SSS"/>
+    </layout>
+  </appender>  
+
+  <appender name="consola" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.TTCCLayout">
+      <param name="dateFormat" value="yyyy/MM/dd HH:mm:ss.SSS"/>
+    </layout>
+  </appender>
+
+  
+  <logger name="jsp" additivity="true">
+    <level value="debug"/>
+  </logger>
+
+  <root>
+    <priority value="debug"/>
+    <appender-ref ref="fileAppender"/>
+    <appender-ref ref="consola"/>
+  </root>
+
+</log4j:configuration>

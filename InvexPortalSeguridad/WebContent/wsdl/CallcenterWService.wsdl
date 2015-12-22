@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.invex.com.mx/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CallcenterWServiceService" targetNamespace="http://ws.invex.com.mx/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ws.invex.com.mx/">
+<xs:element name="getCuentasAD" type="tns:getCuentasAD"/>
+<xs:element name="getCuentasADResponse" type="tns:getCuentasADResponse"/>
+<xs:complexType name="getCuentasAD">
+<xs:sequence>
+<xs:element minOccurs="0" name="account" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCuentasADResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:cuentaAD"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cuentaAD">
+<xs:sequence>
+<xs:element minOccurs="0" name="clasificacion" type="xs:string"/>
+<xs:element minOccurs="0" name="nombreCompleto" type="xs:string"/>
+<xs:element minOccurs="0" name="numCuenta" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoCuenta" type="xs:string"/>
+<xs:element minOccurs="0" name="ucode3" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="InvexServiceException" nillable="true" type="xs:string"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCuentasAD">
+    <wsdl:part element="tns:getCuentasAD" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCuentasADResponse">
+    <wsdl:part element="tns:getCuentasADResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvexServiceException">
+    <wsdl:part element="tns:InvexServiceException" name="InvexServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CallcenterWService">
+    <wsdl:operation name="getCuentasAD">
+      <wsdl:input message="tns:getCuentasAD" name="getCuentasAD">
+    </wsdl:input>
+      <wsdl:output message="tns:getCuentasADResponse" name="getCuentasADResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:InvexServiceException" name="InvexServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CallcenterWServiceServiceSoapBinding" type="tns:CallcenterWService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCuentasAD">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCuentasAD">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCuentasADResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvexServiceException">
+        <soap:fault name="InvexServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CallcenterWServiceService">
+    <wsdl:port binding="tns:CallcenterWServiceServiceSoapBinding" name="CallcenterWServicePort">
+      <soap:address location="http://172.16.18.52:8080/TsysWebFile/CallcenterWService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

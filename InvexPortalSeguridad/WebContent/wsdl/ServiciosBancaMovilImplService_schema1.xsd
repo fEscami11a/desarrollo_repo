@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema targetNamespace="http://ws.bmovil.invex.com.mx/" version="1.0" xmlns:tns="http://ws.bmovil.invex.com.mx/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="InvexWSException" nillable="true" type="xs:string"/>
+
+  <xs:element name="getCuentaCBA" type="tns:getCuentaCBA"/>
+
+  <xs:element name="getCuentaCBAResponse" type="tns:getCuentaCBAResponse"/>
+
+  <xs:element name="getMovsByDay" type="tns:getMovsByDay"/>
+
+  <xs:element name="getMovsByDayResponse" type="tns:getMovsByDayResponse"/>
+
+  <xs:element name="getNumLuciByWebUsr" type="tns:getNumLuciByWebUsr"/>
+
+  <xs:element name="getNumLuciByWebUsrResponse" type="tns:getNumLuciByWebUsrResponse"/>
+
+  <xs:element name="getPCA" type="tns:getPCA"/>
+
+  <xs:element name="getPCAResponse" type="tns:getPCAResponse"/>
+
+  <xs:element name="getProductosByWebUsr" type="tns:getProductosByWebUsr"/>
+
+  <xs:element name="getProductosByWebUsrResponse" type="tns:getProductosByWebUsrResponse"/>
+
+  <xs:element name="obtenerMovsAntesCorte" type="tns:obtenerMovsAntesCorte"/>
+
+  <xs:element name="obtenerMovsAntesCorteResponse" type="tns:obtenerMovsAntesCorteResponse"/>
+
+  <xs:element name="obtenerMovsDespuesCorte" type="tns:obtenerMovsDespuesCorte"/>
+
+  <xs:element name="obtenerMovsDespuesCorteResponse" type="tns:obtenerMovsDespuesCorteResponse"/>
+
+  <xs:complexType name="getPCA">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPCAResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDespuesCorte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDespuesCorteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsAntesCorte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsAntesCorteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMovsByDay">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMovsByDayResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCuentaCBA">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCuentaCBAResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductosByWebUsr">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductosByWebUsrResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getNumLuciByWebUsr">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getNumLuciByWebUsrResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

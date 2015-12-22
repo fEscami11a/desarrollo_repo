@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	
+</h:head>
+<h:body>
+<ui:composition template="/template/common/commonLayout.xhtml">
+<ui:define name="title"></ui:define>
+<ui:define name="content">
+	
+	
+	<rich:panel>
+        <f:facet name="header">
+        Consulta de Usuarios
+        </f:facet>
+       <h:form>
+		 <h:messages errorClass="errorMessage" infoClass="infoMessage" infoStyle="color:green"
+            warnClass="warnMessage" errorStyle="color:red"></h:messages>
+			<h:panelGrid columns="2">
+				<h:outputText value="Usuario web:" />
+				<h:inputText value="#{consultaUsuarioBean.webuser}" maxlength="30"></h:inputText>
+				<h:outputText value="Nombre:" />
+				<h:inputText value="#{consultaUsuarioBean.nombre}" maxlength="30"></h:inputText>
+				<h:outputText value="Apellido paterno:" />
+				<h:inputText value="#{consultaUsuarioBean.apaterno}" maxlength="30"></h:inputText>
+				<h:outputText value="Apellido materno:" />
+				<h:inputText value="#{consultaUsuarioBean.amaterno}" maxlength="30"></h:inputText>
+				<h:outputText value="RFC:" />
+				<h:inputText value="#{consultaUsuarioBean.rfc}" maxlength="30"></h:inputText>
+				<h:outputText value="Correo electrónico:" />
+				<h:inputText value="#{consultaUsuarioBean.email}" maxlength="30">
+				</h:inputText>
+				<h:outputText value="Número de tarjeta:" />
+				<h:inputText value="#{consultaUsuarioBean.numTarjeta}" maxlength="16"></h:inputText>
+				
+			</h:panelGrid>
+			<br></br>
+		<h:commandButton type="submit" value="Buscar"
+					action="#{consultaUsuarioBean.consultarUsuario}"></h:commandButton>
+				<h:commandButton type="reset" value="Limpiar"></h:commandButton>
+				
+	</h:form>
+    </rich:panel>
+	
+	
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>

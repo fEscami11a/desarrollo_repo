@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:sws="http://www.springframework.org/schema/web-services" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+				http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+				http://www.springframework.org/schema/tx 
+		        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		        http://www.springframework.org/schema/web-services 
+				http://www.springframework.org/schema/web-services/web-services-2.0.xsd 
+		        http://www.springframework.org/schema/context 
+		        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+ 	
+<!-- Beans Declaration -->
+  <context:annotation-config />
+    <context:component-scan base-package="mx.com.invex.seguridad" />
+    
+ 
+	<!-- 
+		Our test service bean 
+	--> 
+	<!-- <bean id="AccountDetailsService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="true"> 
+        <property name="schemaCollection"> 
+            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection"> 
+                <property name="inline" value="true" /> 
+                <property name="xsds"> 
+                    <list> 
+                        <value>schemas/AccountDetailsServiceOperations.xsd</value> 
+                     </list> 
+                 </property> 
+             </bean> 
+         </property> 
+         <property name="portTypeName" value="AccountDetailsService"/> 
+         <property name="serviceName" value="AccountDetailsServices" /> 
+         <property name="locationUri" value="/endpoints"/> 
+     </bean> 
+     
+     <bean id="SeguridadMovilService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="true"> 
+        <property name="schemaCollection"> 
+            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection"> 
+                <property name="inline" value="true" /> 
+                <property name="xsds"> 
+                    <list> 
+                        <value>schemas/SeguridadMovilServiceOperations.xsd</value> 
+                     </list> 
+                 </property> 
+             </bean> 
+         </property> 
+         <property name="portTypeName" value="SeguridadMovilService"/> 
+         <property name="serviceName" value="SeguridadMovilService" /> 
+         <property name="locationUri" value="/endpoints"/> 
+     </bean> 
+      -->
+     
+    <bean id="dbDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName"  value="java:jboss/datasources/InvextarjetasDS"/>
+    </bean>
+    
+   <!--  <bean id="genericDao" class="mx.com.invex.seguridad.dao.GenericDAOImpl">
+    	<property name="sessionFactgory"  ref="SessionFactory"/>
+	</bean>   -->  
+
+	<bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dbDataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>mx.com.invex.seguridad.entidades.Usuario</value>
+				<value>mx.com.invex.seguridad.entidades.Intentosesion</value>
+				<value>mx.com.invex.seguridad.entidades.Sesion</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop> -->
+			</props>
+		</property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="txManager" />
+  <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <property name="sessionFactory" ref="SessionFactory" />
+  </bean>
+  
+</beans>

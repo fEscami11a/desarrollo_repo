@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema targetNamespace="http://ws.bmovil.invex.com.mx/" version="1.0" xmlns:tns="http://ws.bmovil.invex.com.mx/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="InvexWSException" nillable="true" type="xs:string"/>
+
+  <xs:element name="getProductosByWebUsr" type="tns:getProductosByWebUsr"/>
+
+  <xs:element name="getProductosByWebUsrResponse" type="tns:getProductosByWebUsrResponse"/>
+
+  <xs:element name="getSiguienteDiaHabil" type="tns:getSiguienteDiaHabil"/>
+
+  <xs:element name="getSiguienteDiaHabilResponse" type="tns:getSiguienteDiaHabilResponse"/>
+
+  <xs:element name="obtenerMovsAntesCorte" type="tns:obtenerMovsAntesCorte"/>
+
+  <xs:element name="obtenerMovsAntesCorteResponse" type="tns:obtenerMovsAntesCorteResponse"/>
+
+  <xs:element name="obtenerMovsDespuesCorte" type="tns:obtenerMovsDespuesCorte"/>
+
+  <xs:element name="obtenerMovsDespuesCorteResponse" type="tns:obtenerMovsDespuesCorteResponse"/>
+
+  <xs:element name="obtenerMovsDosCortesAnteriores" type="tns:obtenerMovsDosCortesAnteriores"/>
+
+  <xs:element name="obtenerMovsDosCortesAnterioresResponse" type="tns:obtenerMovsDosCortesAnterioresResponse"/>
+
+  <xs:element name="webMovEdoCtaFech" type="tns:webMovEdoCtaFech"/>
+
+  <xs:element name="webMovEdoCtaFechResponse" type="tns:webMovEdoCtaFechResponse"/>
+
+  <xs:complexType name="getSiguienteDiaHabil">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSiguienteDiaHabilResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDespuesCorte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDespuesCorteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsAntesCorte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsAntesCorteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="webMovEdoCtaFech">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="webMovEdoCtaFechResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductosByWebUsr">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getProductosByWebUsrResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDosCortesAnteriores">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="obtenerMovsDosCortesAnterioresResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

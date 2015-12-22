@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+ <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://com/blog/samples/webservices/seguridadservice" targetNamespace="http://com/blog/samples/webservices/seguridadservice" elementFormDefault="qualified">   
+      <xsd:element name="AutentificarRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="username" type="xsd:string"/>  
+                     <xsd:element name="contrasenia" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="AutentificarResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="respAut" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+      
+       <xsd:element name="AutorizarRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="idSesion" type="xsd:string"/>   
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="AutorizarResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="resp" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+       <xsd:element name="CerrarSessionRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="idSesion" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="CerrarSessionResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="resp" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+      <xsd:element name="AutentificarWebRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="username" type="xsd:string"/>  
+                     <xsd:element name="contrasenia" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="AutentificarWebResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="respAut" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+      
+       <xsd:element name="AutorizarWebRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="idSesion" type="xsd:string"/>   
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="AutorizarWebResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="resp" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      
+       <xsd:element name="CerrarSessionWebRequest">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="idSesion" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+      <xsd:element name="CerrarSessionWebResponse">  
+           <xsd:complexType>  
+                <xsd:sequence>  
+                     <xsd:element name="resp" type="xsd:string"/>  
+                </xsd:sequence>  
+           </xsd:complexType>  
+      </xsd:element>  
+ </xsd:schema>
