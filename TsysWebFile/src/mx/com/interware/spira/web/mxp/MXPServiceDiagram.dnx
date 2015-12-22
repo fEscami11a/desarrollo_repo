@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xmi:id="_gJrQAD4vEeGTj69FH4z3nw" type="Class" name="classdiagram.dnx">
+  <children xmi:id="_tlwaoD4vEeGTj69FH4z3nw">
+    <children xmi:id="_tlwaoz4vEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_tlwapD4vEeGTj69FH4z3nw" width="530" height="530"/>
+    </children>
+    <children xmi:id="_tlwapT4vEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_tlwapj4vEeGTj69FH4z3nw" type="Kind"/>
+    <children xmi:id="_tlwapz4vEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_tlwaqD4vEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_tlwaqT4vEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_tlwaqj4vEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_tlwaqz4vEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_tlwarD4vEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_tlwarT4vEeGTj69FH4z3nw" visible="false" type="SignalCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_tlwarj4vEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLClassifierStyle" xmi:id="_tlwaoT4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label" useClassifierShape="true"/>
+    <element xmi:type="uml:Interface" href="mmi:///#jsrctype%5Ename=MXP%5Bjcu%5Ename=MXP.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Interface"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tlwaoj4vEeGTj69FH4z3nw" x="22507" y="1268"/>
+  </children>
+  <children xmi:id="_ugxRYD4vEeGTj69FH4z3nw">
+    <children xmi:id="_ugxRYz4vEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_ugxRZD4vEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_ugxRZT4vEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_ugxRZj4vEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_ugxRZz4vEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_ugxRaD4vEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_ugxRaT4vEeGTj69FH4z3nw"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_vKVy0D4vEeGTj69FH4z3nw" value="-0.33019607843137255"/>
+    </children>
+    <children xmi:id="_ugxRaj4vEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_ugxRaz4vEeGTj69FH4z3nw"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_vKVy0T4vEeGTj69FH4z3nw" value="1.3301960784313724"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_ugxRYT4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ugxRYj4vEeGTj69FH4z3nw" x="3804" y="634"/>
+  </children>
+  <children xmi:id="_wPVE8D4vEeGTj69FH4z3nw">
+    <children xmi:id="_wPe18D4vEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_wPe18T4vEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_wPe18j4vEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_wPe18z4vEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_wPe19D4vEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_wPe19T4vEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_wPe19j4vEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_wPe19z4vEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_wPe1-D4vEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_wPVE8T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wPVE8j4vEeGTj69FH4z3nw" x="22824" y="6340"/>
+  </children>
+  <children xmi:id="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_3LFWIz4vEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_3LFWJD4vEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_3LFWJT4vEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_3LFWJj4vEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_3LFWJz4vEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_3LFWKD4vEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_3LFWKT4vEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_3LFWKj4vEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_3LFWKz4vEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_3LFWIT4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3LFWIj4vEeGTj69FH4z3nw" x="12680"/>
+  </children>
+  <children xmi:id="_EIK3oz4wEeGTj69FH4z3nw">
+    <children xmi:id="_EIK3pj4wEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EIK3pz4wEeGTj69FH4z3nw" width="530" height="530"/>
+    </children>
+    <children xmi:id="_EIUooD4wEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_EIUooT4wEeGTj69FH4z3nw" type="Kind"/>
+    <children xmi:id="_EIUooj4wEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_EIUooz4wEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_EIUopD4wEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EIUopT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_EIUopj4wEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EIUopz4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_EIUoqD4wEeGTj69FH4z3nw" visible="false" type="SignalCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EIUoqT4wEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLClassifierStyle" xmi:id="_EIK3pD4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label" useClassifierShape="true"/>
+    <element xmi:type="uml:Interface" href="mmi:///#jsrctype%5Ename=LSWS%5Bjcu%5Ename=LSWS.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Interface"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EIK3pT4wEeGTj69FH4z3nw" x="20922" y="9510"/>
+  </children>
+  <children xmi:id="_GcSPUD4wEeGTj69FH4z3nw">
+    <children xmi:id="_GcSPUz4wEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GcSPVD4wEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_GcSPVT4wEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_GcSPVj4wEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_GcSPVz4wEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_GcSPWD4wEeGTj69FH4z3nw" type="EJB3ANNOTATION_COMPARTMENT">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GcSPWT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_GcSPWj4wEeGTj69FH4z3nw" type="EJB3ATTRIBUTE_COMPARTMENT">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GcSPWz4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_GcSPXD4wEeGTj69FH4z3nw" type="EJB3OPERATION_COMPARTMENT">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GcSPXT4wEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_GcSPUT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=LSWSSoapBindingImpl%5Bjcu%5Ename=LSWSSoapBindingImpl.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GcSPUj4wEeGTj69FH4z3nw" x="10778" y="11095"/>
+  </children>
+  <children xmi:id="_l5tfgT4wEeGTj69FH4z3nw">
+    <children xmi:id="_l5tfhD4wEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_l5tfhT4wEeGTj69FH4z3nw" width="530" height="530"/>
+    </children>
+    <children xmi:id="_l5tfhj4wEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_l5tfhz4wEeGTj69FH4z3nw" type="Kind"/>
+    <children xmi:id="_l5tfiD4wEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_l5tfiT4wEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_l5tfij4wEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l5tfiz4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l5tfjD4wEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l5tfjT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l5tfjj4wEeGTj69FH4z3nw" visible="false" type="SignalCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l5tfjz4wEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLClassifierStyle" xmi:id="_l5tfgj4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label" useClassifierShape="true"/>
+    <element xmi:type="uml:Interface" href="mmi:///#WsdlPortType%5EQNameLocalPart=LSWS%5EQNameURI=urn:ls.facade.ls.spira.interware.com.mx%5BWsdlDefinition%5Bfile%5Eid=LSWS.wsdl%5Bfolder%5Eid=wsdl%5Bfolder%5Eid=WebContent%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Interface"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_l5tfgz4wEeGTj69FH4z3nw" x="20288" y="21873"/>
+  </children>
+  <children xmi:id="_l52pcD4wEeGTj69FH4z3nw">
+    <children xmi:id="_l52pcz4wEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_l52pdD4wEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_l52pdT4wEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_l52pdj4wEeGTj69FH4z3nw" type="Kind"/>
+    <children xmi:id="_l52pdz4wEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_l52peD4wEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_l52peT4wEeGTj69FH4z3nw" visible="false" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l52pej4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l6KLcD4wEeGTj69FH4z3nw" visible="false" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l6KLcT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l6KLcj4wEeGTj69FH4z3nw" visible="false" type="RealizationListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l6KLcz4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l6KLdD4wEeGTj69FH4z3nw" visible="false" type="RequiredInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l6KLdT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_l6KLdj4wEeGTj69FH4z3nw" visible="false" type="ProvidedInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_l6KLdz4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_nOzDID4wEeGTj69FH4z3nw">
+      <eAnnotations xmi:id="_nOzDIz4wEeGTj69FH4z3nw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+        <details xmi:id="_nPPIAD4wEeGTj69FH4z3nw" key="ShowTypeLabelStyle" value="Represents Name and Type Name"/>
+      </eAnnotations>
+      <children xmi:id="_nPPIAT4wEeGTj69FH4z3nw" type="PortName">
+        <children xmi:id="_nPPIAz4wEeGTj69FH4z3nw" type="PartTextCompartment"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nPPIAj4wEeGTj69FH4z3nw" y="-133"/>
+      </children>
+      <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_nOzDIT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" fontHeight="8" showListVisibility="None" showListSignature="true" showStereotype="Label"/>
+      <element xmi:type="uml:Port" href="mmi:///#WsdlPort%5EName=LSWS%5BWsdlService%5EQNameLocalPart=LSWSService%5EQNameURI=urn:ls.facade.ls.spira.interware.com.mx%5BWsdlDefinition%5Bfile%5Eid=LSWS.wsdl%5Bfolder%5Eid=wsdl%5Bfolder%5Eid=WebContent%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5D$uml.Port"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nOzDIj4wEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_l52pcT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label" showWhiteBox="true"/>
+    <element xmi:type="uml:Component" href="mmi:///#WsdlService%5EQNameLocalPart=LSWSService%5EQNameURI=urn:ls.facade.ls.spira.interware.com.mx%5BWsdlDefinition%5Bfile%5Eid=LSWS.wsdl%5Bfolder%5Eid=wsdl%5Bfolder%5Eid=WebContent%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Component"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_l52pcj4wEeGTj69FH4z3nw" x="23458" y="19337"/>
+  </children>
+  <children xmi:id="_7mLzAD4wEeGTj69FH4z3nw">
+    <children xmi:id="_7mLzAz4wEeGTj69FH4z3nw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_7mLzBD4wEeGTj69FH4z3nw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_7mLzBT4wEeGTj69FH4z3nw" type="Stereotype"/>
+    <children xmi:id="_7mLzBj4wEeGTj69FH4z3nw" type="Name"/>
+    <children xmi:id="_7mLzBz4wEeGTj69FH4z3nw" type="Parent"/>
+    <children xmi:id="_7mLzCD4wEeGTj69FH4z3nw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_7mLzCT4wEeGTj69FH4z3nw"/>
+    </children>
+    <children xmi:id="_7mLzCj4wEeGTj69FH4z3nw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_7mLzCz4wEeGTj69FH4z3nw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_7mLzAT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=AbstractTSYSMessage%5Bjcu%5Ename=AbstractTSYSMessage.java%5Bjpack%5Ename=mx.com.interware.spira.web%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7mLzAj4wEeGTj69FH4z3nw" x="2853" y="7608"/>
+  </children>
+  <children xmi:id="_lOoFsD4xEeGTj69FH4z3nw" type="Note">
+    <children xmi:id="_lOoFtT4xEeGTj69FH4z3nw" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:id="_lOoFtj4xEeGTj69FH4z3nw" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_lOoFsT4xEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" description="&lt;p>&#xD;&#xA;    POJO con los parametros de entrada del servicio MXP&#xD;&#xA;&lt;/p>" fillColor="13369343" lineColor="6737151" lineWidth="1"/>
+    <styles xmi:type="notation:TextStyle" xmi:id="_lOoFsj4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="_lOoFsz4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lOoFtD4xEeGTj69FH4z3nw" x="14446" y="-2646" width="5184"/>
+  </children>
+  <children xmi:id="_uE3GkD4xEeGTj69FH4z3nw" type="Note">
+    <children xmi:id="_uE3GlT4xEeGTj69FH4z3nw" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:id="_uE3Glj4xEeGTj69FH4z3nw" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_uE3GkT4xEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" description="Implementación del servicio MXP que envía mensaje a MQ de promocionio" fillColor="13369343" lineColor="6737151" lineWidth="1"/>
+    <styles xmi:type="notation:TextStyle" xmi:id="_uE3Gkj4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="_uE3Gkz4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uE3GlD4xEeGTj69FH4z3nw" x="24315" y="3677" width="4522"/>
+  </children>
+  <children xmi:id="__HKxAD4xEeGTj69FH4z3nw" type="Note">
+    <children xmi:id="__HKxBT4xEeGTj69FH4z3nw" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:id="__HKxBj4xEeGTj69FH4z3nw" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="__HKxAT4xEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" description="Superclase de los servicios MQ con los método para la conexion en vio de mensajes a colas MQ" fillColor="13369343" lineColor="6737151" lineWidth="1"/>
+    <styles xmi:type="notation:TextStyle" xmi:id="__HKxAj4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="__HKxAz4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="__HKxBD4xEeGTj69FH4z3nw" x="317" y="4121" width="7910"/>
+  </children>
+  <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_gJrQAT4vEeGTj69FH4z3nw"/>
+  <element xsi:nil="true"/>
+  <edges xmi:id="_uhEMUD4vEeGTj69FH4z3nw" source="_ugxRYD4vEeGTj69FH4z3nw" target="_tlwaoD4vEeGTj69FH4z3nw">
+    <children xmi:id="_uhEMUz4vEeGTj69FH4z3nw" type="NameLabel">
+      <children xmi:id="_uhEMVT4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_uhEMVj4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uhEMVD4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_uhEMUT4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:InterfaceRealization" href="mmi:///#jimpl%5Bjsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXP%5Bjcu%5Ename=MXP.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.InterfaceRealization"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_uhEMUj4vEeGTj69FH4z3nw" points="[1944, -615, -16269, -971]$[7560, -2394, -10653, -2750]$[12455, -2394, -5758, -2750]$[16759, -339, -1454, -695]"/>
+  </edges>
+  <edges xmi:id="_wQEr0D4vEeGTj69FH4z3nw" source="_wPVE8D4vEeGTj69FH4z3nw" target="_tlwaoD4vEeGTj69FH4z3nw">
+    <children xmi:id="_wQEr0z4vEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_wQEr1T4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_wQEr1z4vEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_wQEr1j4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wQEr1D4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_wQEr0T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXP%5Bjcu%5Ename=MXP.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wQEr0j4vEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_wQEr2D4vEeGTj69FH4z3nw" source="_wPVE8D4vEeGTj69FH4z3nw" target="_ugxRYD4vEeGTj69FH4z3nw">
+    <children xmi:id="_wQEr2z4vEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_wQEr3T4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_wQEr3z4vEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_wQEr3j4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wQEr3D4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_wQEr2T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wQEr2j4vEeGTj69FH4z3nw" points="[-1454, 431, 17076, 6137]$[-6869, 2033, 11661, 7739]$[-13510, 2033, 5020, 7739]$[-14462, -3364, 4068, 2342]$[-16586, -4587, 1944, 1119]"/>
+  </edges>
+  <edges xmi:id="_wQEr4D4vEeGTj69FH4z3nw" source="_wPVE8D4vEeGTj69FH4z3nw" target="_tlwaoD4vEeGTj69FH4z3nw">
+    <children xmi:id="_wQEr4z4vEeGTj69FH4z3nw" type="NameLabel">
+      <children xmi:id="_wQEr5T4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_wQEr5j4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wQEr5D4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_wQEr4T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:InterfaceRealization" href="mmi:///#jimpl%5Bjsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXP%5Bjcu%5Ename=MXP.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.InterfaceRealization"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wQEr4j4vEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_3MRo8D4vEeGTj69FH4z3nw" source="_tlwaoD4vEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_3MRo8z4vEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_3MRo9T4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_3MRo9z4vEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_3MRo9j4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3MRo9D4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_3MRo8T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXP%5Bjcu%5Ename=MXP.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3MRo8j4vEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_3MRo-D4vEeGTj69FH4z3nw" source="_ugxRYD4vEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_3MRo-z4vEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_3MbZ8D4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_3MbZ8j4vEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_3MbZ8T4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3MRo_D4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_3MRo-T4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3MRo-j4vEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_3MbZ8z4vEeGTj69FH4z3nw" source="_wPVE8D4vEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_3MbZ9j4vEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_3MbZ-D4vEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_3MbZ-j4vEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_3MbZ-T4vEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3MbZ9z4vEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_3MbZ9D4vEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3MbZ9T4vEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_ES5g8D4wEeGTj69FH4z3nw" source="_EIK3oz4wEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_ES5g8z4wEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_ES5g9T4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_ES5g9z4wEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_ES5g9j4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ES5g9D4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ES5g8T4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=LSWS%5Bjcu%5Ename=LSWS.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ES5g8j4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_GpGjUD4wEeGTj69FH4z3nw" source="_GcSPUD4wEeGTj69FH4z3nw" target="_wPVE8D4vEeGTj69FH4z3nw">
+    <children xmi:id="_GpGjUz4wEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_GpGjVT4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_GpGjVz4wEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_GpGjVj4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GpGjVD4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GpGjUT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=LSWSSoapBindingImpl%5Bjcu%5Ename=LSWSSoapBindingImpl.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPWS%5Bjcu%5Ename=MXPWS.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GpGjUj4wEeGTj69FH4z3nw" points="[2870, -5742, -7444, 6361]$[4715, -9435, -5599, 2668]$[8860, -11410, -1454, 693]"/>
+  </edges>
+  <edges xmi:id="_GpGjWD4wEeGTj69FH4z3nw" source="_GcSPUD4wEeGTj69FH4z3nw" target="_EIK3oz4wEeGTj69FH4z3nw">
+    <children xmi:id="_GpGjWz4wEeGTj69FH4z3nw" type="NameLabel">
+      <children xmi:id="_GpQUUD4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_GpQUUT4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GpGjXD4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GpGjWT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:InterfaceRealization" href="mmi:///#jimpl%5Bjsrctype%5Ename=LSWSSoapBindingImpl%5Bjcu%5Ename=LSWSSoapBindingImpl.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=LSWS%5Bjcu%5Ename=LSWS.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.InterfaceRealization"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GpGjWj4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_GpQUUj4wEeGTj69FH4z3nw" source="_GcSPUD4wEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <children xmi:id="_GpQUVT4wEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_GpQUVz4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_GpQUWT4wEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_GpQUWD4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GpQUVj4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GpQUUz4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=LSWSSoapBindingImpl%5Bjcu%5Ename=LSWSSoapBindingImpl.java%5Bjpack%5Ename=mx.com.interware.spira.ls.facade.ls%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=MXPParam%5Bjcu%5Ename=MXPParam.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GpQUVD4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_nS9xcD4wEeGTj69FH4z3nw" source="_nOzDID4wEeGTj69FH4z3nw" target="_l5tfgT4wEeGTj69FH4z3nw">
+    <children xmi:id="_nTHicD4wEeGTj69FH4z3nw" type="NameLabel">
+      <children xmi:id="_nTHicj4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_nTHicz4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nTHicT4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_nS9xcT4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Dependency" href="mmi:///#WsdlBinding%5EName=LSWS%5EQNameLocalPart=LSWS%5EQNameURI=urn:ls.facade.ls.spira.interware.com.mx%5BWsdlService%5EQNameLocalPart=LSWSService%5EQNameURI=urn:ls.facade.ls.spira.interware.com.mx%5BWsdlDefinition%5Bfile%5Eid=LSWS.wsdl%5Bfolder%5Eid=wsdl%5Bfolder%5Eid=WebContent%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5D$uml.Dependency"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_nS9xcj4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_7nOU0D4wEeGTj69FH4z3nw" source="_ugxRYD4vEeGTj69FH4z3nw" target="_7mLzAD4wEeGTj69FH4z3nw">
+    <children xmi:id="_7nOU0z4wEeGTj69FH4z3nw" type="KindLabel">
+      <children xmi:id="_7nOU1T4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_7nOU1z4wEeGTj69FH4z3nw" type="Kind"/>
+      <children xmi:id="_7nOU1j4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7nOU1D4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_7nOU0T4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=AbstractTSYSMessage%5Bjcu%5Ename=AbstractTSYSMessage.java%5Bjpack%5Ename=mx.com.interware.spira.web%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_7nOU0j4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_7nOU2D4wEeGTj69FH4z3nw" source="_ugxRYD4vEeGTj69FH4z3nw" target="_7mLzAD4wEeGTj69FH4z3nw">
+    <children xmi:id="_7nOU2z4wEeGTj69FH4z3nw" type="NameLabel">
+      <children xmi:id="_7nOU3T4wEeGTj69FH4z3nw" type="Stereotype"/>
+      <children xmi:id="_7nOU3j4wEeGTj69FH4z3nw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7nOU3D4wEeGTj69FH4z3nw" y="-186"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_7nOU2T4wEeGTj69FH4z3nw" fontName="Microsoft Sans Serif" showStereotype="Text"/>
+    <element xmi:type="uml:Generalization" href="mmi:///#jgen%5Bjsrctype%5Ename=MXPImpl%5Bjcu%5Ename=MXPImpl.java%5Bjpack%5Ename=mx.com.interware.spira.web.mxp%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=AbstractTSYSMessage%5Bjcu%5Ename=AbstractTSYSMessage.java%5Bjpack%5Ename=mx.com.interware.spira.web%5Bjsrcroot%5Esrcfolder=JavaSource%5Bproject%5Eid=TsysWS%5D%5D%5D%5D%5D$uml.Generalization"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_7nOU2j4wEeGTj69FH4z3nw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:id="_mZk14D4xEeGTj69FH4z3nw" type="NoteAttachment" source="_lOoFsD4xEeGTj69FH4z3nw" target="_3LFWID4vEeGTj69FH4z3nw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_mZk14T4xEeGTj69FH4z3nw" lineWidth="1"/>
+    <styles xmi:type="notation:ArrowStyle" xmi:id="_mZk14j4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="_mZk14z4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_mZk15D4xEeGTj69FH4z3nw" points="[0, 0, -544, -146]$[479, 128, -65, -18]"/>
+  </edges>
+  <edges xmi:id="_uFA3kD4xEeGTj69FH4z3nw" type="NoteAttachment" source="_uE3GkD4xEeGTj69FH4z3nw" target="_wPVE8D4vEeGTj69FH4z3nw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_uFA3kT4xEeGTj69FH4z3nw" lineWidth="1"/>
+    <styles xmi:type="notation:ArrowStyle" xmi:id="_uFA3kj4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="_uFA3kz4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_uFA3lD4xEeGTj69FH4z3nw" points="[0, 0, -917, -282]$[862, 265, -55, -17]"/>
+  </edges>
+  <edges xmi:id="__HT68D4xEeGTj69FH4z3nw" type="NoteAttachment" source="__HKxAD4xEeGTj69FH4z3nw" target="_7mLzAD4wEeGTj69FH4z3nw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="__HT68T4xEeGTj69FH4z3nw" lineWidth="1"/>
+    <styles xmi:type="notation:ArrowStyle" xmi:id="__HT68j4xEeGTj69FH4z3nw"/>
+    <styles xmi:type="notation:LineTypeStyle" xmi:id="__HT68z4xEeGTj69FH4z3nw"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__HT69D4xEeGTj69FH4z3nw" points="[0, 0, -214, -825]$[107, 415, -107, -410]"/>
+  </edges>
+</notation:Diagram>

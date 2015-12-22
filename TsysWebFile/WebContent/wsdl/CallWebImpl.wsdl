@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ws.invex.com.mx" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ws.invex.com.mx" xmlns:intf="http://ws.invex.com.mx" xmlns:tns1="http://dto.spira.interware.com.mx" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://ws.invex.com.mx" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://dto.spira.interware.com.mx"/>
+   <element name="getCuentasAD">
+    <complexType>
+     <sequence>
+      <element name="account" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCuentasADResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getCuentasADReturn" type="tns1:CuentaAD"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://dto.spira.interware.com.mx" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="CuentaAD">
+    <sequence>
+     <element name="clasificacion" nillable="true" type="xsd:string"/>
+     <element name="nombreCompleto" nillable="true" type="xsd:string"/>
+     <element name="numCuenta" nillable="true" type="xsd:string"/>
+     <element name="tipoCuenta" nillable="true" type="xsd:string"/>
+     <element name="ucode3" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getCuentasADRequest">
+
+      <wsdl:part element="impl:getCuentasAD" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCuentasADResponse">
+
+      <wsdl:part element="impl:getCuentasADResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="CallWebImpl">
+
+      <wsdl:operation name="getCuentasAD">
+
+         <wsdl:input message="impl:getCuentasADRequest" name="getCuentasADRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCuentasADResponse" name="getCuentasADResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CallWebImplSoapBinding" type="impl:CallWebImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getCuentasAD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCuentasADRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCuentasADResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CallWebImplService">
+
+      <wsdl:port binding="impl:CallWebImplSoapBinding" name="CallWebImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/TsysWebFile/services/CallWebImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

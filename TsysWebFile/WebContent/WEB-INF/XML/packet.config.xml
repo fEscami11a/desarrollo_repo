@@ -1,0 +1,2880 @@
+<packets>
+	<packet id="TSYS">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="clientBankID" fmt="X(04)" />
+			<field name="accountID" fmt="X(36)" />
+			<field name="accountType" fmt="XX">
+				<option name="Supress Translate" value="SX" />
+				<option name="Card" value="CA" />
+				<option name="ECOMM" value="EC" />
+				<option name="Debit" value="DB" />
+				<option name="Membershit" value="ME" />
+			</field>
+			<field name="applicationID" fmt="XX">
+				<option name="TS1 Consumer" value="T1" />
+				<option name="TS2 Consumer" value="T2" />
+				<option name="Electronic Commerce" value="EC" />
+				<option name="NextGen Card" value="NG" />
+				<option name="TS1 Comertial Card" value="C1" />
+			</field>
+			<field name="operatorID" fmt="X(20)" />
+			<field name="maxMessageSize" fmt="9(08)" />
+			<field name="allowMultiple" fmt="X(1)">
+				<option name="Yes" value="Y" />
+				<option name="No" value="N" />
+			</field>
+			<field name="date" fmt="YYYYMMDD" />
+			<field name="time" fmt="HHMMSS" />
+			<field name="filler1" fmt="X(1)" />
+			<field name="passFail" fmt="X(1)">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="responseAccountRef" fmt="X(19)" />
+			<field name="externalWorkArea" fmt="X(50)" />
+			<field name="numberOfPackets" fmt="9(04)" />
+			<field name="headerVar1" fmt="X(20)" />
+			<field name="headerVar2" fmt="X(20)" />
+			<field name="headerVar3" fmt="X(20)" />
+			<field name="responseSeq" fmt="9(4)" />
+			<field name="moreMessage" fmt="X(1)">
+				<option name="More messages" value="Y" />
+				<option name="No more messages" value="N" />
+				<option name="No more messages" value=" " />
+			</field>
+			<field name="filler2" fmt="X(11)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="clientBankID" fmt="X(04)" />
+			<field name="accountID" fmt="X(36)" />
+			<field name="accountType" fmt="XX">
+				<option name="Supress Translate" value="SX" />
+				<option name="Card" value="CA" />
+				<option name="ECOMM" value="EC" />
+				<option name="Debit" value="DB" />
+				<option name="Membershit" value="ME" />
+			</field>
+			<field name="applicationID" fmt="XX">
+				<option name="TS1 Consumer" value="T1" />
+				<option name="TS2 Consumer" value="T2" />
+				<option name="Electronic Commerce" value="EC" />
+				<option name="NextGen Commercial Card" value="NG" />
+				<option name="TS1 Comertial Card" value="C1" />
+			</field>
+			<field name="operatorID" fmt="X(20)" />
+			<field name="maxMessageSize" fmt="9(08)" />
+			<field name="allowMultiple" fmt="X(1)">
+				<option name="Yes" value="Y" />
+				<option name="No" value="N" />
+			</field>
+			<field name="date" fmt="YYYYMMDD" />
+			<field name="time" fmt="HHMMSS" />
+			<field name="filler1" fmt="X(1)" />
+			<field name="passFail" fmt="X(1)">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="responseAccountRef" fmt="X(19)" />
+			<field name="externalWorkArea" fmt="X(50)" />
+			<field name="numberOfPackets" fmt="9(04)" />
+			<field name="headerVar1" fmt="X(20)" />
+			<field name="headerVar2" fmt="X(20)" />
+			<field name="headerVar3" fmt="X(20)" />
+			<field name="responseSeq" fmt="9(4)" />
+			<field name="moreMessage" fmt="X(1)">
+				<option name="More messages" value="Y" />
+				<option name="No more messages" value="N" />
+				<option name="No more messages" value=" " />
+			</field>
+			<field name="filler2" fmt="X(11)" />
+		</struct>
+	</packet>
+	<packet id="BOSS">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="filler1" fmt="X(8)" />
+			<field name="filler2" fmt="X(8)" />
+			<field name="maintenanceClass" fmt="XX">
+				<option name="Cardholder" value="CA" />
+				<option name="Commercial" value="CM" />
+				<option name="Company" value="CO" />
+				<option name="Hierarchy" value="HI" />
+				<option name="Merchant" value="ME" />
+			</field>
+			<field name="maintenanceRouting" fmt="X">
+				<option name="Apply now" value="N" />
+				<option name="Apply today" value="T" />
+			</field>
+			<field name="applicationID" fmt="X">
+				<option name="Add" value="A" />
+				<option name="Update" value="U" />
+				<option name="Delete" value="D" />
+				<option name="Replace" value="R" />
+			</field>
+			<field name="passFail" fmt="X">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="processID" fmt="X(4)" />
+			<field name="approvingOfficer" fmt="X(4)" />
+			<field name="responseType" fmt="X">
+				<option name="Edit" value="E" />
+				<option name="Update" value="U" />
+				<option name="Pendig" value="P" />
+				<option name="Expired" value="X" />
+			</field>
+			<field name="editResponseOption" fmt="X">
+				<option name="Send response on edit" value="Y" />
+				<option name="Do not end response on edit" value="N" />
+			</field>
+			<field name="updateResponseOption" fmt="X">
+				<option name="Send response on update" value="Y" />
+				<option name="Do not end response on update" value="N" />
+			</field>
+			<field name="pendedResponseOption" fmt="X">
+				<option name="Send response on pend" value="Y" />
+				<option name="Do not end response on pend" value="N" />
+				<option name="Bypass pending option" value="X" />
+			</field>
+			<field name="filler3" fmt="X" />
+			<field name="expireResponseOption" fmt="X">
+				<option name="Send response on expire" value="Y" />
+				<option name="Do not end response on expire" value="N" />
+			</field>
+			<field name="filler4" fmt="X(5)" />
+			<field name="requestID" fmt="X(24)" />
+			<field name="filler5" fmt="X(48)" />
+			<field name="mqReplyToQueue" fmt="X(48)" />
+			<field name="mqReplyToQueueManager" fmt="X(48)" />
+			<field name="filler6" fmt="X(6)" />
+			<field name="internalWorkArea" fmt="X(30)" />
+			<field name="filler7" fmt="X(25)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="filler1" fmt="X(8)" />
+			<field name="filler2" fmt="X(8)" />
+			<field name="maintenanceClass" fmt="XX">
+				<option name="Cardholder" value="CA" />
+				<option name="Commercial" value="CM" />
+				<option name="Company" value="CO" />
+				<option name="Hierarchy" value="HI" />
+				<option name="Merchant" value="ME" />
+			</field>
+			<field name="maintenanceRouting" fmt="X">
+				<option name="Apply now" value="N" />
+				<option name="Apply today" value="T" />
+			</field>
+			<field name="applicationID" fmt="X">
+				<option name="Add" value="A" />
+				<option name="Update" value="U" />
+				<option name="Delete" value="D" />
+				<option name="Replace" value="R" />
+			</field>
+			<field name="passFail" fmt="X">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="processID" fmt="X(4)" />
+			<field name="approvingOfficer" fmt="X(4)" />
+			<field name="responseType" fmt="X">
+				<option name="Edit" value="E" />
+				<option name="Update" value="U" />
+				<option name="Pendig" value="P" />
+				<option name="Expired" value="X" />
+			</field>
+			<field name="editResponseOption" fmt="X">
+				<option name="Send response on edit" value="Y" />
+				<option name="Do not end response on edit" value="N" />
+			</field>
+			<field name="updateResponseOption" fmt="X">
+				<option name="Send response on update" value="Y" />
+				<option name="Do not end response on update" value="N" />
+			</field>
+			<field name="pendedResponseOption" fmt="X">
+				<option name="Send response on pend" value="Y" />
+				<option name="Do not end response on pend" value="N" />
+				<option name="Bypass pending option" value="X" />
+			</field>
+			<field name="filler3" fmt="X" />
+			<field name="expireResponseOption" fmt="X">
+				<option name="Send response on expire" value="Y" />
+				<option name="Do not end response on expire" value="N" />
+			</field>
+			<field name="filler4" fmt="X(5)" />
+			<field name="requestID" fmt="X(24)" />
+			<field name="filler5" fmt="X(48)" />
+			<field name="mqReplyToQueue" fmt="X(48)" />
+			<field name="mqReplyToQueueManager" fmt="X(48)" />
+			<field name="filler6" fmt="X(6)" />
+			<field name="internalWorkArea" fmt="X(30)" />
+			<field name="filler7" fmt="X(25)" />
+		</struct>
+	</packet>
+
+	<packet id="FLDC">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="fieldIdentifier" fmt="X(6)" />
+			<field name="currentFieldLength" fmt="9(4)" />
+			<field name="newFieldLength" fmt="9(4)" />
+			<field name="passFail" fmt="X">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="systemUse" fmt="X(20)" />
+			<field name="newFieldValue" fmt="Variable" depends="newFieldLength" />
+			<field name="currentFieldValue" fmt="Variable" depends="currentFieldLength" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="fieldIdentifier" fmt="X(6)" />
+			<field name="currentFieldLength" fmt="X(4)" />
+			<field name="newFieldLength" fmt="X(4)" />
+			<field name="passFail" fmt="X">
+				<option name="Pass" value="P" />
+				<option name="Fail" value="F" />
+			</field>
+			<field name="systemUse" fmt="X(20)" />
+			<field name="newFieldValue" fmt="Variable" depends="newFieldLength" />
+			<field name="currentFieldValue" fmt="Variable" depends="currentFieldLength" />
+		</struct>
+	</packet>
+	<!-- Inicio del packet SI01 -->
+	<packet id="SI01">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="ACCOUNT-CYCLE" fmt="9(02)" />
+			<field name="TRANSFER-STATUS" fmt="x(01)">
+				<option name="TRANSFER-OLD-ACCT" value="T" />
+				<option name="TRANSFER-NEW-ACCT" value="F" />
+				<option name="TRANSFER-GEN-HIST" value="G" />
+				<option name="TRANSFER-FRAUD-ACCT" value="M" />
+			</field>
+			<field name="TRANSFER-REASON" fmt="x(01)">
+				<option name="LOST-CARD" value="L" />
+				<option name="STOLEN-CARD" value="S" />
+				<option name="FRAUD-USE-OF-CARD" value="F" />
+				<option name="DIVORCED" value="V" />
+				<option name="CONVERSION" value="O" />
+				<option name="MISCELLANEOUS" value="M" />
+				<option name="TRANSFER-TO-REC-BNK" value="R" />
+				<option name="BANK-TO-BANK-TRANS" value="B" />
+			</field>
+			<field name="TRANSFER-DATE" fmt="9(04)" /><!-- 9(04) -->
+			<field name="LOST-ACCT-STATUS" fmt="x(01)">
+				<option name="LOST-PENDING-TRANSFR" value="L" />
+			</field>
+			<field name="ACCT-DELETE-STATUS" fmt="x(01)">
+				<option name="AUTOMATIC-DELETE" value="A" />
+				<option name="MANUAL-DELETE" value="M" />
+				<option name="NOTICE_PRINTED-DEL-R" value="D" />
+			</field>
+			<field name="CUR-ACCT-COL-STAT" fmt="x(01)">
+				<option name="CURRENT" value=" " />
+				<option name="EMPLOYEE-PAST-DUE" value="A" />
+				<option name="EMPLOYEE-OVERLIMIT" value="B" />
+				<option name="PAST-DUE-1-03" value="F" />
+				<option name="PAST-DUE-31-60" value="G" />
+				<option name="PAST-DUE-61-90" value="H" />
+				<option name="PAST-DUE-91-120" value="I" />
+				<option name="PAST-DUE-121-150" value="J" />
+				<option name="PAST-DUE-151-180" value="K" />
+				<option name="PAST-DUE-181-PLUS" value="L" />
+				<option name="OVERLIMIT-00-10-PCT" value="R" />
+				<option name="OVERLIMIT-11-15-PCT" value="S" />
+				<option name="OVERLIMIT-16-25-PCT" value="T" />
+				<option name="OVERLIMIT-26-50-PCT" value="U" />
+				<option name="OVERLIMIT-51-75-PCT" value="V" />
+				<option name="OVERLIMIT-76-PLUS-PT" value="W" />
+				<option name="HISTORY-ONLY" value="Z" />
+				<option name="HISTORY-WAIT-CYCLE" value="*" />
+			</field>
+			<field name="OLD-CYC-AFT-CHGOF" fmt="9(02)" />
+			<field name="REISSUE-DAY" fmt="9(02)" />
+			<field name="TYPE-CODE" fmt="X(01)" />
+			<field name="LAST-CRD-RATE-CHG" fmt="9(08)" />
+			<field name="CREDIT-RATING" fmt="X(02)" />
+			<field name="AGENT" fmt="X(04)" /><!--9(04)-->
+			<field name="ISSUE-BANK" fmt="9(04)" />
+			<field name="BRANCH" fmt="X(04)" /><!--9(04)-->
+			<field name="CREDIT-SCORE" fmt="9(04)" />
+			<field name="LAST-DT-SC-CHG" fmt="9(08)" />
+			<field name="OFFCR-CHANGE-SCR" fmt="9(04)" />
+			<field name="ORIG-CREDIT-SCORE" fmt="9(04)" />
+			<field name="STATUS" fmt="x(01)">
+				<option name="GROUP-1" value="Y" />
+				<option name="GROUP-2" value="N" />
+				<option name="NEITHER-GROUP" value="\u0020" />
+			</field>
+			<field name="AUTO-MAN-CBR" fmt="x(01)">
+				<option name="G1-AUTO-CBR-G2-MAN" value="Y" />
+				<option name="NO-AUTO-CBR-MANUAL" value="N" />
+			</field>
+			<field name="MANUAL-OVRRIDE-CBR" fmt="x(01)">
+				<option name="G1-MAN-CBR-G2-RQ-OVR" value="Y" />
+				<option name="NO-MAN-CBR-REQ-OVR" value="N" />
+			</field>
+			<field name="OVR-CVR-BREXCEP" fmt="x(01)">
+				<option name="G1-OVR-CBR-G2-BAL-EX" value="Y" />
+				<option name="NO-OVR-CBR-BAL-EXCEP" value="N" />
+			</field>
+			<field name="TST-CBR-ISS-CREXC" fmt="x(01)">
+				<option name="G1-CBRISSTST-G2-CDRT" value="Y" />
+				<option name="NO-CBRISSTST-CREXCEP" value="N" />
+			</field>
+			<field name="ACCT-TYPE-EXCEP" fmt="x(01)">
+				<option name="G2-ACCOUNT-TYPE-EXCP" value="Y" />
+				<option name="NO-ACCOUNT-TYPE-EXCP" value="N" />
+			</field>
+			<field name="AUTH-OS-EXCEP" fmt="x(01)">
+				<option name="G2-AUTH-OUTST-EXCEP" value="Y" />
+				<option name="NO-AUTH-OUTST-EXCEP" value="N" />
+			</field>
+			<field name="ACT-TODAY-EXCEP" fmt="x(01)">
+				<option name="G2-ACTIV-TODAY-EXCEP" value="Y" />
+				<option name="NO-ACTIV-TODAY-EXCEP" value="N" />
+			</field>
+			<field name="BEHAVORIAL-SCORE" fmt="9(04)" />
+			<field name="OFFICER" fmt="X(04)" /><!--9(04)-->
+			<field name="OUTSTANDING-AUTHS" fmt="9(03)" />
+			<field name="OS-AUTH-AMT" fmt="+9(7).99" />
+			<field name="CURRENTLY-OVRLIMIT" fmt="+9(7).99" />
+			<field name="NUM-OF-STATEMENTS" fmt="X(05)" /><!--9(05)-->
+			<field name="NUM-OF-TM-CD-BAL" fmt="9(02)" />
+			<field name="DAYS-IN-CRED-BAL" fmt="9(03)" />
+			<field name="DAYS-OVERLIMIT" fmt="9(03)" />
+			<field name="DAYS-PAST-DUE" fmt="9(03)" />
+			<field name="NUM-OL-NOTICES" fmt="9(03)" />
+			<field name="OL-SINCE-OPEN" fmt="9(03)" />
+			<field name="DATE-LST-OL-SNT" fmt="9(08)" />
+			<field name="TIMES-PD-CYCLE" fmt="9(03)" />
+			<field name="PD-NOTC-1-SENT" fmt="x(01)">
+				<option name="PAST-DUE-NOTC1-SENT" value="Y" />
+				<option name="PAST-DUE-NOTC1-NOT" value="N" />
+			</field>
+			<field name="PD-NOTC-2-SENT" fmt="x(01)">
+				<option name="PAST-DUE-NOTC2-SENT" value="Y" />
+				<option name="PAST-DUE-NOTC2-NOT" value="N" />
+			</field>
+			<field name="COLL-CARD-SENT" fmt="x(01)">
+				<option name="COLECTION-CARD-SENT" value="Y" />
+				<option name="COLLECTION-CARD-NOT" value="N" />
+			</field>
+			<field name="PD-NOTC-3-SENT" fmt="x(01)">
+				<option name="PAST-DUE-NOTC3-SENT" value="Y" />
+				<option name="PAST-DUE-NOTC3-NOT" value="N" />
+			</field>
+			<field name="OVERLIM-LET-1" fmt="x(01)">
+				<option name="OVERLIMIT-LET1-SENT" value="Y" />
+				<option name="OVERLIMIT-LET1-NOT" value="N" />
+			</field>
+			<field name="OVERLIM-LET-2" fmt="x(01)">
+				<option name="OVERLIMIT-LET2-SENT" value="Y" />
+				<option name="OVERLIMIT-LET2-NOT" value="N" />
+			</field>
+			<field name="NON-ACC-STATUS" fmt="x(01)">
+				<option name="ACCT-NON-ACCURAL-ST" value="Y" />
+				<option name="ACCT-NOT-NON-ACCURA" value="N" />
+			</field>
+			<field name="CRED-LIM-INC-LET" fmt="x(01)">
+				<option name="CRED-LIM-INC-LETTER" value="Y" />
+				<option name="NO-CRED-LIM-INC-LET" value="N" />
+			</field>
+			<field name="ACCT-IN-DISPUTE" fmt="x(01)">
+				<option name="ACCOUNT-IN-DISPUTE" value="Y" />
+				<option name="ACCOUNT-NOT-IN-DISP" value="N" />
+			</field>
+			<field name="LAST-DISPUTE-DATE" fmt="9(08)" />
+			<field name="OFCR-APPR-LST-DIS" fmt="9(04)" />
+			<field name="AMT-CUR-IN-DISP" fmt="+9(7).99" />
+			<field name="LAST-DISPUTE-SETLD" fmt="9(08)" />
+			<field name="NUM-TIMES-DISPUTE" fmt="9(03)" />
+			<field name="RESTRICTED-CARD-LS" fmt="x(01)">
+				<option name="RESTRICTED-CARD-LST" value="Y" />
+				<option name="NOT-ON-RESTRICT-CL" value="N" />
+				<option name="NOT-ON-RCL" value="\u0020" />
+			</field>
+			<field name="REASON-ON-RCL" fmt="X(01)" />
+			<field name="REG-CODE-FOR-RCL" fmt="X(16)" />
+			<field name="DATE-LAST-ON-RCL" fmt="9(08)" />
+			<field name="PURGE-DATE-FOR-RCL" fmt="9(06)" />
+			<field name="ACCT-IN-CRB-STAT" fmt="x(01)">
+				<option name="ACCT-ON-CRB" value="Y" />
+				<option name="ACCT-NOT-ON-CRB" value="N" />
+				<option name="ACCT-NOT-ON-CRB-ETH" value="\u0020" />
+			</field>
+			<field name="CRB-REASON" fmt="X(02)" />
+			<field name="CRB-REGION-CODE" fmt="X(16)" />
+			<field name="PURGE-DATE-FOR-CRB" fmt="9(06)" />
+			<field name="DAT-LAST-ON-CRB" fmt="9(08)" />
+			<field name="DONT-PRINT-PAST-DU" fmt="x(01)">
+				<option name="DO-NOT-PRNT-PD-NOTC" value="Y" />
+				<option name="PRINT-PAST-DUE-NOTC" value="N" />
+			</field>
+			<field name="DONT-PRINT-OVERLMT" fmt="x(01)">
+				<option name="DO-NOT-PRNT-OVERLMT" value="Y" />
+				<option name="PRINT-OVERLIMIT-NOT" value="N" />
+			</field>
+			<field name="DONT-PRNT-PAST-MSG" fmt="x(01)">
+				<option name="DONOT-PRINT-PD-MESG" value="Y" />
+				<option name="PRINT-PASTDUE-MESSG" value="N" />
+			</field>
+			<field name="DONT-PRNT-OVLM-MSG" fmt="x(01)">
+				<option name="DONOT-PRINT-OVERLIM" value="Y" />
+				<option name="PRINT-OVERLIMIT-MSG" value="N" />
+			</field>
+			<field name="DONT-PRNT-STATEMNT" fmt="x(01)">
+				<option name="FICHE-STATEMENT" value="Y" />
+				<option name="PRINT-STATEMENT" value="N" />
+			</field>
+			<field name="IMMUNE-AT-CYCLE" fmt="x(01)">
+				<option name="ACCT-IMMUNE-AT-CYCL" value="Y" />
+				<option name="ACCT-NOT-IMMUNE-CYC" value="N" />
+			</field>
+			<field name="FC-PREC-4-DEC" fmt="x(01)">
+				<option name="FC-PRECISION-4-DECM" value="Y" />
+				<option name="NOT-FC-PREC-4-DECM" value="N" />
+			</field>
+			<field name="STRIPE-WAS-READ" fmt="x(01)">
+				<option name="CIRCUIT-CTY-STRP-RD" value="Y" />
+				<option name="CIRCUIT-CTY-STP-NOT" value="N" />
+			</field>
+			<field name="CHG-TAX-THIS-CYCLE" fmt="x(01)">
+				<option name="ACCT-CHARGED-TAX-CY" value="Y" />
+				<option name="ACCT-NOT-CHARGED-TX" value="N" />
+			</field>
+			<field name="DATE-NOTC-PRT-CHG" fmt="9(08)" />
+			<field name="OFCR-APP-NOTC-CHG" fmt="9(04)" />
+			<field name="INS-RATE-CODE" fmt="x(01)">
+				<option name="NO-INS-COVERAGE" value="N" />
+				<option name="YES-INS-COVERAGE" value="Y" />
+				<option name="INSUR-CODE-ONE" value="1" />
+				<option name="INSUR-CODE-TWO" value="2" />
+				<option name="INSUR-CODE-THREE" value="3" />
+				<option name="INSUR-CODE-FOUR" value="4" />
+				<option name="INSUR-CODE-FIVE" value="5" />
+			</field>
+			<field name="MONTH-INS-DUE" fmt="X(02)" />
+			<field name="TIMES-INS-CAL-OPN" fmt="9(05)" />
+			<field name="CH-BIRTH-DATE" fmt="9(06)" />
+			<field name="USER-CODE-1" fmt="X(04)" />
+			<field name="USER-CODE-2-POS0" fmt="X(01)" />
+			<field name="USER-CODE-2-POS1" fmt="X(01)" />
+			<field name="USER-CODE-2-POS2" fmt="X(01)" />
+			<field name="USER-CODE-2-POS3" fmt="X(01)" />
+			<field name="USER-CODE-3" fmt="X(04)" />
+			<field name="USER-ACCT-1" fmt="X(14)" /><!--X(14)-->
+			<field name="USER-ACCT-2" fmt="X(14)" /><!--X(14)-->
+			<field name="USER-ACCT-3" fmt="X(14)" /><!--X(14)-->
+			<field name="OTH-ACCT-NUMBER" fmt="9(16)" />
+			<field name="DDA-ACCNT-NUMBER" fmt="9(14)" />
+			<field name="SAV-ACCT-NUMBER" fmt="9(14)" />
+			<field name="INS-LOAN-ACCT-NBR" fmt="9(14)" />
+			<field name="TRNACCT-NR-OLD-NW" fmt="9(18)" />
+			<field name="CARDS-OUTSTANDING" fmt="9(03)" />
+			<field name="CARDS-TOBE-REISSUE" fmt="9(03)" />
+			<field name="EXP-DT-CUR-CARD" fmt="9(06)" />
+			<field name="TRANSIT-ROUTING-NB" fmt="9(09)" />
+			<field name="DOCUTEL-PIN-NUMBER" fmt="X(07)" />
+			<field name="DIEBOLD-OFFSET-PIN" fmt="X(04)" />
+			<field name="DIEBOLD-ENTRY-NBR" fmt="X(02)" />
+			<field name="ISD-FILL-T" fmt="X(06)" />
+			<field name="DIEBOLD-WITHDR-LMT" fmt="9(03)" />
+			<field name="BUSINESS-LOGO-FLD" fmt="X(07)" />
+			<field name="CORP-ACCT-NUMBER" fmt="X(04)" /><!--9(04) -->
+			<field name="ISD-FILL-0" fmt="X(01)" />
+			<field name="OVERDRAFT-COV-FLAG" fmt="X(01)" />
+			<field name="DUAL-VISA-MAST-PL" fmt="x(01)">
+				<option name="DUAL-VISA-MC" value="D" />
+				<option name="VISA-ONLY" value="V" />
+				<option name="MASTER-CHARGE-ONLY" value="M" />
+				<option name="CHOICE-CARD" value="C" />
+				<option name="PRIVATE-LABEL" value="\u0020" />
+			</field>
+			<field name="CARD-USE-REPORTED" fmt="x(01)">
+				<option name="USED-NOT-REPORTED" value="U" />
+				<option name="USED-REPORTED" value="R" />
+				<option name="NOT-USED-OR-REPORTD" value="N" />
+			</field>
+			<field name="DATE-CARD-1ST-USED" fmt="9(08)" />
+			<field name="PSTDU-MANUALY-CHGD" fmt="x(01)">
+				<option name="PAST-DUE-MANUAL-CHG" value="Y" />
+				<option name="PASTDUE-NO-MAN-CHG" value="N" />
+			</field>
+			<field name="TIMES-PSTDUE-CHGMN" fmt="9(03)" />
+			<field name="LST-PASTDUE-MAN-CH" fmt="9(08)" />
+			<field name="LAST-PASTDUE-NOTIC" fmt="9(08)" />
+			<field name="OFCR-APP-PT-DU-CH" fmt="9(04)" />
+			<field name="LAST-CRED-RPT-CHCK" fmt="9(06)" />
+			<field name="DATE-ACCT-OPENNED" fmt="9(08)" />
+			<field name="LAST-STATEMENT-DT" fmt="9(08)" />
+			<field name="LAST-MAINT-DATE" fmt="9(08)" />
+			<field name="PRIR-LAST-MAINT-DT" fmt="9(08)" />
+			<field name="LAST-MAG-MAINT" fmt="9(08)" />
+			<field name="LAST-CRED-ON-ACCT" fmt="9(08)" />
+			<field name="LAST-PAYMENT-DATE" fmt="9(08)" />
+			<field name="LAST-PAYMENT-AMT" fmt="+9(7).99" />
+			<field name="DATE-LAST-PURCHASE" fmt="9(08)" />
+			<field name="DATE-LAST-CASH-ADV" fmt="9(08)" />
+			<field name="DATE-LAST-PAST-DUE" fmt="9(08)" />
+			<field name="DATE-LAST-LATE-CHG" fmt="9(08)" />
+			<field name="LAST-TRANSACT-DATE" fmt="9(08)" />
+			<field name="ANY-TYPE-LAST-ACTV" fmt="9(08)" />
+			<field name="DATE-OF-LAST-LETTR" fmt="9(08)" />
+			<field name="DATE-PAYMENT-DUE" fmt="9(08)" />
+			<field name="PIN-REQUEST-FLAG" fmt="x(01)">
+				<option name="PIN-REQUESTED" value="Y" />
+				<option name="PIN-NOT-REQUESTED" value="N" />
+			</field>
+			<field name="DATE-OF-PIN-REQUEST" fmt="9(08)" />
+			<field name="DATE-SENT-CREDBURU" fmt="9(08)" />
+			<field name="SPOUSE-RESP-FR-ACT" fmt="x(01)">
+				<option name="SPOUSE-RESPONSIBLE" value="Y" />
+				<option name="SPOUSE-NOT-RESP" value="N" />
+				<option name="SPOUSE-NOT-RESP-B" value="\u0020" />
+			</field>
+			<field name="SPOUSE-RESP-CODE" fmt="X(01)" />
+			<field name="ADDR-CHG-S-BUREAU" fmt="x(01)">
+				<option name="ADDR-CHG-S-REPORTED" value="Y" />
+				<option name="ADDR-NOT-CHG-S-RPT" value="N" />
+			</field>
+			<field name="NAME-LNE1-CHANGE" fmt="x(01)">
+				<option name="NAME-CHG-S-REPORTED" value="Y" />
+				<option name="NAME-NOT-CHG-S-RPT" value="N" />
+			</field>
+			<field name="NAME-LNE2-CHANGE" fmt="x(01)">
+				<option name="NAME2-CHG-S-REPTED" value="Y" />
+				<option name="NAME2-NOT-CHG-S-RPT" value="N" />
+			</field>
+			<field name="NAME-LINE2-ADDED" fmt="x(01)">
+				<option name="NAME2-ADDED-S-RPTED" value="Y" />
+				<option name="NAME2-NOT-ADDED-RPT" value="N" />
+			</field>
+			<field name="CREDITBUREA-REPORT" fmt="x(01)">
+				<option name="LAST-TIME-SEND-CRDB" value="Y" />
+				<option name="NOT-LAST-TIME-CRDBR" value="N" />
+			</field>
+			<field name="CARD-REQ-TODAY" fmt="x(01)">
+				<option name="CARD-REQUESTED-TODY" value="Y" />
+				<option name="CARD-NOT-REQ-TODAY" value="N" />
+			</field>
+			<field name="CARD-REQ-DEL-TOD" fmt="x(01)">
+				<option name="CARD-REQ-DELET-TDAY" value="Y" />
+				<option name="CARD-REQ-NOTDEL-TDY" value="N" />
+			</field>
+			<field name="DEL-TRADE-FM-BUREA" fmt="x(01)">
+				<option name="DELETE-TRADELN-BURE" value="Y" />
+				<option name="DONOT-DELETE-TRADE" value="N" />
+			</field>
+			<field name="ORIG-CREDIT-LIMIT" fmt="+9(7).99" />
+			<field name="NBR-TIMES-LIM-CHGD" fmt="9(03)" />
+			<field name="OFCR-APPV-LIMT-CHG" fmt="9(04)" />
+			<field name="LAST-LIMIT-INC-DEC" fmt="+9(7).99" />
+			<field name="DATE-LAST-LIM-CHG" fmt="9(06)" />
+			<field name="TYPE-OF-LIMIT-CHG" fmt="x(01)">
+				<option name="AUTOMATIC-LIMIT-CHG" value="A" />
+				<option name="MANUAL-LIMIT-CHANGE" value="M" />
+				<option name="TRIAD-LIMIT-CHANGE" value="T" />
+			</field>
+			<field name="FIXED-PAYMENT-AMT" fmt="+9(7).99" />
+			<field name="DATE-FIXED-PAY-STR" fmt="9(08)" />
+			<field name="DATE-FIX-PAYAMT-CH" fmt="9(08)" />
+			<field name="OFCR-APPR-FIXED-P" fmt="9(04)" />
+			<field name="HIGH-BAL-ON-ACCT" fmt="+9(7).99" />
+			<field name="DATE-HIGH-BAL-REAC" fmt="9(08)" />
+			<field name="FIN-CHARGE-CYCLE" fmt="x(01)">
+				<option name="PUR-FIN-CHG-T-CYCL" value="Y" />
+				<option name="NO-PUR-FIN-CHG-T-C" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-1" fmt="x(01)">
+				<option name="PAST-DUE-LET-1-30" value="Y" />
+				<option name="NO-PSTDUE-LET-1-30" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-2" fmt="x(01)">
+				<option name="PAST-DUE-LET-31-60" value="Y" />
+				<option name="NO-PSTDU-LET-31-60" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-3" fmt="x(01)">
+				<option name="PAST-DUE-LET-61-90" value="Y" />
+				<option name="NO-PSTDU-LET-61-90" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-4" fmt="x(01)">
+				<option name="PAS-DUE-LET-91-120" value="Y" />
+				<option name="NO-PSTDU-LET-91-120" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-5" fmt="x(01)">
+				<option name="PAS-DUE-LET-121-150" value="Y" />
+				<option name="NO-PSTDU-LT-121-150" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-6" fmt="x(01)">
+				<option name="PAS-DUE-LET-151-180" value="Y" />
+				<option name="NO-PSTDU-LT-151-180" value="N" />
+			</field>
+			<field name="PAST-DUE-LETTER-7" fmt="x(01)">
+				<option name="PAS-DUE-LET-181-PLS" value="Y" />
+				<option name="NO-PSTDU-LT-181-PLS" value="N" />
+			</field>
+			<field name="STATE-CD-FOR-ACCT" fmt="X(02)" />
+			<field name="SKIP-PAYMENT-STATE" fmt="x(01)">
+				<option name="YES-SKIP-PAYMENT" value="Y" />
+				<option name="PARTIAL-PRE-PAYMENT" value="R" />
+			</field>
+			<field name="TYPE-AUTO-DEDUCTIO" fmt="x(01)">
+				<option name="DDA" value="D" />
+				<option name="SAVINGS" value="S" />
+				<option name="PAYROLL" value="P" />
+				<option name="BILL-CHECK" value="B" />
+				<option name="AUTO-CLR-HOUSE-SAV" value="C" />
+				<option name="AUTO-CLR-HOUSE-DDA" value="A" />
+			</field>
+			<field name="METHOD-FOR-AUTO-DE" fmt="x(01)">
+				<option name="MINIMUM-PAYMENT" value="M" />
+				<option name="CURRENT-BALANCE" value="B" />
+				<option name="FIXED-PAYMENT" value="F" />
+				<option name="PREV-STATE-BALANCE" value="P" />
+			</field>
+			<field name="ACT-REISSUE-RATING" fmt="X(02)" />
+			<field name="EXPDATE-BEF-REISSU" fmt="9(06)" />
+			<field name="ENCODE-ALL-ACCTS" fmt="X(01)" />
+			<field name="STR-CRD-ALPHA-PIN" fmt="X(01)" />
+			<field name="CHECK-OK-CARD" fmt="X(01)" />
+			<field name="CHG-IN-TERMS-COMP" fmt="X(01)" />
+			<field name="REISSU-CRD-PRINTED" fmt="X(01)" />
+			<field name="DELETE-PROC-COMP" fmt="X(01)" />
+			<field name="CHARGEOFF-PROC-COM" fmt="X(01)" />
+			<field name="TRANSFER-PROC-COMP" fmt="X(01)" />
+			<field name="ACCT-ACTIVE-TODAY" fmt="x(01)">
+				<option name="ACTIVE-TODAY" value="Y" />
+				<option name="NOT-ACTIVE-TODAY" value="N" />
+			</field>
+			<field name="ACCT-ACT-THIS-MONT" fmt="x(01)">
+				<option name="ACTIVE-THIS-MONTH" value="Y" />
+				<option name="NOT-ACTIV-THIS-MNTH" value="N" />
+			</field>
+			<field name="ACCT-ACTIVE-T-YEAR" fmt="x(01)">
+				<option name="ACTIVE-THIS-YEAR" value="Y" />
+				<option name="NOT-ACTIV-THIS-YEAR" value="N" />
+			</field>
+			<field name="ACCT-ACT-PRIR-YEAR" fmt="x(01)">
+				<option name="ACTIVE-LAST-YEAR" value="Y" />
+				<option name="NOT-ACTIV-LAST-YEAR" value="N" />
+			</field>
+			<field name="ACCT-ACT-SINCE-OPE" fmt="x(01)">
+				<option name="ACTIVE-SINCE-OPEN" value="Y" />
+				<option name="NOT-ACTIV-SINC-OPEN" value="N" />
+			</field>
+			<field name="DEB-ACTIVITY-TODAY" fmt="x(01)">
+				<option name="DEBIT-ACTIVITY-TOD" value="Y" />
+				<option name="NO-DEB-ACTIVITY-TOD" value="N" />
+			</field>
+			<field name="CRED-ACTVITY-TODAY" fmt="x(01)">
+				<option name="CREDIT-ACTIV-TODAY" value="Y" />
+				<option name="NO-CRD-ACTIVITY-TOD" value="N" />
+			</field>
+			<field name="SUPP-AIR-INS-ACT-M" fmt="x(01)">
+				<option name="SUPP-AIR-INS-ACT-M" value="Y" />
+				<option name="NO-SUPPAIR-INS-ACT" value="N" />
+			</field>
+			<field name="SALES-DRFT-TH-CYCL" fmt="x(01)">
+				<option name="SALES-DRFT-TH-CYCLE" value="Y" />
+				<option name="NO-SALES-DRFT-T-CYC" value="N" />
+			</field>
+			<field name="CASH-ADV-THIS-CYC" fmt="x(01)">
+				<option name="CASH-ADV-THIS-CYCLE" value="Y" />
+				<option name="NO-CASH-ADV-THS-CYC" value="N" />
+			</field>
+			<field name="CREDIT-THIS-CYCLE" fmt="x(01)">
+				<option name="CREDIT-THIS-CYCLE" value="Y" />
+				<option name="NO-CREDIT-THIS-CYCL" value="N" />
+			</field>
+			<field name="PAYMENT-THIS-CYCLE" fmt="x(01)">
+				<option name="PAYMENT-THIS-CYCLE" value="Y" />
+				<option name="NO-PAYMENT-THIS-CYC" value="N" />
+			</field>
+			<field name="SALES-DRAFT-REV-CY" fmt="x(01)">
+				<option name="SALES-DRAFT-REV-CYC" value="Y" />
+				<option name="NO-SALES-DRAFT-REV" value="N" />
+			</field>
+			<field name="CASHADV-REV-TH-CYC" fmt="x(01)">
+				<option name="CASHADV-REV-TH-CYCL" value="Y" />
+				<option name="NO-CASHADV-REV-TH-C" value="N" />
+			</field>
+			<field name="CRED-REV-THIS-CYCL" fmt="x(01)">
+				<option name="CREDIT-REV-THIS-CYC" value="Y" />
+				<option name="NO-CREDIT-REV-TH-CY" value="N" />
+			</field>
+			<field name="PAYMENT-REV-T-CYCL" fmt="x(01)">
+				<option name="PAYMENT-REV-THIS-CY" value="Y" />
+				<option name="NO-PAYMENT-REV-TH-C" value="N" />
+			</field>
+			<field name="PREV-STATE-BAL" fmt="+9(7).99" />
+			<field name="PREV-PURCHASE-BAL" fmt="+9(7).99" />
+			<field name="PREV-CASHADV-BAL" fmt="+9(7).99" />
+			<field name="PREVPUR-FINCHG-OUT" fmt="+9(5).99" />
+			<field name="PREV-CASHADV-FINCH" fmt="+9(5).99" />
+			<field name="PREV-MISC-OUTSTAND" fmt="+9(7).99" />
+			<field name="PREV-STATE-LATECHG" fmt="+9(5).99" />
+			<field name="PREV-STATE-INS-CHG" fmt="+9(3).99" />
+			<field name="PREV-STATE-ACT-DUE" fmt="+9(3).99" />
+			<field name="DATE-LAST-ANNFEE-C" fmt="9(06)" />
+			<field name="AMT-LAST-ANNUAL-FE" fmt="+9(5).99" />
+			<field name="ANNUAL-FEE-FLAG" fmt="x(01)">
+				<option name="HAS-BEEN-CHARGED-AF" value="Y" />
+				<option name="FREE-DONOT-EVER-CHG" value="F" />
+				<option name="HAS-NOT-BEEN-CHGED" value="N" />
+				<option name="DO-NOT-CHARGE" value="X" />
+				<option name="WAIVE-UPDATE-TRMS-D" value="W" />
+				<option name="RECURRING-BILLING" value="R" />
+				<option name="AAA-SPECIAL-OPTION" value="Z" />
+				<option name="SIX-MONTH-FREERIDE" value="S" />
+				<option name="TWO-YEAR-OPTION" value="T" />
+				<option name="DELUX-ACCT-NCNB-1-Y" value="D" />
+				<option name="BYPASSED-CHCK-REINS" value="B" />
+				<option name="NATIONSBANK-USAGE" value="U" />
+				<option name="NATIONSBANK-VOLUME" value="V" />
+				<option name="FOUR-YEAR-OPTION" value="C" />
+			</field>
+			<field name="ANNUAL-FEE-RATECDE" fmt="X(01)" />
+			<field name="CHARGEOFF-STATUS" fmt="x(01)">
+				<option name="AUTOMATIC-CHARGEOFF" value="A" />
+				<option name="MANUAL-CHARGEOFF" value="M" />
+			</field>
+			<field name="DATE-CHARGE-OFF" fmt="9(06)" />
+			<field name="BAL-CHARGED-OFF" fmt="+9(7).99" />
+			<field name="CHARGEOFF-REASON" fmt="x(01)">
+				<option name="FRAUD" value="F" />
+				<option name="BAD-DEBT" value="B" />
+				<option name="BANKRUPT" value="K" />
+				<option name="DOMESTIC" value="H" />
+				<option name="DECEASED" value="D" />
+				<option name="CHAPTER-13-BANKRUPT" value="C" />
+				<option name="ATTORNEY-ACCOUNTS" value="A" />
+				<option name="SKIP-ACCOUNTS" value="S" />
+				<option name="MISCELLANEOUS" value="M" />
+			</field>
+			<!--<struct name="PURCHASE-RATE-CODE"> --><!--VMBR 061005-->
+			<field name="RATECD-UND-BP1" fmt="9(01)" />
+			<field name="RATECD-OVR1-U2" fmt="9(01)" />
+			<field name="RATECD-OVR-BP2" fmt="9(01)" />
+			<!--</struct>--><!--VMBR 061005-->
+			<field name="3-PURCHASE-RT-CDS" fmt="9(03)" />
+			<!--<struct name="RATECD-CA">--><!--VMBR 061005-->
+			<field name="RATECD-CA-UND1" fmt="9(01)" />
+			<field name="RATECD-CA-OV1U2" fmt="9(01)" />
+			<field name="RATECD-CA-OVR2" fmt="9(01)" />
+			<!--</struct>--><!--VMBR 061005-->
+			<field name="3-CASHADV-RATECODE" fmt="9(03)" />
+			<field name="RATECODE-CSHADV-FE" fmt="9(01)" />
+			<field name="RATECODE-MINPAYMNT" fmt="9(01)" />
+			<field name="RATECODE-LATECHG-F" fmt="9(01)" />
+			<field name="HOLD-PLASTIC" fmt="x(01)">
+				<option name="HOLD-PLASTIC" value="Y" />
+				<option name="DONOT-HOLD-PLASTIC" value="N" />
+			</field>
+			<field name="ZIP4-NOT-CONVERT" fmt="x(01)">
+				<option name="ZIP-PLUS-4-NOT-CNV" value="Y" />
+				<option name="ZIP-PLUS-4-CONVERT" value="N" />
+			</field>
+			<field name="ZIP4-IS-VALID" fmt="x(01)">
+				<option name="ZIP-PLUS-4-VALID" value="Y" />
+				<option name="ZIP-PLUS-4-INVALID" value="N" />
+			</field>
+			<field name="ONL-ADDRCHG-UPD-OV" fmt="x(01)">
+				<option name="ONL-ADDR-UPD-OVER" value="Y" />
+				<option name="NO-ONL-ADDR-UPD-OVR" value="N" />
+			</field>
+			<field name="AUTH_USER1-HASCARD" fmt="x(01)">
+				<option name="AUTH_USR-1-HAS-CRDS" value="Y" />
+				<option name="AUTH_USR1-HASNO-CRD" value="N" />
+			</field>
+			<field name="AUTH_USER2-HASCARD" fmt="x(01)">
+				<option name="AUTH_USR-2-HAS-CRDS" value="Y" />
+				<option name="AUTH_USR2-HASNO-CRD" value="N" />
+			</field>
+			<field name="AUTH_USER3-HASCARD" fmt="x(01)">
+				<option name="AUTH_USR-3-HAS-CRDS" value="Y" />
+				<option name="AUTH_USR3-HASNO-CRD" value="N" />
+			</field>
+			<field name="DATE-LAT-NMADDR-MN" fmt="9(08)" />
+			<field name="SSN-FOR-NAME-LINE1" fmt="9(09)" />
+			<field name="HOME-PHONE-NUMBER" fmt="9(10)" />
+			<field name="BUSINESS-PHONE-NUMBER" fmt="9(10)" />
+			<field name="SPOUSE-NAME" fmt="X(15)" />
+			<field name="PLACE-OF-EMPLOYMEN" fmt="X(15)" />
+			<field name="NAME-LINE1-PRIM-AP" fmt="X(25)" />
+			<field name="NAME-LINE2-COAPPL" fmt="X(25)" />
+			<field name="ADDRESS-LINE-1" fmt="X(36)" />
+			<field name="ADDRESS-LINE-2" fmt="X(36)" />
+			<field name="ADDRESS-CITY" fmt="X(25)" /><!-- VMBR 061024 (==)-->
+			<field name="STATE-ABBRE-ADDLN1" fmt="X(03)" /><!-- VMBR 061024 (+1)-->
+			<field name="AUTH-USER-NAME1" fmt="X(25)" />
+			<field name="AUTH-USER-NAME2" fmt="X(25)" />
+			<field name="AUTH-USER-NAME3" fmt="X(25)" />
+			<field name="STATEMENT-HOLD-CDE" fmt="9(03)" />
+			<field name="ZIPCODE-CARDHOLDER" fmt="X(09)" /><!-- cambio X(09) -->
+			<field name="LAST-AUTO-PASTDUE" fmt="9(08)" />
+			<field name="TIMES-AUTO-PASTDUE" fmt="9(03)" />
+			<field name="AGENT-BANK-NAME" fmt="X(40)" />
+			<field name="EXT-TRNACCT-NR-OLD" fmt="X(16)" />
+			<field name="SHORT-NAME" fmt="X(15)" />
+			<field name="RATE-CODE-CH-COMPL" fmt="X(01)" />
+			<field name="CAN-CHG-MBRSHIP-FE" fmt="X(01)" />
+			<field name="CAN-CHG-OVRLMT-FEE" fmt="X(01)" />
+			<field name="ACCT-HAS-VISA-PHONE" fmt="X(01)" />
+			<field name="BILL-FEDX-CARD-DE" fmt="X(01)" />
+			<field name="CARD-ACTIVATION-ST" fmt="X(01)" />
+			<field name="INDICATE-PURCH-IHB" fmt="X(01)" />
+			<field name="INDICATE-CASH-IHB" fmt="X(01)" />
+			<field name="PAST-DUE-NOTICE-1" fmt="X(01)" />
+			<field name="PAST-DUE-NOTICE-2" fmt="X(01)" />
+			<field name="AUTO-LTR-1" fmt="X(01)" />
+			<field name="AUTO-LTR-2" fmt="X(01)" />
+			<field name="AUTO-LTR-3" fmt="X(01)" />
+			<field name="AUTO-LTR-4" fmt="X(01)" />
+			<field name="ACCT-DNLD-FROM-SSI" fmt="X(01)" />
+			<field name="ACCT-NEW-TO-SSI-RM" fmt="X(01)" />
+			<field name="ACE-STATUS-BYTE" fmt="X(01)" />
+			<field name="QTRLY-PMT-MO-COUNT" fmt="+9(01)" />
+			<field name="DEF-PMT-SCHD-CNTDN" fmt="+9(01)" />
+			<field name="DEF-PMT-SCHD-REFRE" fmt="+9(01)" />
+			<field name="NWB-STATUS" fmt="x(01)">
+				<option name="NWB-STAT-YES" value="Y" />
+				<option name="NWB-STAT-NO" value="N" />
+			</field>
+			<field name="NWB-ACCT-LISTED" fmt="x(01)">
+				<option name="NWB-LIST-YES" value="Y" />
+				<option name="NWB-LIST-NO" value="N" />
+			</field>
+			<field name="JVTYPE" fmt="x(03)">
+				<option name="JVTYPE-CBA" value="CBA" />
+				<option name="JVTYPE-PCA" value="PCA" />
+				<option name="JVTYPE-SCA" value="SCA" />
+				<option name="JVTYPE-ICA" value="ICA" />
+			</field>
+			<field name="LONG-NAME" fmt="X(40)" />
+			<field name="TAXID" fmt="X(13)" /><!-- Cambio X(13)-->
+			<field name="BUSN-EXT" fmt="X(05)" /><!-- Cambio 9(06)-->
+			<field name="PREV-POINT-BAL" fmt="+9(09)" /><!-- Cambio +9(09)-->
+			<field name="ACCUM-POINTS" fmt="+9(09)" /><!-- Cambio +9(09)-->
+			<field name="POINTS-USED" fmt="+9(09)" /><!-- Cambio +9(09)-->
+			<field name="EXPIRED-POINTS" fmt="+9(09)" /><!-- Cambio +9(09)-->
+			<field name="CURR-POINT-BAL" fmt="+9(09)" /><!-- Cambio +9(09)-->
+			<field name="BONUS-POINT-CDATE" fmt="X(08)" />
+			<field name="ISD-FILL3" fmt="X(10)" />
+			<field name="FRAUD-MESSAGE-IND" fmt="x(01)">
+				<option name="FRAUD-MESSAGE" value="Y" />
+				<option name="NOT-FRAUD-MESSAGE" value="N" />
+			</field>
+			<field name="COMB-DET-STATEMENT" fmt="x(01)">
+				<option name="LITTLE-STATEMENT" value="Y" />
+				<option name="NOT-LITTLE-STATEMNT" value="N" />
+			</field>
+			<field name="COMB-MASTER-STATEM" fmt="x(01)">
+				<option name="BIG-STATEMENT" value="Y" />
+				<option name="NOT-BIG-STATEMENT" value="N" />
+			</field>
+			<field name="SYS-GENER-PIN" fmt="x(01)">
+				<option name="SYS-GENER-PIN" value="Y" />
+				<option name="NOT-SYS-GENER-PIN" value="N" />
+			</field>
+			<field name="CUST-SELECTED-PIN" fmt="x(01)">
+				<option name="CUST-SEL-PIN" value="Y" />
+				<option name="NOT-CUST-SEL-PIN" value="N" />
+			</field>
+			<field name="BANK-53" fmt="x(01)">
+				<option name="BANK-53" value="Y" />
+				<option name="NON-BANK-53" value="N" />
+			</field>
+			<field name="BANK-SPECIFIC-IND" fmt="x(01)">
+				<option name="BANK-SPECIFIC-IND" value="Y" />
+				<option name="NON-BANK-SPEC-IND" value="N" />
+			</field>
+			<field name="BANK-SPEC2-IND" fmt="x(01)">
+				<option name="BANK-SPEC2-IND" value="Y" />
+				<option name="NON-BANK-SPEC2-IND" value="N" />
+			</field>
+			<field name="FREE-TEXT-STATUS" fmt="X(01)" />
+			<field name="EXT-SEG-1-ON-FILE" fmt="x(01)">
+				<option name="EXT-SEG-1-ON-FILE" value="Y" />
+				<option name="NO-EXT-SEG-1" value="N" />
+			</field>
+			<field name="STATE-PROD-THIS-CY" fmt="x(01)">
+				<option name="STAT-PROD-TH-CYC" value="Y" />
+				<option name="NO-STATE-TH-CYC" value="N" />
+			</field>
+			<field name="ZERO-BALANCE-YESTE" fmt="x(01)">
+				<option name="ZERO-BAL-YESTERDAY" value="Y" />
+				<option name="NO-ZERO-BAL-YES" value="N" />
+			</field>
+			<field name="AFFIN-DUES-CG-PREV" fmt="x(01)">
+				<option name="AFFIN-DUES-CG-PREV" value="Y" />
+				<option name="NO-AFF-DUES-CG-PREV" value="N" />
+			</field>
+			<field name="AFFIN-DUES-FIRST-C" fmt="x(01)">
+				<option name="AFF-DUES-FIRST-CHG" value="Y" />
+				<option name="NO-AFF-DUES-FST-CHG" value="N" />
+			</field>
+			<field name="NEW-ACCT-1ST-BBAL" fmt="x(01)">
+				<option name="NEW-ACCT-1ST-BILL" value="Y" />
+				<option name="NOT-NEW-ACCT-1ST" value="N" />
+			</field>
+			<field name="RET-CHECK-THIS-CYC" fmt="x(01)">
+				<option name="RET-CHECK-THIS-CYC" value="Y" />
+				<option name="NO-RET-CHECK-TH-CYC" value="N" />
+			</field>
+			<field name="SENT-TO-MC-TRAV" fmt="x(01)">
+				<option name="SENT-TO-MC-TRAV" value="Y" />
+				<option name="NOT-SENT-TO-MC-TRAV" value="N" />
+			</field>
+			<field name="ISD-FILL-8" fmt="X(01)" />
+			<field name="AUTH-NCNB-SEC-ON" fmt="x(01)">
+				<option name="NCNB-SECURE-ON" value="Y" />
+				<option name="NCNB-SECURE-OFF" value="N" />
+			</field>
+			<field name="AUTH-NCNB-SEC-COMP" fmt="x(01)">
+				<option name="NCNB-SECURE-COMP" value="Y" />
+				<option name="NCNB-SECURE-NOT-CM" value="N" />
+			</field>
+			<field name="ACCT-PENDING-XFR" fmt="x(01)">
+				<option name="ACCT-PENDING-XFR" value="Y" />
+				<option name="ACCT-NOT-PENDING-X" value="N" />
+			</field>
+			<field name="CHANGE-IN-TERM-DT" fmt="9(08)" />
+			<field name="ISD-FILL4" fmt="X(36)" /><!-- X(36) --><!--VMBR 061005-->
+			<field name="FRAUD-COUNTERFEIT" fmt="X(01)" />
+			<field name="ISD-FILL5" fmt="X(33)" />
+			<field name="PD-FULL-BEF-PAYDUE" fmt="X(01)" />
+			<field name="OVERLIMIT-CHRG-COM" fmt="X(01)" />
+			<field name="ATM-XFER-TODAY-ACC" fmt="X(01)" />
+			<field name="DEBIT-CRDLIM-UPD-T" fmt="X(01)" />
+			<field name="LETTER-REQ-TODAY" fmt="X(01)" />
+			<field name="LETTER-REQ-DEL-TOD" fmt="X(01)" />
+			<field name="ACCT-REISSUED-TH-M" fmt="X(01)" />
+			<field name="AUTO-LIM-INCR-TH-M" fmt="X(01)" />
+			<field name="CO-STMT-FLAG" fmt="X(01)" />
+			<field name="CITY-STATE-COMBINE" fmt="X(27)" />
+			<field name="ISD-FILL6" fmt="X(14)" /><!-- X(14) --><!--VMBR 061005-->
+			<field name="DATE-TO-CHG-ANN-FE" fmt="9(08)" />
+			<field name="ISD-FILL7" fmt="X(67)" />
+			<field name="BANK-NUMBER" fmt="9(04)" />
+			<field name="CELL-PHONE" fmt="X(13)" /><!-- cambio 9(13) -->
+			<field name="CURP-ID" fmt="X(18)" /><!-- cambio X(18) -->
+			<field name="GUARANTOR1" fmt="X(25)" />
+			<field name="RFC-GUARANTOR1" fmt="X(13)" />
+			<field name="GUARANTOR2" fmt="X(25)" />
+			<field name="RFC-GUARANTOR2" fmt="X(13)" />
+			<field name="GUARANTOR3" fmt="X(25)" />
+			<field name="RFC-GUARANTOR3" fmt="X(13)" />
+			<field name="EMBOSS-NAME" fmt="X(26)" />
+			<field name="PERSONAL-RFC" fmt="X(13)" />
+			<field name="EMAIL" fmt="X(60)" />
+			<field name="MISC-USER1" fmt="X(01)" />
+			<field name="IDS-FILL8" fmt="X(43)" />
+		</struct>
+	</packet>
+	<!-- Final del packet SI01 -->
+	<!-- Inicio del packet SI02 -->
+	<packet id="SI02">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="CR-LIMIT" fmt="+9(07).99" />
+			<field name="TOTAL-CURRENT-BAL" fmt="+9(07).99" />
+			<field name="AVAILABLE-MONEY" fmt="+9(07).99" />
+			<field name="OS-MIN-PMT-DUE" fmt="+9(07).99" />
+			<field name="AMT-CA-MIN-PMT-DUE" fmt="+9(07).99" />
+			<field name="NUM-TIMES-PMT-SKPD" fmt="9(03)" />
+			<field name="NUM-CA-CRD-FE-FEE" fmt="9(03)" />
+			<field name="AMT-CA-CRD-FE-FEE" fmt="+9(07).99" />
+			<field name="CS-ADV-FRFEE-TC" fmt="+9(05).99" />
+			<field name="NUM-PUR-TC" fmt="9(05)" />
+			<field name="AMT-PUR-TC" fmt="+9(07).99" />
+			<field name="NUM-CA-TC" fmt="9(05)" />
+			<field name="AMT-CA-TC" fmt="+9(07).99" />
+			<field name="NUM-CR-TC" fmt="9(05)" />
+			<field name="AMT-CR-TC" fmt="+9(07).99" />
+			<field name="NUM-PMT-TC" fmt="9(05)" />
+			<field name="AMT-PMT-TC" fmt="+9(07).99" />
+			<field name="NUM-MISC-CHRG-TC" fmt="9(03)" />
+			<field name="AMT-MISC-CHRG-TC" fmt="+9(07).99" />
+			<field name="NUM-OVLIM-FEE-TC" fmt="9(03)" />
+			<field name="AMT-OVLIM-FEE-TC" fmt="+9(05).99" />
+			<field name="NUM-DR-ADJ-TC" fmt="9(03)" />
+			<field name="AMT-DR-ADJ-TC" fmt="+9(05).99" />
+			<field name="NUM-CR-ADJ-TC" fmt="9(03)" />
+			<field name="AMT-CR-ADJ-TC" fmt="+9(05).99" />
+			<field name="LATE-CRG-ASES-TC" fmt="+9(05).99" />
+			<field name="AMT-MEM-FEE-TC" fmt="+9(03).99" />
+			<field name="AMT-SUBJ-LATE-CRG" fmt="+9(07).99" />
+			<field name="LTD-CA-AMT" fmt="+9(11).99" />
+			<field name="DISC-AMT-ALLOWED" fmt="+9(05).99" />
+			<field name="PMT-APD-PUR-FCH" fmt="+9(07).99" />
+			<field name="PMT-APD-CA-FNCH" fmt="+9(07).99" />
+			<field name="PMT-APD-MISC-CH" fmt="+9(07).99" />
+			<field name="PMT-APP-CURPUR-BAL" fmt="+9(07).99" />
+			<field name="PMT-APD-PREV-PUR" fmt="+9(07).99" />
+			<field name="PMT-APD-OLDBAL-PUR" fmt="+9(07).99" />
+			<field name="PMT-APD-CURR-CA" fmt="+9(07).99" />
+			<field name="PMT-APD-PREV-CA" fmt="+9(07).99" />
+			<field name="PMT-APD-OLD-BAL-CA" fmt="+9(07).99" />
+			<field name="CUR-PUR-FIN-CHG-OS" fmt="+9(07).99" />
+			<field name="OLD-PUR-FIN-CHG-OS" fmt="+9(07).99" />
+			<field name="CURR-CA-FIN-CHG-OS" fmt="+9(07).99" />
+			<field name="OLD-CA-FIN-CHRG-OS" fmt="+9(07).99" />
+			<field name="CURR-MISC-CHRG-OS" fmt="+9(07).99" />
+			<field name="AGGR-NUM-DAYS-BILL" fmt="9(03)" />
+			<field name="AGGR-NUM-DAY-LTCHG" fmt="9(03)" />
+			<field name="AGGR-BAL-CUR-PUR" fmt="+9(13).99" />
+			<field name="AGG-BAL-1CY-OLDPUR" fmt="+9(13).99" />
+			<field name="AGG-BAL-2CY-OLDPUR" fmt="+9(13).99" />
+			<field name="AGGR-BAL-CURR-CA" fmt="+9(13).99" />
+			<field name="AGGR-BAL-1CYCLE-CA" fmt="+9(13).99" />
+			<field name="AGGR-BAL-2CYCLE-CA" fmt="+9(13).99" />
+			<field name="CREDIT-BAL" fmt="+9(07).99" />
+			<field name="CREDIT-BAL-AGGR" fmt="+9(09).99" />
+			<field name="CREDIT-BAL-RC" fmt="X(01)" />
+			<field name="PREV-CYC-CR-BAL" fmt="+9(07).99" />
+			<field name="IVA-TRANS-AMT" fmt="+9(07).99" />
+			<field name="JV-PUR-BONUS-PTS" fmt="+9(07).99" />
+			<field name="ISD-FILLER-1" fmt="X(61)" />
+			<field name="LC-ADB-CURR-PUR" fmt="+9(07).99" />
+			<field name="CURR-PUR-BAL-OS" fmt="+9(07).99" />
+			<field name="1CYC-OLDPUR-BAL-OS" fmt="+9(07).99" />
+			<field name="2CYC-OLDPUR-BAL-OS" fmt="+9(07).99" />
+			<field name="CURR-CA-BAL-OS" fmt="+9(07).99" />
+			<field name="1CYC-OLD-CA-BAL-OS" fmt="+9(07).99" />
+			<field name="2CYC-OLD-CA-BAL-OS" fmt="+9(07).99" />
+			<field name="NUM-TIMES-PD-1-30" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-31-60" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-61-90" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-91-120" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-121-150" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-151-180" fmt="9(03)" />
+			<field name="NUM-TIMES-PD-181-PLS" fmt="9(03)" />
+			<field name="AMT-CURR-PD-1-30" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-31-60" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-61-90" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-91-120" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-121-150" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-151-180" fmt="+9(07).99" />
+			<field name="AMT-CURR-PD-181-PLS" fmt="+9(07).99" />
+			<field name="VAR-SEGMENT-IND" fmt="x(01)">
+				<option name="CASH-LIM-FOR-CC-ONL" value="L" />
+				<option name="PRIVATE-LABEL-VAR-S" value="\u0020" />
+				<option name="AAA-SEGMENT" value="A" />
+				<option name="BUSINESSCARD" value="B" />
+				<option name="CIF-FLAG-DATA" value="F" />
+				<option name="CHECK-REORDER-DATA" value="C" />
+				<option name="EQUITY-LINE-SEGMENT" value="E" />
+				<option name="MILITARY-SEGMENT" value="M" />
+				<option name="NCNB-SOLICIT-DATA" value="S" />
+				<option name="PROCARD-SEGMENT" value="P" />
+				<option name="HR-BLOCK-BLOCKBUCKS" value="H" />
+				<option name="OPEN-REPORTING" value="O" />
+			</field>
+			<field name="CASH-LIMIT-PERCENT" fmt="9(03)" />
+			<field name="CASH-LIMIT-CHG-DT" fmt="9(08)" />
+			<field name="CASH-AUTH-OUTSTAND" fmt="+9(07).99" />
+			<field name="MISC-VAR-AREA-IND1" fmt="X(01)">
+				<option name="ACCT-HAS-OLD-SEG" value="Y" />
+				<option name="ACCT-HAS-NO-OLD-SEG" value="N" />
+			</field>
+			<field name="OLD-PUR-BAL-OS" fmt="+9(07).99" />
+			<field name="OLD-CA-BAL-OS" fmt="+9(07).99" />
+			<field name="AGGR-OLD-PUR-BAL" fmt="+9(13).99" />
+			<field name="AGGR-OLD-CA-BAL" fmt="+9(13).99" />
+			<field name="RC-OLD-PUR-UBP1" fmt="9(01)" />
+			<field name="RC-OLD-PUR-OBP1" fmt="9(01)" />
+			<field name="RC-OLD-PUR-OBP2" fmt="9(01)" />
+			<field name="RC-OLD-PUR-GROUP" fmt="9(03)" />
+			<field name="RC-OLD-CAUND-B1" fmt="9(01)" />
+			<field name="RC-OLD-CAOVR-B1" fmt="9(01)" />
+			<field name="RC-OLD-CAOVR-B2" fmt="9(01)" />
+			<field name="RC-OLD-CA-GROUP" fmt="9(03)" />
+			<field name="RC-OLD-PUR-GRP1" fmt="9(03)" />
+			<field name="RC-OLD-CA-GRP2" fmt="9(03)" />
+			<field name="REAGE-PASTDUE" fmt="x(01)">
+				<option name="HAS-REAGE-PAST-DUE" value="Y" />
+				<option name="HAS-NO-REAGE-PAST-D" value="N" />
+			</field>
+			<field name="DATE-PAYMENT" fmt="9(08)" />
+			<field name="MIN-PMT-DUE" fmt="+9(05)" />
+			<field name="2-NUM-TMS-PD-1-30" fmt="9(03)" />
+			<field name="2-NUM-TMS-PD-31-60" fmt="9(03)" />
+			<field name="2-NUM-TMS-PD-61-90" fmt="9(03)" />
+			<field name="2-NM-TMS-PD-91-120" fmt="9(03)" />
+			<field name="2-NM-TM-PD-121-150" fmt="9(03)" />
+			<field name="2-NM-TM-PD-151-180" fmt="9(03)" />
+			<field name="2-NM-TM-PD-181-PLS" fmt="9(03)" />
+			<field name="2-AMT-CURR-PD-1-30" fmt="+9(05)" />
+			<field name="2-AMT-CUR-PD-31-60" fmt="+9(05)" />
+			<field name="2-AMT-CUR-PD-61-90" fmt="+9(05)" />
+			<field name="2-AMT-CU-PD-91-120" fmt="+9(05)" />
+			<field name="2-AMT-CR-PD121-150" fmt="+9(05)" />
+			<field name="2-AMT-CR-PD151-180" fmt="+9(05)" />
+			<field name="2-AMT-CR-PD181-PLS" fmt="+9(05)" />
+			<field name="2-NUM-DAYS-PD-PMT" fmt="9(03)" />
+			<field name="2-NOTC-PRT-FLG-PMT" fmt="X(01)" />
+			<field name="2-COLL-STATUS-PMT" fmt="X(01)" />
+			<field name="PRV-CYC-ADB-CURPUR" fmt="+9(07).99" />
+			<field name="BEG-MO-CURR-BAL" fmt="+9(09).99" />
+			<field name="YTD-FIN-CHR-ASSESS" fmt="+9(07).99" />
+			<field name="YTD-FIN-CHRG-PAID" fmt="+9(07).99" />
+			<field name="PRIOR-YTD-FIN-CHRG" fmt="+9(07).99" />
+			<field name="YTD-LATE-CHRG" fmt="+9(07).99" />
+			<field name="ACCT-HAS-OLD-SEG-2" fmt="x(01)">
+				<option name="ACCT-HAS-OLD-SEG-2" value="Y" />
+				<option name="ACCT-NO-OLD-SEG2" value="N" />
+			</field>
+			<field name="ACCT-HAS-XTRALINE" fmt="x(01)">
+				<option name="ACCT-HAS-XTRALINE" value="Y" />
+				<option name="ACCT-NO-XTRALINE" value="N" />
+			</field>
+			<field name="ACCT-HAS-FLA-SALES" fmt="x(01)">
+				<option name="ACCT-HAS-FLA-SALES" value="Y" />
+				<option name="ACCT-NO-FLA-SALES" value="N" />
+			</field>
+			<field name="ACCT-HAS-MAJ-PURC" fmt="x(01)">
+				<option name="ACCT-HAS-MAJ-PURC" value="Y" />
+				<option name="ACCT-HAS-NO-MAJ-PURC" value="N" />
+			</field>
+			<field name="ACCT-HAS-CALL-CD" fmt="x(01)">
+				<option name="ACCT-HAS-CALLING-CD" value="Y" />
+				<option name="ACCT-NO-CALLING-CARD" value="N" />
+			</field>
+			<field name="EXPANSION" fmt="X(01)" />
+			<field name="DELETE-PIN-REQUEST" fmt="x(01)">
+				<option name="DELETE-PIN-REQUEST" value="Y" />
+				<option name="DONT-DELETE-PIN-REQ" value="N" />
+			</field>
+			<field name="MISC-VAR-AREA-IND2" fmt="x(01)">
+				<option name="ACCT-HAS-OLD-SEG-2" value="Y" />
+				<option name="ACCT-HAS-NO-OLD-SEG-2" value="N" />
+			</field>
+			<field name="OLD-PUR-BAL-OS-2" fmt="+9(07).99" />
+			<field name="OLD-CA-BAL-OS-2" fmt="+9(07).99" />
+			<field name="AGGR-OLD-PUR-BAL-2" fmt="+9(13).99" />
+			<field name="AGGR-OLD-CA-BAL-2" fmt="+9(13).99" />
+			<field name="RC-OLD-PUR-UBP1-2" fmt="9(01)" />
+			<field name="RC-OLD-PUR-OBP1-2" fmt="9(01)" />
+			<field name="RC-OLD-PUR-OBP2-2" fmt="9(01)" />
+			<field name="RC-OLD-PUR-GROUP-2" fmt="9(03)" />
+			<field name="RC-OLD-CAUND-B1-2" fmt="9(01)" />
+			<field name="RC-OLD-CAOVR-B1-2" fmt="9(01)" />
+			<field name="RC-OLD-CAOVR-B2-2" fmt="9(01)" />
+			<field name="RC-OLD-CA-GROUP-2" fmt="9(03)" />
+			<!--<struct name = "RC-OLD-PUR-GRPS-2">--><!--VMBR 061006-->
+			<field name="RC-OLD-PUR-GRP1-2" fmt="9(03)" />
+			<field name="RC-OLD-CA-GRP2-2" fmt="9(03)" />
+			<!--</struct>--><!--VMBR 061006-->
+			<field name="ACCT-PROCESS-TYPE" fmt="X(01)" />
+			<field name="COMPANY-NUMBER" fmt="X(05)" />
+			<field name="PERC-LIMIT-CASH" fmt="+999" />
+			<field name="MEMO-BALAN-PURCH" fmt="+9(07).99" />
+			<field name="TYPE-BILLING" fmt="X" />
+			<field name="MEMO-BALAN-CASH" fmt="+9(07).99" />
+			<field name="ISD-FILLER2" fmt="X(11)" />
+			<field name="FUTURE-XPANSION" fmt="X(71)" />
+		</struct>
+	</packet>
+	<!-- Final del packet SI02 -->
+	<!-- Inicio del packet SI03-->
+	<packet id="SI03">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+
+			<field name="MORE-DATA-IND" fmt="X(1)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(3)" />
+			<field name="SEGMENT-LENGTH" fmt="9(4)" />
+			<array name="TRANS-SEGMENT" min="0" max="74" depends="NBR-TRAN-SEGMENTS">
+				<field name="BANK-NUM" fmt="9(04)" />
+				<field name="ACCT-NUM" fmt="9(14)" />
+				<field name="ACCT-SEQ-NUM" fmt="9(06)" />
+				<field name="ACCT-NUM-EXP" fmt="X(03)" />
+				<field name="ACCT-NUM-EXP2" fmt="X(03)" />
+				<field name="TRANSMIT-BK" fmt="9(04)" />
+				<field name="AGT-ASSIGNED" fmt="9(04)" />
+				<field name="RUN-NUMBER" fmt="9(06)" />
+				<field name="TRANSMISSION-NUM" fmt="9(06)" />
+				<field name="FROM-AER" fmt="9(03)" />
+				<field name="DAILY-PROC-STAT" fmt="X(01)">
+					<option name="PRODUCTION-ITEM" value="P" />
+					<option name="TEST-ITEM" value="T" />
+					<option name="BLOCKBUSTER-OR-AAA" value="\u0020" />
+				</field>
+				<field name="CARDHLDR-PLAN-VISA" fmt="X(01)">
+					<option name="PLAN-VISA" value="Y" />
+					<option name="NOT-PLAN-VISA" value="N" />
+				</field>
+				<field name="CARDHLDR-PLAN-MC" fmt="X(01)">
+					<option name="MASTERCARD-PLAN" value="Y" />
+					<option name="NOT-MASTERCD-PLAN" value="N" />
+				</field>
+				<field name="CARDHLDR-PLAN-PL01" fmt="X(01)">
+					<option name="PRIVATE-LABEL-01" value="Y" />
+					<option name="NOT-PRIVATE-LAB-01" value="N" />
+				</field>
+				<field name="CARDHLDR-PLAN-PL02" fmt="X(01)">
+					<option name="PRIVATE-LABEL-02" value="Y" />
+					<option name="NOT-PRIVATE-LAB-02" value="N" />
+				</field>
+				<field name="CARDHLDR-PLAN-PL03" fmt="X(01)">
+					<option name="PRIVATE-LABEL-03" value="Y" />
+					<option name="NOT-PRIVATE-LAB-03" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VISA-CA" fmt="X(01)">
+					<option name="VISA-CASH-ADV-MERC" value="Y" />
+					<option name="NOT-VISA-CA-MERCHNT" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-CA-M" fmt="X(01)">
+					<option name="MASTERCARD-CA-MERC" value="Y" />
+					<option name="NOT-MASTERCD-CA-MER" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VISA-LG" fmt="X(01)">
+					<option name="VISA-LARGE-TICKET-M" value="Y" />
+					<option name="NOT-VISA-LGE-TICK-M" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-LG-T" fmt="X(01)">
+					<option name="MASTERCARD-LGE-TICK" value="Y" />
+					<option name="NOT-MC-LARGE-TICK-M" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VISA-BU" fmt="X(01)">
+					<option name="VISA-BUSINESS-CARD" value="Y" />
+					<option name="NOT-VISA-BUSINESS-C" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-BUCD" fmt="X(01)">
+					<option name="MASTERCARD-BUS-CARD" value="Y" />
+					<option name="NOT-MASTERCD-BUS-CD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-DINERS" fmt="X(01)">
+					<option name="DINERS" value="Y" />
+					<option name="NOT-DINERS" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-ONL-DC" fmt="X(01)">
+					<option name="ONLINE-DEBIT-CARD" value="Y" />
+					<option name="NOT-ONL-DEBIT-CARD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-REC-BNK" fmt="X(01)">
+					<option name="RECOVERY-BANK" value="Y" />
+					<option name="NOT-RECOVERY-BANK" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-OUTCLR" fmt="X(01)">
+					<option name="OUTCLEAR" value="Y" />
+					<option name="NOT-OUTCLEAR" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-ELECTRN" fmt="X(01)">
+					<option name="ELECTRON" value="Y" />
+					<option name="NOT-ELECTRON" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VIS-AAA" fmt="X(01)">
+					<option name="VISA-AAA" value="Y" />
+					<option name="NOT-VISA-AAA" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-AAA" fmt="X(01)">
+					<option name="MASTERCARD-AAA" value="Y" />
+					<option name="NOT-MASTERCARD-AAA" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VISA-DC" fmt="X(01)">
+					<option name="VISA-DEBIT-CARD" value="Y" />
+					<option name="NOT-VISA-DEBIT-CARD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-DEBC" fmt="X(01)">
+					<option name="MASTERCARD-DEBIT-CD" value="Y" />
+					<option name="NOT-MASTERCD-DEB-CD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-VISA-PR" fmt="X(01)">
+					<option name="VISA-PREMIUM-CARD" value="Y" />
+					<option name="NOT-VISA-PREM-CARD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-MC-GOLD" fmt="X(01)">
+					<option name="MASTERCARD-GOLDCARD" value="Y" />
+					<option name="NOT-MASTERCD-GOLDCD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-EQ-VISA" fmt="X(01)">
+					<option name="EQUITY-VISA" value="Y" />
+					<option name="NOT-EQUITY-VISA" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-EQ-MC" fmt="X(01)">
+					<option name="EQUITY-MASTERCARD" value="Y" />
+					<option name="NOT-EQUITY-MASTERCD" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-EQ-PL" fmt="X(01)">
+					<option name="EQUITY-PRIVATE-LAB" value="Y" />
+					<option name="NOT-EQUITY-PRIVATEL" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-JCB" fmt="X(01)">
+					<option name="JCB" value="Y" />
+					<option name="NOT-JCB" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-DISCOVE" fmt="X(01)">
+					<option name="DISCOVER" value="Y" />
+					<option name="NOT-DISCOVER" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-AM-EXP" fmt="X(01)">
+					<option name="AMERICAN-EXPRESS" value="Y" />
+					<option name="NOT-AMERICAN-EXPRES" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-AVAIL1" fmt="X(01)">
+					<option name="AVAILABLE1" value="Y" />
+					<option name="NOT-AVAILABLE1" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-AVAIL2" fmt="X(01)">
+					<option name="AVAILABLE2" value="Y" />
+					<option name="NOT-AVAILABLE2" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-AVAIL3" fmt="X(01)">
+					<option name="AVAILABLE3" value="Y" />
+					<option name="NOT-AVAILABLE3" value="N" />
+				</field>
+				<field name="CDHLDR-PLN-ALL-PLN" fmt="X(01)">
+					<option name="ALL-PLANS-PRESENT" value="Y" />
+					<option name="NOT-ALL-PLANS-PRES" value="N" />
+				</field>
+				<field name="LAST-TRAN-DT" fmt="9(08)" />
+				<field name="DEB-CRED-STAT" fmt="X(01)" />
+				<field name="IN-TRAN-CD" fmt="X(04)" />
+				<field name="OUT-TRAN-CD" fmt="X(04)" /><!--Modificado antes 9(04) -->
+				<field name="TCSI-CD" fmt="X(04)" />
+				<field name="THIS-TRAN-REVERSED" fmt="X(01)">
+					<option name="TRANSACTION-REVERSD" value="Y" />
+					<option name="TRANS-NOT-REVERSED" value="N" />
+				</field>
+				<field name="REVERSAL-TRANS" fmt="X(01)">
+					<option name="REVERSAL-TRANSACTIN" value="Y" />
+					<option name="NOT-REVERSAL-TRANS" value="N" />
+				</field>
+				<field name="TRANSLATED-FOR-ORG" fmt="X(01)">
+					<option name="ACCT-TRANS-FR-ORIG" value="Y" />
+					<option name="ACCT-NOT-TRNS-F-ORG" value="N" />
+				</field>
+				<field name="TRANSLATED-FRM-XFR" fmt="X(01)">
+					<option name="ACCT-TRANS-FR-TRANS" value="Y" />
+					<option name="ACCT-NOT-TRNS-F-TRN" value="N" />
+				</field>
+				<field name="ACCT-FORCE-POSTED" fmt="X(01)">
+					<option name="ACCT-FORCE-POSTED" value="Y" />
+					<option name="ACCT-NOT-FORCE-POST" value="N" />
+				</field>
+				<field name="0-TRAN-DATE-FLAG" fmt="X(01)">
+					<option name="ZERO-TRAN-DT-FLAG" value="Y" />
+					<option name="NOT-0-TRAN-DATE-FLG" value="N" />
+				</field>
+				<field name="AAA-DUES-IND" fmt="X(01)">
+					<option name="AAA-DUES-IND" value="Y" />
+					<option name="NOT-AAA-DUES-IND" value="N" />
+				</field>
+				<field name="ELECTRON-TERM-IND" fmt="X(01)">
+					<option name="ELECTRONIC-TERM-IND" value="Y" />
+					<option name="NO-ELECTNIC-TERM-ID" value="N" />
+				</field>
+				<field name="AGENCY-ACCT-CROWN" fmt="X(01)">
+					<option name="AGNCY-ACCT-CROWN-FN" value="Y" />
+					<option name="NO-AGNCY-ACT-CROWN" value="N" />
+				</field>
+				<field name="MECH-NAME-41-BYTES" fmt="X(01)">
+					<option name="MERCHANT-NM-CN-41-B" value="Y" />
+					<option name="MERCHANT-NM-NOT-41" value="N" />
+				</field>
+				<field name="CARDSAVINGS-TRAN" fmt="X(01)">
+					<option name="CARDSAVINGS-TRANS" value="Y" />
+					<option name="NOT-CARDSAVINGS-TRN" value="N" />
+				</field>
+				<field name="VISA-BUSINESS-CARD" fmt="X(01)">
+					<option name="VISA-BUSINESS-CARD" value="Y" />
+					<option name="NOT-VISA-BUS-CARD" value="N" />
+				</field>
+				<field name="SPEC-USER-OPTION" fmt="X(01)">
+					<option name="SPEC-USR-OPT-BYTE" value="Y" />
+					<option name="NO-SPEC-USR-OPT-BYT" value="N" />
+				</field>
+				<field name="ANN-FEE-CHG-IS-REN" fmt="X(01)">
+					<option name="ANN-FEE-CHG-IS-REN" value="Y" />
+					<option name="ANN-FEE-CHG-NOT-REN" value="N" />
+				</field>
+				<field name="SECURED-CARD-TRANS" fmt="X(01)">
+					<option name="SECURED-CARD-TRANS" value="Y" />
+					<option name="NOT-SECURE-CD-TRAN" value="N" />
+				</field>
+				<field name="PREV-STATE-TRANS" fmt="X(01)">
+					<option name="PREV-STATE-TRANS" value="Y" />
+					<option name="NOT-PREV-STATE-TRAN" value="N" />
+				</field>
+				<field name="TRANS-STAT-BYTE4" fmt="X(01)" />
+				<field name="TRANS-STAT-BYTE5" fmt="X(01)" />
+				<field name="TRAN-AMT" fmt="+9(09).99" />
+				<field name="POST-DATE" fmt="9(08)" />
+				<field name="TRAN-DATE" fmt="9(08)" />
+				<field name="TYPE-RECORD" fmt="X(02)">
+					<option name="DEFAULT-TYPE" value="00" />
+					<option name="ON-US-ITEM" value="01" />
+					<option name="INCOMING-ITEM" value="02" />
+					<option name="INCOMING-FOREIGN-IT" value="03" />
+					<option name="OUTGOING-ITEM" value="04" />
+					<option name="OUTGOING-FOREIGH-IT" value="05" />
+					<option name="MERCHANT-TRANS-ITEM" value="06" />
+					<option name="MASTERCD-INC-DIR-ST" value="08" />
+					<option name="MASTERCD-OUT-DIR-ST" value="09" />
+					<option name="CURR-CALL-CARD-TRAN" value="0A" />
+				</field>
+				<field name="TRAN-TYPE" fmt="X(02)">
+					<option name="SALES-OR-CREDIT" value="01" />
+					<option name="CASH-ADVANCE" value="02" />
+					<option name="ATM" value="03" />
+					<option name="PAYMENT" value="04" />
+					<option name="ONUS-DRAFT-REVERSAL" value="05" />
+					<option name="ONUS-DRAFT" value="06" />
+					<option name="CHARGEBACK" value="07" />
+					<option name="REPRESENTMENT" value="08" />
+					<option name="REQUEST" value="09" />
+					<option name="CONFIRMATION" value="10" />
+					<option name="WIRE-TRANSFER" value="11" />
+				</field>
+				<field name="RATE-PERCENT" fmt="+9(03).99" />
+				<field name="RATE-PER-ITEM" fmt="+9(03).99" />
+				<field name="WEEK-POSTED" fmt="9(02)" />
+				<field name="BUSCARD-OTHER-NUM" fmt="9(14)" />
+				<field name="TRAN-POSTED-MEMO" fmt="X(01)">
+					<option name="ITM-POST-AS-MEMO" value="Y" />
+					<option name="ITM-NOT-POST-AS-MEM" value="N" />
+				</field>
+				<field name="CONTROL-ITEM" fmt="X(01)">
+					<option name="CONTROL-ITEM" value="Y" />
+					<option name="NOT-CONTROL-ITEM" value="N" />
+				</field>
+				<field name="ISD-FILL1" fmt="X(02)" />
+				<field name="EXPIRATION-DATE" fmt="9(06)" />
+				<field name="SET-NATL-REG-FEE-S" fmt="X(01)">
+					<option name="SETLD-UND-NATREG-FS" value="Y" />
+					<option name="NOT-SET-NATREG-FS" value="N" />
+				</field>
+				<field name="INTERNATIONAL-STD" fmt="X(01)">
+					<option name="INTERNATIONAL-STD" value="Y" />
+					<option name="NOT-INTERNATL-STD" value="N" />
+				</field>
+				<field name="INTRNAT-PRE-PS2000" fmt="X(01)">
+					<option name="INTERNATL-PREPS2000" value="Y" />
+					<option name="NOT-INTERNAT-PP2000" value="N" />
+				</field>
+				<field name="INTERNATL-ELECTRON" fmt="X(01)">
+					<option name="INTERNATL-ELECTRON" value="Y" />
+					<option name="NOT-INTERNAT-ELECTN" value="N" />
+				</field>
+				<field name="ISD-FILL2" fmt="X(02)" />
+				<field name="MERC-ZIP-FOR-TMP" fmt="9(9)" />
+				<field name="AIRLINE-ITINERARY" fmt="X(01)">
+					<option name="AIRLINE-ITINERARY" value="Y" />
+					<option name="NOT-AIRLINE-ITINERY" value="N" />
+				</field>
+				<field name="VISA-EDIT-PKG-7-0" fmt="X(01)">
+					<option name="VISA-EDIT-PKG-7-0" value="Y" />
+					<option name="NOT-VISA-EDIT-PKG70" value="N" />
+				</field>
+				<field name="CAR-RENTAL-LODGING" fmt="X(01)">
+					<option name="CAR-RENTAL-LODGING" value="Y" />
+					<option name="NOT-CAR-RENTAL-LODG" value="N" />
+				</field>
+				<field name="DIRECT-MARKETING" fmt="X(01)">
+					<option name="DIRECT-MARKETING" value="Y" />
+					<option name="NOT-DIRECT-MARKET" value="N" />
+				</field>
+				<field name="PURCHASE-CARD" fmt="X(01)">
+					<option name="PURCHASE-CARD" value="Y" />
+					<option name="NO-PURCHASE-CARD" value="N" />
+				</field>
+				<field name="GENERIC-EXTRA-DATA" fmt="X(01)">
+					<option name="GENERIC-EXTRA-DATA" value="Y" />
+					<option name="NO-GENERIC-EXTRA-DT" value="N" />
+				</field>
+				<field name="ADJUSTMENT-PROC-ID" fmt="X(01)">
+					<option name="NO-ADJUSTMENT" value="\u0020" />
+					<option name="ADJUSTMENT" value="A" />
+				</field>
+				<field name="DETAIL-MONEY-ITEMS" fmt="X(01)">
+					<option name="DETAIL-MONEY-ITEMS" value="Y" />
+					<option name="NOT-DETAIL-MONEY-IT" value="N" />
+				</field>
+				<field name="CALLING-CARD-ITEMS" fmt="X(01)">
+					<option name="CALLING-CARD-ITEMS" value="Y" />
+					<option name="NOT-CALLING-CARD-IT" value="N" />
+				</field>
+				<field name="TRANS-REF-NUMBER" fmt="X(23)" />
+				<field name="MERCHANT-ACCT-NUM" fmt="9(16)" />
+				<field name="MERCHANT-DBA-NAME" fmt="X(25)" />
+				<field name="MERCHANT-DBA-CITY" fmt="X(13)" />
+				<field name="MERCHANT-DBA-STATE" fmt="X(03)" />
+				<field name="MERCH-DBA-COUNTRY" fmt="X(03)" />
+				<field name="MERCH-SIC-CLASS-CD" fmt="9(04)" />
+				<field name="MC-ICA-NUMBER" fmt="9(04)" />
+				<field name="REIMB-ATTRIB-CODE" fmt="X(01)" />
+				<field name="INTRCNGE-FEE-CTL-S" fmt="X(02)">
+					<option name="NO-FEES-ASSESSED" value="00" />
+					<option name="STAND-DOMESTIC-FEES" value="01" />
+					<option name="ATM-FEES" value="02" />
+					<option name="CASH-FEES" value="03" />
+					<option name="FOREIGN-ATM-FEES-CS" value="04" />
+					<option name="FOREIGN-CASH-FEES" value="05" />
+					<option name="FOREIGH-AID" value="06" />
+					<option name="MASTERPHONE" value="07" />
+					<option name="TIIF-AIRLINES" value="08" />
+					<option name="TIIF-DIRECT-MARKET" value="09" />
+					<option name="TIIF-TRAVEL" value="0A" />
+					<option name="TIIF-OTHER" value="0B" />
+					<option name="TMP-88-ONLY" value="0C" />
+					<option name="MERIT-1" value="0D" />
+					<option name="MERIT-2" value="0E" />
+					<option name="MERIT-3" value="0F" />
+					<option name="DINERS-DA-TIRF-CLB" value="10" />
+					<option name="AMEX-DATA-CAPTURE" value="11" />
+					<option name="NOT-USED" value="12" />
+					<option name="FOREIGN" value="13" />
+					<option name="EUROPEAN" value="14" />
+					<option name="VISA-DISC-AIT-TIRF" value="15" />
+					<option name="MC-DISC-VISA-TMP87" value="16" />
+					<option name="VISA-DISC-VISA-TM87" value="17" />
+					<option name="MC-DISC-AID-TIRF-CR" value="18" />
+					<option name="EXPRESS-PAYMENT-SVC" value="19" />
+					<option name="VISA-SUPERMKT-INCNT" value="1A" />
+					<option name="MC-SUPERMKT-INCENTV" value="1B" />
+					<option name="MC-DOMESTIC-CIRRUS" value="1C" />
+					<option name="MC-FOREIGN-CIRRUS-A" value="1D" />
+					<option name="VS-FOREIGN-AIRLN-LC" value="1E" />
+					<option name="VS-FOREIGN-AIRLN-RC" value="1F" />
+					<option name="VS-FOREIGN-AIRLN-IR" value="20" />
+					<option name="VISA-PSIRF-CRED-CRD" value="21" />
+					<option name="VISA-PSIRF-DEB-CD-P" value="22" />
+					<option name="VISA-PSIRF-DEB-CD-T" value="23" />
+					<option name="VISA-PSIRF-DEB-CD-O" value="24" />
+					<option name="VISA-BUSCRD-EL-PASS" value="25" />
+					<option name="VISA-BUSCRD-EL-TRAV" value="26" />
+					<option name="VISA-BUSCRD-SD-PASS" value="27" />
+					<option name="VISA-BUSCRD-STD-TRV" value="28" />
+					<option name="MASTERCARD-BUSINESS" value="29" />
+					<option name="CPS-PASS-TRNPT1-PS2" value="2A" />
+					<option name="CPS-PASS-TRNPT2-PS2" value="2B" />
+					<option name="CPS-LODGING-PREF-PS" value="2C" />
+					<option name="CPS-LODGING-PS2000" value="2D" />
+					<option name="CPS-CAR-RENT-PREF-P" value="2E" />
+					<option name="CPS-CAR-RENTAL-PS20" value="2F" />
+					<option name="CPS-DIR-MKT-PS2000" value="30" />
+					<option name="CPS-AUTO-FUEL-DISP" value="31" />
+					<option name="US-CAN-BILAT-FEE-PS" value="32" />
+					<option name="US-ASIA-PAC-BILAT-F" value="33" />
+				</field>
+				<field name="DF-FRNCUR-TRAN-AMT" fmt="+9(09).99" />
+				<field name="DF-FRNCUR-ACQUIRER" fmt="X(03)" />
+				<field name="DF-FRNCURR-CNV-DT" fmt="9(04)" />
+				<field name="DF-FRNCURR-USER-CU" fmt="X(03)" />
+				<field name="DF-FRNCURR-USA-AMT" fmt="+9(09).99" />
+				<field name="C-H-ACTIV-TERM-IND" fmt="X(01)" />
+				<field name="SPECIAL-MERCH-IND" fmt="X(01)">
+					<option name="MER-L-VISA-LODG-SVC" value="L" />
+					<option name="MER-F-FACS-DRAFT-PR" value="F" />
+					<option name="MER-D-LODG-500-FLR" value="D" />
+					<option name="MER-B-LODG-1000-FL" value="B" />
+					<option name="MER-S-LODG-1500-FL" value="S" />
+					<option name="MER-H-VS-LODG-SP-FL" value="H" />
+					<option name="MER-8-VS-QUASI-CASH" value="8" />
+				</field>
+				<field name="SPECIAL-RIS-IND" fmt="X(01)">
+					<option name="RIS-ZERO-FL-LIM-REQ" value="1" />
+					<option name="AIS-TERM-REQ-ACCT-D" value="2" />
+					<option name="AIS-TERM-REQ-F-ACCT" value="3" />
+				</field>
+				<field name="PAYMENT-SERV-IND" fmt="X(01)" />
+				<field name="AUTHORIZATION-REQ" fmt="X(01)" />
+				<field name="AUTHORIZATION-NBR" fmt="X(06)" />
+				<field name="TYPE-OF-AUTO-DED" fmt="X(01)">
+					<option name="DDA" value="D" />
+					<option name="SAVINGS" value="S" />
+					<option name="PAYROLL" value="P" />
+					<option name="BILL-CHECK" value="B" />
+					<option name="AUTO-PAYMENT" value="A" />
+				</field>
+				<field name="USE-COUNTRY-CODE" fmt="X(01)">
+					<option name="USE-COUNTRY-CODE" value="Y" />
+					<option name="DONT-USE-COUNTRY-CD" value="N" />
+				</field>
+				<field name="ACCUM-DSECT-STAT-2" fmt="X(01)" />
+				<field name="FLOOR-LIMIT-IND" fmt="X(01)">
+					<option name="ABOV-FLLIM-20-PCT-M" value="A" />
+					<option name="BELO-FLLIM-20-PCT-M" value="B" />
+					<option name="ABOV-FLLIM-20-PCT-L" value="C" />
+					<option name="EQL-FLLIM-BL-20-LES" value="D" />
+					<option name="INSUF-INF-FL-20-LES" value="I" />
+					<option name="FLOOR-LIMIT-ZERO" value="Z" />
+				</field>
+				<field name="CWB-CRB-IND" fmt="X(01)">
+					<option name="VALIDATION-NOT-APPL" value="\u0020" />
+					<option name="CWB-CRB-MERCH-REG" value="Y" />
+					<option name="NOT-LISTED-ON-PUR-D" value="N" />
+					<option name="INSUF-INF-TO-DET-WN" value="I" />
+				</field>
+				<field name="AUTH-CODE-NOT-ISS" fmt="X(01)">
+					<option name="AUTH-CD-NOT-ISS-LCS" value="N" />
+				</field>
+				<field name="OPERATOR-ID-FR-ENT" fmt="X(03)" />
+				<field name="TERM-ENTRY-MODE" fmt="X(02)">
+					<option name="NOT-SPECIFIED" value="\u0020\u0020" />
+					<option name="NO-TERMINAL" value="00" />
+					<option name="KEY-ENTRY" value="01" />
+					<option name="MAG-STRIPE-READER" value="02" />
+					<option name="BAR-CODE-READ" value="03" />
+					<option name="OCR-READ" value="04" />
+					<option name="RESERVED" value="05" />
+					<option name="TRACK-1-READ" value="06" />
+					<option name="ENTIRE-MAG-STRIP-RD" value="90" />
+				</field>
+				<field name="CENT-PROC-SETTL-DT" fmt="9(06)" />
+				<field name="CHARGEBACK-RIGHTS" fmt="X(02)">
+					<option name="NON-REPS-TRANSACTIN" value="\u0020\u0020" />
+					<option name="REPS-RET-CB-RIGTS-A" value="00" />
+					<option name="REPS-TE-CB-RIGHTS-A" value="01" />
+				</field>
+				<field name="MAIL-PHONE-ORD-IND" fmt="X(01)" />
+				<field name="ACQUIRER-MEMBER-ID" fmt="X(08)" />
+				<field name="ATM-ACCOUNT-SEL" fmt="X(01)" />
+				<field name="ISD-FILL3" fmt="X(06)" />
+				<field name="TRANS-ID-NUMBER" fmt="X(15)" />
+				<field name="EXCLUDED-TRANID-RE" fmt="X(01)">
+					<option name="TRANS-ID-PRESENT" value="\u0020" />
+					<option name="ORIG-NOT-CLEAR-BSII" value="A" />
+				</field>
+				<!--Nuevo 16 Octubre 2008 -->
+				<field name="REWARD-ELIGIBLE" fmt="X(01)">
+					<option name="REWARD-ELIGIBLE" value="Y" />
+					<option name="NOT-REWARD-ELIGIBLE" value="N" />
+				</field>
+				<field name="REWARD-TERMS-ID" fmt="9(10)" />
+				<field name="REWARD-AMOUNT" fmt="X(13)" />
+				<!--Nuevo 16 Octubre 2008 -->
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI03 -->
+	<!-- Inicio del packet SI04 -->
+	<packet id="SI04">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROSE-IN" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STATEMENT-DATE" fmt="9(08)" />
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROSE-IN" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STATEMENT-DATE" fmt="9(08)" />
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+
+			<field name="MORE-DATA-IND" fmt="X(1)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(03)" />
+			<field name="SEGMENT-LENGTH" fmt="9(04)" />
+			<array name="TRANS-SEGMENT" min="0" max="80" depends="NBR-TRAN-SEGMENTS">
+				<field name="BANK-NUM" fmt="9(04)" />
+				<field name="ACCT-NUM" fmt="9(14)" />
+				<field name="CLOSE-DT" fmt="9(08)" />
+				<field name="PSA-ITEM-SEQ" fmt="9(05)" />
+				<field name="PSA-STATEMENT-SEQ" fmt="9(03)" />
+				<field name="WEEK-POSTED" fmt="9(02)" />
+				<field name="REVERSED" fmt="X(01)">
+					<option name="PREV-TRN-REVERSED" value="Y" />
+					<option name="PREV-TRN-NOT-REV" value="N" />
+				</field>
+				<field name="REVERSAL-TRANS" fmt="X(01)">
+					<option name="PREV-TRN-REVERSAL" value="Y" />
+					<option name="PREV-TRN-NOT-REVSAL" value="N" />
+				</field>
+				<field name="SYS-GEN-COMB-MAST" fmt="X(01)">
+					<option name="SYS-GEN-COMB-MAST" value="Y" />
+					<option name="NOT-SYS-GEN-COMB-MS" value="N" />
+				</field>
+				<field name="USE-COUNTRY-CODE" fmt="X(01)">
+					<option name="USE-COUNTRY-CODE" value="Y" />
+					<option name="DONT-USE-COUNTRY-CD" value="N" />
+				</field>
+				<field name="PS2000-SEGMENT" fmt="X(01)">
+					<option name="PS2000-SEGMENT" value="Y" />
+					<option name="NOT-PS2000-SEGMENT" value="N" />
+				</field>
+				<field name="DUPLICATE-TRANS" fmt="X(01)">
+					<option name="DUPLICATE-TRANSACTN" value="Y" />
+					<option name="NOT-DUPLCTE-TRANS" value="N" />
+				</field>
+				<field name="ZERO-TRAN-DATE-FLG" fmt="X(01)">
+					<option name="ZERO-TRAN-DATE-FLAG" value="Y" />
+					<option name="NO-ZERO-TRAN-DATE-F" value="N" />
+				</field>
+				<field name="PS2000-SEG-MASTERC" fmt="X(01)">
+					<option name="PS2000-SEG-FOR-MSCD" value="Y" />
+					<option name="PS2000-SEG-NOT-MSCD" value="N" />
+				</field>
+				<field name="PSA-FROM-AER-FILE" fmt="X(03)" />
+				<field name="PSA-IN-TRANS-CD" fmt="X(04)" />
+				<field name="PSA-OUT-TRANS-CD" fmt="X(04)" /><!--Modificado antes 9(04) -->
+				<field name="PSA-OUT-TRNCD-TCSI" fmt="X(04)" />
+				<field name="TRANS-CD-INTO-TCSI" fmt="X(04)" />
+				<field name="TYPE-RECORD" fmt="X(02)">
+					<option name="DEFAULT-TYPE-RECORD" value="00" />
+					<option name="ON-US-ITEM" value="01" />
+					<option name="INCOMING-ITEM" value="02" />
+					<option name="INCOMING-FORIGN-ITM" value="03" />
+					<option name="OUTGOING-ITEM" value="04" />
+					<option name="OUTGOING-FORIGN-ITM" value="05" />
+					<option name="MERCHANT-TRANS-ITEM" value="06" />
+					<option name="MC-INCOMING-DIR-SET" value="08" />
+					<option name="MC-OUTGOING-DIR-SET" value="09" />
+					<option name="PREV-CALLING-CARD-T" value="0A" />
+				</field>
+				<field name="PSA-ID-TRANS-AMT" fmt="+9(09).99" />
+				<field name="PSA-ID-TRANS-REF-N" fmt="X(23)" />
+				<field name="PSA-ID-POST-DT" fmt="9(08)" />
+				<field name="PSA-ID-TRAN-DT" fmt="9(08)" />
+				<field name="PSA-ID-MERCH-CNTRY" fmt="X(03)" />
+				<field name="ID-LAST-TRAN-DATE" fmt="9(08)" />
+				<field name="ID-MERCH-ACCT-NUM" fmt="9(16)" />
+				<field name="PSA-ID-TBC-OTH-ACT" fmt="9(14)" />
+				<field name="ITEM-POST-AS-MEMO" fmt="X(01)">
+					<option name="POSTED-AS-MEMO" value="Y" />
+					<option name="NOT-POSTED-AS-MEMO" value="N" />
+				</field>
+				<field name="CONTROL-ITEM" fmt="X(01)">
+					<option name="CONTROL-ITEM" value="Y" />
+					<option name="NOT-CONTROL-ITEM" value="N" />
+				</field>
+				<field name="ID-MERCHANT-NAME" fmt="X(25)" />
+				<field name="ID-MERCHANT-CITY" fmt="X(13)" />
+				<field name="ID-MERCHANT-STATE" fmt="X(03)" />
+				<field name="ID-MERCHANT-SIC" fmt="X(04)" />
+				<field name="PSA-ID-ICA-NUM" fmt="X(04)" />
+				<field name="ID-REIMBURSE-CODE" fmt="X(01)" />
+				<field name="ID-INTERCHNG-FEE-C" fmt="X(02)">
+					<option name="NO-FEES-ASSESSED" value="00" />
+					<option name="STAN-DOMESTIC-FEE" value="01" />
+					<option name="AMT-FEES" value="02" />
+					<option name="CASH-FEES" value="03" />
+					<option name="FOREIGN-ATM-FEES-CH" value="04" />
+					<option name="FOREIGN-CASH-FEES" value="05" />
+					<option name="FOREIGN-AID" value="06" />
+					<option name="MASTERPHONE" value="07" />
+					<option name="TIIF-AIRLINES" value="08" />
+					<option name="TIIF-DIRECT-MARKET" value="09" />
+					<option name="TIIF-TRAVEL" value="0A" />
+					<option name="TIIF-OTHER" value="0B" />
+					<option name="TMP-88-ONLY" value="0C" />
+					<option name="MERIT-1" value="0D" />
+					<option name="MERIT-2" value="0E" />
+					<option name="MERIT-3" value="0F" />
+					<option name="DINERS-DISCOUNT-AID" value="10" />
+					<option name="AMEX-DATA-CAPTURE" value="11" />
+					<option name="ID-NOT-USED" value="12" />
+					<option name="ID-FOREIGN" value="13" />
+					<option name="ID-EUROPEAN" value="14" />
+					<option name="VISA-DISCOUNT-AID" value="15" />
+					<option name="MC-DISCOUNT-VISA" value="16" />
+					<option name="VISA-DISCOUNT-VISA" value="17" />
+					<option name="MC-DISCOUNT-AID-TIR" value="18" />
+					<option name="EXPRESS-PAYMENT-SVC" value="19" />
+					<option name="VISA-SUPERMARKET-IN" value="1A" />
+					<option name="MC-SUPERMARKET-INC" value="1B" />
+					<option name="MC-DOMESTIC-CIRRUS" value="1C" />
+					<option name="MC-FOREIGN-CIRRUS" value="1D" />
+					<option name="VISA-FOREIGN-AIRLN" value="1E" />
+					<option name="VISA-FOREIGN-AIR-RL" value="1F" />
+					<option name="VISA-FOREIGN-AIR-IR" value="20" />
+					<option name="VISA-PSIRF-CRED-CAR" value="21" />
+					<option name="VISA-PSIRF-DEB-CD-P" value="22" />
+					<option name="VISA-PSIRF-DC-TRAVL" value="23" />
+					<option name="VISA-PSIRF-DC-OTHER" value="24" />
+					<option name="VISA-BC-ELEC-PASS-T" value="25" />
+					<option name="VISA-BC-ELEC-TRAVEL" value="26" />
+					<option name="VISA-BC-STAND-PASS" value="27" />
+					<option name="VISA-BC-STAND-TRAVL" value="28" />
+					<option name="MASTERCARD-BUSCARD" value="29" />
+					<option name="CPS-PASS-TRANSPRT-1" value="2A" />
+					<option name="CPS-PASS-TRANSPRT-2" value="2B" />
+					<option name="CPS-LODGING-PREF" value="2C" />
+					<option name="CPS-LODGING-PS2000" value="2D" />
+					<option name="CPS-CAR-RENTAL-PREF" value="2E" />
+					<option name="CPS-CAR-RENTAL" value="2F" />
+					<option name="CPS-DIRECT-MARKET" value="30" />
+					<option name="CPS-AUTO-FUEL-DISP" value="31" />
+					<option name="US-CANADA-BILATERAL" value="32" />
+					<option name="US-ASIA-PACIFIC-BIL" value="33" />
+				</field>
+				<field name="ID-PERCENT-RATE" fmt="9(03)" />
+				<field name="ID-RATE-EFF-DATE" fmt="9(06)" />
+				<field name="ID-AUTH-REVD" fmt="9(02)" />
+				<field name="ID-TYPE-AUTO-DED" fmt="X(01)">
+					<option name="ID-TYPE-DDA" value="D" />
+					<option name="ID-TYPE-SAVINGS" value="S" />
+					<option name="ID-PAYROLL" value="P" />
+					<option name="ID-BILL-CHECK" value="B" />
+					<option name="ID-AUTO-PAYMENT" value="A" />
+				</field>
+				<field name="ACCT-TRANS-FR-ORIG" fmt="X(01)">
+					<option name="TRANS-FROM-ORIGINAL" value="Y" />
+					<option name="NOT-TRANS-FR-ORIG" value="N" />
+				</field>
+				<field name="ACCT-TRANS-FR-TRAN" fmt="X(01)">
+					<option name="TRANS-FROM-TRANSFER" value="Y" />
+					<option name="TRANS-NOT-FR-TRANS" value="N" />
+				</field>
+				<field name="VISA-7-0-EDIT-PKG" fmt="X(01)">
+					<option name="VISA-7-0-EDIT-PACK" value="Y" />
+					<option name="NOT-VISA-7-0-EDIT-P" value="N" />
+				</field>
+				<field name="FORCE-POST-OLD-ACT" fmt="X(01)">
+					<option name="FORCE-POST-OLD-ACCT" value="Y" />
+					<option name="NOT-FORCE-POST-OLD" value="N" />
+				</field>
+				<field name="ANN-FEE-CHGED-REN" fmt="X(01)">
+					<option name="ANN-FEE-CHGED-RENWL" value="Y" />
+					<option name="ANN-FEE-CHG-NOT-REN" value="N" />
+				</field>
+				<field name="CARDSAV-TRANS" fmt="X(01)">
+					<option name="CARDSAVINGS-TRANS" value="Y" />
+					<option name="NOT-CARDSAVINGS-TRN" value="N" />
+				</field>
+				<field name="AIRLINE-ITNRY-SEG" fmt="X(01)">
+					<option name="AIRLINE-ITIN-SEGMNT" value="Y" />
+					<option name="NOT-AIRLINE-INTRY" value="N" />
+				</field>
+				<field name="MERCH-NAME-41-BYTE" fmt="X(01)">
+					<option name="MERCH-NAME-CONT-41" value="Y" />
+					<option name="MERCH-NAME-NOT-41-B" value="N" />
+				</field>
+				<field name="ID-FLOOR-LIMIT" fmt="X(01)">
+					<option name="VALID-NOT-APPLIC" value="\u0020" />
+					<option name="TRAN-AMT-ABV-FL-M20" value="A" />
+					<option name="TRAN-AMT-BEL-FL-M20" value="B" />
+					<option name="TRAN-AMT-ABV-FL-20L" value="C" />
+					<option name="TRAN-AMT-EQL-BL-20L" value="D" />
+					<option name="INSUF-INF-FL-20L" value="I" />
+					<option name="FLOOR-LIMIT-IS-ZERO" value="Z" />
+				</field>
+				<field name="ID-CWB-CRB-INDICAT" fmt="X(01)">
+					<option name="VALID-NOT-APPLIC-TR" value="\u0020" />
+					<option name="LIST-CWB-CRB-REG-PD" value="Y" />
+					<option name="NOT-LIST-MR-PUR-DTE" value="N" />
+					<option name="INSUF-INF-WARN-BULL" value="I" />
+				</field>
+				<field name="ID-LOSS-CONT-SVC" fmt="X(01)" />
+				<field name="ID-AMIL-PHONE-ORDR" fmt="X(01)" />
+				<field name="CAR-RENTAL-LODGING" fmt="X(01)">
+					<option name="CAR-RENTAL-LODGING" value="Y" />
+					<option name="NOT-CAR-RENTAL-LODG" value="N" />
+				</field>
+				<field name="DIRECT-MARKETING" fmt="X(01)">
+					<option name="DIRECT-MARKETING-SE" value="Y" />
+					<option name="NOT-DIRECT-MARKET" value="N" />
+				</field>
+				<field name="PURCHASE-CARD" fmt="X(01)">
+					<option name="PURCHASE-CARD-SECT" value="Y" />
+					<option name="NOT-PURCHASE-CARD" value="N" />
+				</field>
+				<field name="GENERIC-EXTRA-DATA" fmt="X(01)">
+					<option name="GENERIC-EXTRA-DATA" value="Y" />
+					<option name="NOT-GENERIC-EXTRA" value="N" />
+				</field>
+				<field name="ID-ACQUIRER-ID" fmt="X(08)" />
+				<field name="TERMINAL-ENTRY-MOD" fmt="X(02)">
+					<option name="TERM-ENT-NOT-SPECFD" value="\u0020\u0020" />
+					<option name="NO-TERMINAL" value="00" />
+					<option name="TERM-ENT-KEY-ENTRY" value="01" />
+					<option name="TERM-ENT-MAG-STRIPE" value="02" />
+					<option name="TERM-ENT-BAR-CODE" value="03" />
+					<option name="TERM-ENT-OCR-READ" value="04" />
+					<option name="TERM-ENT-RESERVED" value="05" />
+					<option name="TERM-ENT-TRACK-1-RD" value="06" />
+					<option name="TERM-ENT-ENTIRE-MAG" value="90" />
+				</field>
+				<!--<struct name = "FINANCE-CHRG">--><!--061010 VMBR-->
+				<field name="APR1-REG" fmt="99.999" />
+				<field name="APR2-REG" fmt="99.999" />
+				<field name="APR3-REG" fmt="99.999" />
+				<field name="APR1-OLD" fmt="99.999" />
+				<field name="APR2-OLD" fmt="99.999" />
+				<field name="APR3-OLD" fmt="99.999" />
+				<field name="ADB1-REG" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="ADB2-REG" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="ADB3-REG" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="ADB1-OLD" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="ADB2-OLD" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="ADB3-OLD" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="FC-RATE" fmt="X(06)" />
+				<field name="BILL-CYCLE-DAYS" fmt="9(3)" />
+				<field name="PREV-CYCLE" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="AMT-DISPUTE" fmt="X(11)" /><!-- antes +9999999.99 -->
+				<field name="SEGMENT-TYPX" fmt="XX">
+					<option name="FINANCE-REC" value="01" />
+					<option name="INSURANCE-REC" value="02" />
+				</field>
+				<!--Nuevo 16 Octubre 2008 -->
+				<field name="REWARD-ELIGIBLE" fmt="X(01)">
+					<option name="REWARD-ELIGIBLE" value="Y" />
+					<option name="NOT-REWARD-ELIGIBLE" value="N" />
+				</field>
+				<field name="REWARD-TERMS-ID" fmt="9(10)" />
+				<field name="REWARD-AMOUNT" fmt="X(13)" />
+				<!--Nuevo 16 Octubre 2008 -->
+				<!--</struct>--><!--061010 VMBR-->
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI04 -->
+	<!-- Inicio del packet SI06-->
+	<packet id="SI06">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="REQUEST-DATE" fmt="9(08)" />
+			<field name="REQUEST-TIME" fmt="9(06)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="REQUEST-DATE" fmt="9(08)" />
+			<field name="REQUEST-TIME" fmt="9(06)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+			<field name="MORE-DATA-IND" fmt="X(01)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(03)" />
+			<field name="SEGMENT-LENGTH" fmt="9(04)" />
+			<array name="TRANS-SEGMENT" min="0" max="249" depends="NBR-TRAN-SEGMENTS">
+				<field name="COLLECT-MSG-KEY" fmt="X(32)" />
+				<field name="BANK-NUM" fmt="9(04)" />
+				<field name="ACCT-NUM" fmt="9(14)" />
+				<field name="DATE-STAMP" fmt="9(08)" />
+				<field name="TIME-STAMP" fmt="9(06)" />
+				<field name="COLLECTOR-NUM" fmt="9(06)" />
+				<field name="ACT-CODE" fmt="X(02)" />
+				<field name="RES-CODE" fmt="X(02)" />
+				<field name="MSG-TEXT" fmt="X(50)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI06 -->
+	<!-- Inicio del packet SI07 -->
+	<packet id="SI07">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+			<field name="MORE-DATA-IND" fmt="X(01)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(3)" />
+			<field name="SEGMENT-LENGTH" fmt="X(4)" />
+			<array name="TRANS-SEGMENT" min="0" max="84" depends="NBR-TRAN-SEGMENTS">
+				<field name="BANK-NUM" fmt="9(04)" />
+				<field name="ACCT-NUM" fmt="9(14)" />
+				<field name="SEQ-NUM" fmt="9(05)" />
+				<field name="POST-ST-TRAN" fmt="X(01)" />
+				<field name="INC-TRAN-CODE" fmt="9(04)" />
+				<field name="OUT-TRAN-CODE" fmt="9(04)" />
+				<field name="AMOU-TRAN" fmt="+9(09).99" />
+				<field name="DATE-TRAN" fmt="9(08)" />
+				<field name="DATE-POSTING" fmt="9(08)" />
+				<field name="TRANS-REF-NUMBER" fmt="X(23)" />
+				<field name="TYPE-RECORD" fmt="X(02)">
+					<option name="NO-MIN-PAY" value="01" />
+					<option name="NO-FINAN-CHARGE" value="02" />
+					<option name="NO-FINAN-ACUM-CHARGE-TRAN" value="03" />
+					<option name="ESP-RECORD" value="04" />
+					<option name="TRAN-LEVEL-PRIC" value="05" />
+				</field>
+				<field name="DAYS-TO-HOLD" fmt="9(05)" />
+				<field name="TIME-TO-DROP-TRAN" fmt="X(01)">
+					<option name="TIME-TO-DROP-TRAN-YES" value="Y" />
+					<option name="TIME-TO-DROP-TRAN-NO" value="N" />
+				</field>
+				<field name="TIME-TO-DROP-TRAN-OFF" fmt="X(01)">
+					<option name="TIME-TO-DROP-TRAN-OFF-YES" value="Y" />
+					<option name="TIME-TO-DROP-TRAN-OFF-NO" value="N" />
+				</field>
+				<field name="DAY-MOVE-BALANCE-PUR-BUD" fmt="X(01)">
+					<option name="DAY-MOVE-BALANCE-PUR-BUD-YES" value="Y" />
+					<option name="DAY-MOVE-BALANCE-PUR-BUD-NO" value="N" />
+				</field>
+				<field name="MONEY-MOVE-MAST" fmt="X(01)">
+					<option name="MONEY-MOVE-MAST-YES" value="Y" />
+					<option name="MONEY-MOVE-MAST-NO" value="N" />
+				</field>
+				<field name="ACCUM-FIN-CHRG-MOVE" fmt="X(01)">
+					<option name="ACCUM-FIN-CHRG-MOVE-YES" value="Y" />
+					<option name="ACCUM-FIN-CHRG-MOVE-NO" value="N" />
+				</field>
+				<field name="NO-MIN-PAY-TRAN" fmt="X(01)">
+					<option name="NO-MIN-PAY-TRAN-YES" value="Y" />
+					<option name="NO-MIN-PAY-TRAN-NO" value="N" />
+				</field>
+				<field name="ACCO-2-CYC-PAST-DUE-MON-MOVE-OUT-MAST-BAL-EAR" fmt="X(01)">
+					<option name="ACCO-2-CYC-PAST-DUE-MON-MOVE-OUT-MAST-BAL-EAR-YES" value="Y" />
+					<option name="ACCO-2-CYC-PAST-DUE-MON-MOVE-OUT-MAST-BAL-EAR-NO" value="N" />
+				</field>
+				<field name="ACCO-1-CYCLE-PAS-DUE" fmt="X(01)">
+					<option name="ACCO-1-CYCLE-PAS-DUE-YES" value="Y" />
+					<option name="ACCO-1-CYCLE-PAS-DUE-NO" value="N" />
+				</field>
+				<field name="ACTION-DATE" fmt="9(08)" />
+				<field name="ACTION-CODE" fmt="9(02)" />
+				<field name="AGENT-BANK" fmt="9(04)" />
+				<field name="DATE-OF-LAST-MANT" fmt="9(08)" />
+				<field name="CREDIT-ADJUST" fmt="X(11)" />
+				<field name="TRANS-HAD-BALANCE-AT-CYCLE" fmt="X(01)">
+					<option name="TRANS-HAD-BALANCE-AT-CYCLE-YES" value="Y" />
+					<option name="TRANS-HAD-BALANCE-AT-CYCLE-NO" value="N" />
+				</field>
+				<field name="TRANS-HAD-BALANCE-AT-PREV-CYCLE" fmt="X(01)">
+					<option name="TRANS-HAD-BALANCE-AT-PREV-CYCLE-YES" value="Y" />
+					<option name="TRANS-HAD-BALANCE-AT-PREV-CYCLE-NO" value="N" />
+				</field>
+				<field name="DATE-LAST-CYCLE" fmt="9(08)" />
+				<field name="NUM-DAYS-NO-MIN-PAY-DUE" fmt="9(05)" />
+				<field name="ACT-AMOUNT-PAY-DUE" fmt="+9(07).99" />
+				<field name="NUM-DAYS-NO-FINAN-CHARG" fmt="9(05)" />
+				<field name="OUT-BALAN-TRAN" fmt="+9(09).99" />
+				<field name="AGREG-LIFE-TRANS" fmt="+9(09).99" />
+				<field name="AGREG-DAYS-TRANS-LIFE" fmt="9(05)" />
+				<field name="DATE-BALAN-MOVED-PURCHA" fmt="9(08)" />
+				<field name="TOTAL-AMOU-PAY-HYSTORY" fmt="+9(07).99" />
+				<field name="NUM-DAYS-NO-FINAN-CHARGE" fmt="9(05)" />
+				<field name="OUT-BALAN-ON-TRANS" fmt="+9(09).99" />
+				<field name="CURRENT-CYCLE" fmt="+9(09).99" />
+				<field name="NUM-DAYS-TRANS-ON-FILE" fmt="9(05)" />
+				<field name="DATE-OUT-BALAN-AGGR-MOVE-MAST" fmt="9(08)" />
+				<field name="TOTAL-AMOUN-PAY-FOR-HISTORY" fmt="+9(07).99" />
+				<field name="FINAN-CHARGE-ACCRU-LIFE-TO-DATE" fmt="+9(07).99" />
+				<field name="DATE-ACCU-FINAN-CHARG-MOVE-TO-MAST" fmt="9(08)" />
+				<field name="OUT-BALANCE-ADD-TO-MASTER" fmt="+9(09).99" />
+				<field name="CURR-CYCLE-AGGR-ADD-TO-MAST" fmt="+9(09).99" />
+				<field name="ACCU-FINAN-CHARG-ADD-TO-MAST" fmt="+9(07).99" />
+				<field name="ACCU-FINAN-CHARG-REC-HAS-MATCH-NO-MIN-PAY" fmt="X(01)">
+					<option name="ACCU-FINAN-CHARG-REC-HAS-MATCH-NO-MIN-PAY-YES" value="Y" />
+					<option name="ACCU-FINAN-CHARG-REC-HAS-MATCH-NO-MIN-PAY-NO" value="N" />
+				</field>
+				<field name="ACCOU-PAID-IN-FULL-NO-FINAN-CHARG-ASSESS" fmt="X(01)">
+					<option name="ACCOU-PAID-IN-FULL-NO-FINAN-CHARG-ASSESS-YES" value="Y" />
+					<option name="ACCOU-PAID-IN-FULL-NO-FINAN-CHARG-ASSESS-NO" value="N" />
+				</field>
+				<field name="ACCOU-NOT-CYCLE-SINCE-TRANS-POST" fmt="X(01)">
+					<option name="ACCOU-NOT-CYCLE-SINCE-TRANS-POST-YES" value="Y" />
+					<option name="ACCOU-NOT-CYCLE-SINCE-TRANS-POST-NO" value="N" />
+				</field>
+				<field name="TRANS-PAY-ADJUST-ON-LINE" fmt="X(01)">
+					<option name="TRANS-PAY-ADJUST-ON-LINE-YES" value="Y" />
+					<option name="TRANS-PAY-ADJUST-ON-LINE-NO" value="N" />
+				</field>
+				<field name="FIXED-PAY-MAINT-ON-LINE" fmt="X(01)">
+					<option name="FIXED-PAY-MAINT-ON-LINE-YES" value="Y" />
+					<option name="FIXED-PAY-MAINT-ON-LINE-NO" value="N" />
+				</field>
+				<field name="PAY-APPLI-TO-TRANS-TODAY" fmt="X(01)">
+					<option name="PAY-APPLI-TO-TRANS-TODAY-YES" value="Y" />
+					<option name="PAY-APPLI-TO-TRANS-TODAY-NO" value="N" />
+				</field>
+				<field name="END-DATE" fmt="9(08)" />
+				<field name="NUM-OF-TIMES-1-CYCLE-PAST-DUE" fmt="9(03)" />
+				<field name="NUM-OF-TIMES-2-CYCLE-PAST-DUE" fmt="9(03)" />
+				<field name="MIN-PAY-DUE" fmt="+9(05).99" />
+				<field name="FINAN-CHARG-AT-LAST-CYCLE-DUE" fmt="9(05)" />
+				<field name="FIXED-PAYMENT" fmt="+9(04).99" />
+				<field name="PROMOTION-ID" fmt="X(08)" />
+				<field name="TERMS-CONTROL-ID" fmt="X(06)" />
+				<field name="PROMOTION-BALANCE" fmt="+9(09).99" />
+				<field name="BILLED-BALANCE" fmt="+9(09).99" />
+				<field name="UNBILLED-BALANCE" fmt="+9(09).99" />
+				<field name="OUTSTANDING-FINAN-CHARG" fmt="+9(05).99" />
+				<field name="BILLED-AGGREGATE" fmt="+9(13).99" />
+				<field name="UNBILLED-AGGREGATE" fmt="+9(13).99" />
+				<field name="LIFE-TO-DATE-FINAN-CHARGE-LP" fmt="+9(05).99" />
+				<field name="LIFE-TO-DATE-FINAN-CHARGE-BL" fmt="+9(05).99" />
+				<field name="MIN-TO-PAY-DUE" fmt="+9(07).99" />
+				<field name="EXPIRATION-DATE" fmt="9(08)" />
+				<field name="FIXED-PAYMENT-AMOUNT" fmt="+9(05).99" />
+				<field name="AMOUNT-OF-PAY-APPLIED" fmt="+9(07).99" />
+				<field name="PREV-CYCLE-RATE" fmt="+9(02).999" />
+				<field name="PAYMENT-PRI0RITY-ID" fmt="X(04)" />
+				<field name="DAYS-ON-FILE" fmt="X(06)" />
+				<field name="FINANCE-CHARGE-WAIVED" fmt="+9(05).99" />
+				<field name="FINANCE-CHARGE-REFUNDED" fmt="+9(05).99" />
+				<field name="MOVED-AMOUNT" fmt="+9(09).99" />
+				<field name="MOVED-AGGREGATE" fmt="+9(13).99" />
+				<field name="MOVED-FINANCE-CHARGE" fmt="+9(05).99" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI07 -->
+	<!--Inicio del packet SI12-->
+	<packet id="SI12">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="BANK-NUM" fmt="9(04)" />
+			<field name="ACCOUNT-NUM" fmt="9(14)" />
+			<field name="BANK-NUM-FOR-IAX" fmt="9(04)" />
+			<field name="DATE-REPORT-REC" fmt="9(07)" />
+			<field name="TYPE-OF-PLASTIC" fmt="X(01)" />
+			<field name="EXPIRATION-DATE" fmt="9(06)" />
+			<field name="NUM-CARDS-MISSING" fmt="9(02)" />
+			<field name="CARDHOLD-ACCO-NUM" fmt="9(16)" />
+			<field name="CARDHOLD-NAME" fmt="x(25)" />
+			<field name="CARDHOLD-2ND-NAME" fmt="X(25)" />
+			<field name="CARDHOLD-ADDR-LINE-1" fmt="X(36)" />
+			<field name="CARDHOLD-ADDR-LINE-2" fmt="X(36)" />
+			<field name="CARDHOLD-CITY-STATE" fmt="X(27)" />
+			<field name="ZIP-CODE" fmt="X(09)" />
+			<field name="DATE-OF-BIRTH" fmt="9(06)" />
+			<field name="NSS" fmt="9(09)" />
+			<field name="ORIG-CREDIT-RATING" fmt="X(02)" />
+			<field name="HOME-PHONE-NUM" fmt="9(10)" />
+			<field name="BUSS-PHONE-NUM" fmt="9(10)" />
+			<field name="LAST-USED-DATE" fmt="9(07)" />
+			<field name="LAST-USED-AMOUNT" fmt="9(06)" />
+			<field name="MERCHANT-NAME" fmt="X(24)" />
+			<field name="LOST-CARD" fmt="X(01)">
+				<option name="LOST-CARD" value="Y" />
+				<option name="NOT-LOST-CARD" value="N" />
+			</field>
+			<field name="STOLEN-CARD" fmt="X(01)">
+				<option name="STOLEN-CARD" value="Y" />
+				<option name="NOT-STOLEN-CARD" value="N" />
+			</field>
+			<field name="CARD-NEVER-RECEIVE" fmt="X(01)">
+				<option name="CARD-NEVER-RECEIVE" value="Y" />
+				<option name="NOT-CARD-NEVER-RECEIVE" value="N" />
+			</field>
+			<field name="COUNTERFEIT-CARD" fmt="X(01)">
+				<option name="COUNTERFEIT-CARD" value="Y" />
+				<option name="NOT-COUNTERFEIT-CARD" value="N" />
+			</field>
+			<field name="FRAUDULENT-APP" fmt="X(01)">
+				<option name="FRAUDULENT-APP" value="Y" />
+				<option name="NOT-FRAUDULENT-APP" value="N" />
+			</field>
+			<field name="MAIL-OR-PHONE-ORDER" fmt="X(01)">
+				<option name="MAIL-OR-PHONE-ORDER" value="Y" />
+				<option name="NOT-MAIL-OR-PHONE-ORDER" value="N" />
+			</field>
+			<field name="OTHER-OPTION" fmt="X(01)">
+				<option name="OTHER-OPTION" value="Y" />
+				<option name="NOT-OTHER-OPTION" value="N" />
+			</field>
+			<field name="PIN-LOST-OR-STOLEN" fmt="X(01)">
+				<option name="PIN-LOST-OR-STOLEN" value="Y" />
+				<option name="NOT-PIN-LOST-OR-STOLEN" value="N" />
+			</field>
+			<field name="PRIMARY-CARD-LOST" fmt="X(01)">
+				<option name="PRIMARY-CARD-LOST" value="Y" />
+				<option name="NOT-PRIMARY-CARD-LOST" value="N" />
+			</field>
+			<field name="SECONDARY-CARD-LOST" fmt="X(01)">
+				<option name="SECONDARY-CARD-LOST" value="Y" />
+				<option name="NOT-SECONDARY-CARD-LOST" value="N" />
+			</field>
+			<field name="POLICE-NOTIFIED" fmt="X(01)">
+				<option name="POLICE-NOTIFIED" value="Y" />
+				<option name="NOT-POLICE-NOTIFIED" value="N" />
+			</field>
+			<field name="ACCOUNT-STATUS" fmt="X(03)" />
+			<field name="TIME-REPORT-REC" fmt="X(04)" />
+			<field name="ID-LOST-OR-STOLEN" fmt="X(30)" />
+			<field name="OTH-CARD-LOST-OR-STOLEN" fmt="X(30)" />
+			<field name="CITY-OF-POL-NOTIFIED" fmt="X(16)" />
+			<field name="STATE-OF-POL-NOTIFIED" fmt="X(03)" />
+			<field name="CASE-NUMBER" fmt="X(12)" />
+			<field name="CIRCUM-LINE-1" fmt="X(50)" />
+			<field name="CIRCUM-LINE-2" fmt="X(79)" />
+			<field name="CIRCUM-LINE-3" fmt="X(79)" />
+			<field name="COMMENT-LINE" fmt="X(79)" />
+			<field name="PURGE-DATE" fmt="9(07)" />
+			<field name="CYCLE" fmt="X(02)" />
+			<field name="AGENT" fmt="X(04)" />
+			<field name="REPORTED-BY" fmt="X(30)" />
+			<field name="DATE-DISCOV-MISSING" fmt="9(07)" />
+			<field name="NUM-OF-CARDS-OUTS" fmt="9(02)" />
+			<field name="VISA-BCSA-CODE" fmt="X(02)" />
+			<field name="VISA-BCSA-INITIALS" fmt="X(03)" />
+			<field name="VISA-BCSA-EXCEPT-FILE-PURG-DATR" fmt="9(06)" />
+			<field name="VISA-BCSA-RATING" fmt="X(02)" />
+			<field name="VISA-BCSA-REGION-CODES" fmt="X(08)" />
+			<field name="VISA-BCSA-AMOUNT" fmt="9(09)" />
+			<field name="CRB-TRANS-CODE" fmt="X(01)" />
+			<field name="CRB-PURGE-DATE" fmt="9(06)" />
+			<field name="CRB-REASON-CODE" fmt="X(02)" />
+			<field name="CRB-OFFICER-CODE" fmt="X(04)" />
+			<field name="CRB-REGION-CODE" fmt="X(16)" />
+			<field name="RCL-REASON-CODE" fmt="X(01)" />
+			<field name="RCL-OFFICER-CODE" fmt="X(04)" />
+			<field name="RCL-REGION-NUM" fmt="X(14)" />
+			<field name="RCL-COUNT-NUM" fmt="X(19)" />
+			<field name="MLB-STATUS" fmt="X(01)" />
+			<field name="MGB-CREDIT-RATING" fmt="X(02)" />
+			<field name="MICROFICHE-PRT-STATUS" fmt="X(01)" />
+			<field name="INITIALS-OPER" fmt="X(03)" />
+			<field name="NAME-OF-WORKSPACE" fmt="X(12)" />
+			<field name="DATE-OF-DEL-REQUEST" fmt="9(07)" />
+			<field name="AUTHOR-RESPON-FOR" fmt="X(01)" />
+			<field name="DUAL-FIELD" fmt="X(01)">
+				<option name="NOT-DUAL-ACCOUNT" value="\u0020" />
+				<option name="BOTH-CARDS" value="B" />
+				<option name="ONLY-VISA" value="V" />
+				<option name="ONLY-MASTER-CARD" value="M" />
+			</field>
+			<field name="MC-BCSA-CODE" fmt="X(02)" />
+			<field name="MC-BCSA-INITIALS" fmt="X(03)" />
+			<field name="MC-BCSA-RATINGS" fmt="X(02)" />
+			<field name="MC-BCSA-AMOUNT" fmt="X(09)" />
+			<field name="AREA-EXPANSION" fmt="X(25)" />
+		</struct>
+	</packet>
+	<!-- Final del packet SI12 -->
+	<!-- Inicio del packet SI13 -->
+	<packet id="SI13">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="PREV-POINTS-BALANCE" fmt="+9(9)" /><!-- en realidad es +9(9) -->
+			<field name="ACCUMULATED-POINTS" fmt="+9(9)" /><!-- en realidad es +9(9) -->
+			<field name="POINTS-USED" fmt="+9(9)" /><!-- en realidad es +9(9) -->
+			<field name="EXPIRED-POINTS" fmt="+9(9)" /><!-- en realidad es +9(9) -->
+			<field name="PRE-BALANCE-POINTS" fmt="+9(9)" />
+			<field name="CIR-1449-FLAG" fmt="X(1)" />
+			<field name="CIR-1449-DATE-FLAGGED" fmt="YYYYMMDD" />
+			<field name="ADV-ACCOUNT-STATUS" fmt="X(1)" />
+			<field name="ADV-UPDATE-DATE" fmt="YYYYMMDD" />
+			<field name="BONUS-POINT-MILE-CHANGE-DATE" fmt="YYYYMMDD" />
+			<field name="BONUS-POINT-MILE-CHANGE-USER" fmt="X(3)" />
+			<field name="BONUS-POINT-MILE-CHANGE-TERM" fmt="X(4)" />
+			<field name="PROG-ACCOUNT-NUMBER" fmt="X(10)" />
+			<field name="PROG-ACCOUNT-CHANGE-USER" fmt="X(3)" />
+			<field name="PROG-ACCOUNT-CHANGE-TERM" fmt="X(4)" />
+			<field name="INS-PREMIUM-BASIS" fmt="+9(13).99" />
+			<field name="INS-PREMIUM-DEBITS" fmt="+9(13).99" />
+			<field name="INS-PREMIUM-CREDIT" fmt="+9(13).99" />
+			<field name="BONUS-POINT-MILE-EXPIRA-DATE" fmt="YYYYMMDD" />
+			<field name="BONUS-BUCKS-BUCKET-MONTH-DATE" fmt="+9(7).99" />
+			<field name="BONUS-BUCKS-BUCKET-YEAR-DATE" fmt="+9(13).99" />
+			<field name="CON-CYCLE-PAST-DUE-PAYMENT" fmt="9(1)" />
+			<field name="OLD-PAST-DUE-BUCKET-VALUE" fmt="9(5)" />
+			<field name="CAMP-INDICATOR" fmt="X(2)" />
+			<field name="BURSATIL" fmt="X(10)" />
+			<field name="CONFIDENT-INDICATOR" fmt="X(1)" />
+			<field name="PREV-POINTS-BALANCE-2" fmt="+9(9).99" /><!-- en realidad es +9(9) -->
+			<field name="ACCUMULATED-POINTS-2" fmt="+9(9).99" /><!-- en realidad es +9(9) -->
+			<field name="POINTS-USED-2" fmt="+9(9).99" /><!-- en realidad es +9(9) -->
+			<field name="NEW-POINTS-BALANCE" fmt="+9(9).99" /><!-- en realidad es +9(9) -->
+			<field name="EXT-TLP-BALANCE" fmt="+9(9).99" />
+			<field name="FILLER" fmt="X(293)" /><!-- En la documentacion especifica 303, pero al relizar pruebas-->
+		</struct><!-- Encontre que el stream era de 293 -->
+	</packet>
+	<!-- Final del packet SI13 -->
+	<!-- Inicio del packet SI21 -->
+	<packet id="SI21">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="EXPIRATION-DATE" fmt="9(06)" />
+			<field name="CV-VALUE" fmt="x(03)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="EXPIRATION-DATE" fmt="9(06)" />
+			<field name="CV-VALUE" fmt="x(03)" />
+			<field name="RESPONSE-TEXT" fmt="x(29)" />
+		</struct>
+	</packet>
+	<!-- Final del packet SI21 -->
+	<!--Inicio del packet SI24-->
+	<packet id="SI24">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-ID" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="STARTING-SEQ-NBR" fmt="9(05)" />
+			<field name="NBR-OF-TRANS" fmt="9(05)" />
+			<field name="MORE-DATA-IND" fmt="X(01)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(3)" />
+			<field name="SEGMENT-LENGTH" fmt="9(4)" />
+			<array name="TRANS-SEGMENT" min="1" max="163" depends="NBR-TRAN-SEGMENTS">
+				<field name="BANK-NUM" fmt="9(04)" />
+				<field name="ACCT-NUM" fmt="9(14)" />
+				<field name="SEQ-NUM" fmt="9(05)" />
+				<field name="VALID-DISPUTE" fmt="X(01)">
+					<option name="VALID-DISPUTE" value="Y" />
+					<option name="NOT-VALID-DISPUTE" value="N" />
+				</field>
+				<field name="SETT-IN-CUSTOM-FAVOR" fmt="X(01)">
+					<option name="SETT-IN-CUSTOM-FAVOR" value="Y" />
+					<option name="NOT-SETT-IN-CUSTOM-FAVOR" value="N" />
+				</field>
+				<field name="SETT-IN-USER-FAVOR" fmt="X(01)">
+					<option name="SETT-IN-USER-FAVOR" value="Y" />
+					<option name="NOT-SETT-IN-USER-FAVOR" value="N" />
+				</field>
+				<field name="DROP-THIS-ITEM" fmt="X(01)">
+					<option name="DROP-THIS-ITEM" value="Y" />
+					<option name="NOT-DROP-THIS-ITEM" value="N" />
+				</field>
+				<field name="OVER-LIM-CRED-REC" fmt="X(01)">
+					<option name="OVER-LIM-CRED-REC" value="Y" />
+					<option name="NOT-OVER-LIM-CRED-REC" value="N" />
+				</field>
+				<field name="CYCLE-NUM" fmt="9(02)" />
+				<field name="AGENT-BANK-NUM" fmt="9(04)" />
+				<field name="DATE-PLACE-INTO-DISP" fmt="9(07)" />
+				<field name="DATE-ENTER-INTO-DISP" fmt="9(07)" />
+				<field name="DATE-SETTLED-INTO-DISP" fmt="9(07)" />
+				<field name="REASON-FOR-DISPUTE" fmt="X(01)">
+					<option name="STORE-PURC" value="A" />
+					<option name="BANKRUPTCY" value="B" />
+					<option name="NSF-CHECK-FEE" value="C" />
+					<option name="FRAUD" value="F" />
+					<option name="POST-WRONG-ACCO" value="I" />
+					<option name="LATE-FEE-DISP" value="L" />
+					<option name="SUBJ-TO-MISC-DISP" value="M" />
+					<option name="FINAN-CHARGE" value="N" />
+					<option name="PAY-DISP" value="P" />
+					<option name="STORE-CREDIT-DISP" value="R" />
+					<option name="WRITEOFF" value="W" />
+				</field>
+				<field name="SOURCE-TO-DISPUTE" fmt="9(04)" />
+				<field name="REQ-FOR-COPY-STATUS" fmt="X(01)">
+					<option name="REQ-FOR-COPY-STATUS" value="Y" />
+					<option name="NOT-REQ-FOR-COPY-STATUS" value="N" />
+				</field>
+				<field name="OFFICER-APPROV-CODE" fmt="9(04)" />
+				<field name="BUSC-OTHER-ACCO-NUM" fmt="X(14)" />
+				<field name="BUSC-MEMO" fmt="X(01)">
+					<option name="BUSC-MEMO" value="Y" />
+					<option name="NOT-BUSC-MEMO" value="N" />
+				</field>
+				<field name="BUSC-CONTROL-ITEM" fmt="X(01)">
+					<option name="BUSC-CONTROL-ITEM" value="Y" />
+					<option name="NOT-BUSC-CONTROL-ITEM" value="N" />
+				</field>
+				<field name="CODE-FOR-DISP-TRAN" fmt="X(04)" />
+				<field name="RATE-CODE-TIME-TO-DISP" fmt="X(06)" />
+				<field name="TRANS-CODE" fmt="9(03)" />
+				<field name="TRANS-AMOUNT" fmt="+9(05).99" />
+				<field name="REF-NUM" fmt="X(23)" />
+				<field name="TRANS-POST-DATE" fmt="9(07)" />
+				<field name="TRANS-DATE" fmt="9(07)" />
+				<field name="MERCH-DOING-BUSS-AS-NAME" fmt="X(25)" />
+				<field name="MERCH-CITY" fmt="X(13)" />
+				<field name="MERCH-STATE" fmt="X(02)" />
+				<field name="CARDHOLD-SHORT-NAME" fmt="X(15)" />
+				<field name="ACCO-BALAN" fmt="+9(07).99" />
+				<field name="ACCO-PAST-DUE-AMOUNT" fmt="+9(07).99" />
+				<field name="ACCO-AMOUNT-DISP" fmt="+9(07).99" />
+				<field name="DATE-OF-LAST-DISP" fmt="9(07)" />
+				<field name="DATE-LAST-SETTLE" fmt="9(07)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI24 -->
+	<!-- Inicio del packet SI31 -->
+	<packet id="SI31">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-IN" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="NBR-OF-NAMES" fmt="9(05)" />
+			<field name="USER-BANK" fmt="9(04)" />
+			<field name="ZIP-CODE" fmt="X(05)" />
+			<field name="RBA" fmt="9(11)" />
+			<field name="NAME" fmt="X(24)" />
+			<field name="PHONE-TYPE" fmt="X(01)" />
+			<field name="PHONE-NUMBER" fmt="9(10)" />
+			<field name="TAXID" fmt="X(13)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="BROWSE-IN" fmt="X(01)">
+				<option name="BROWSE-FWD" value="F" />
+				<option name="BROWSE-BKD" value="B" />
+			</field>
+			<field name="NBR-OF-NAMES" fmt="9(05)" />
+			<field name="USER-BANK" fmt="9(04)" />
+			<field name="ZIP-CODE" fmt="X(05)" />
+			<field name="RBA" fmt="9(11)" />
+			<field name="NAME" fmt="X(24)" />
+			<field name="PHONE-TYPE" fmt="X(01)" />
+			<field name="PHONE-NUMBER" fmt="9(10)" />
+			<field name="TAXID" fmt="X(13)" />
+			<field name="MORE-DATA-IND" fmt="X(1)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(03)" />
+			<field name="SEGMENT-LENGTH" fmt="9(04)" />
+			<field name="RBA-INDICATOR" fmt="9(11)" />
+			<array name="TRANS-SEGMENT" min="0" max="155" depends="NBR-TRAN-SEGMENTS">
+				<field name="CARD-HOLD-ACCT-NBR" fmt="9(16)" />
+				<field name="CARD-HOLD-NAME1" fmt="X(25)" />
+				<field name="CARD-HOLD-NAME2" fmt="X(25)" />
+				<field name="AUT-USER1" fmt="X(25)" />
+				<field name="CARD-HOLD-ADDRESS" fmt="X(36)" />
+				<field name="CARD-HOLD-CITY" fmt="X(25)" />
+				<field name="CARD-HOLD-STATE" fmt="X(02)" />
+				<field name="CARD-HOLD-ZIP-CODE" fmt="X(09)" />
+				<field name="FILLER" fmt="X(09)" />
+				<field name="CREDIT-RATING" fmt="X(02)" />
+				<field name="ACCT-STATUS" fmt="X(03)" />
+				<field name="CARD-HOLD-HOME-NBR" fmt="9(10)" />
+				<field name="CARD-HOLD-BUS-NBR" fmt="9(10)" />
+				<field name="TAXID" fmt="X(13)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI31 -->
+	<!--Inicio del packet SI60-->
+	<packet id="SI60">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="SHORT-NAME" fmt="X(15)" />
+			<field name="TYPE-OF-ACCO" fmt="X(03)">
+				<option name="BILLING" value="CBA" />
+				<option name="PRIMARY" value="PCA" />
+				<option name="SECONDARY" value="SCA" />
+			</field>
+			<field name="NUM-OF-ACCO" fmt="9(02)" />
+			<array name="TRANS-SEGMENT" min="0" max="11" depends="NUM-OF-ACCO">
+				<field name="TYPE-OF-ACCOUNT" fmt="X(03)">
+					<option name="BILLING" value="CBA" />
+					<option name="PRIMARY" value="PCA" />
+					<option name="SECONDARY" value="SCA" />
+				</field>
+				<field name="ACCT-NUM" fmt="9(16)" />
+				<field name="TAX-ID" fmt="X(13)" />
+				<field name="LONG-NAME" fmt="X(40)" />
+				<field name="ADDRESS-1" fmt="X(36)" />
+				<field name="ADDRESS-2" fmt="X(36)" />
+				<field name="CITY" fmt="X(27)" />
+				<field name="ZIP-CODE" fmt="X(10)" />
+				<field name="HOME-PHONE" fmt="X(13)" />
+				<field name="CREDIT-RAT" fmt="X(02)" />
+				<field name="CREDIT-LIM" fmt="9(08)" />
+				<field name="BALANCE" fmt="X(11)" />
+				<field name="TRANS-ACCO" fmt="X(16)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI60-->
+	<!--Inicio del packet SI61-->
+	<packet id="SI61">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="SHORT-NAME" fmt="X(15)" />
+			<field name="CYCLE" fmt="9(02)" />
+			<field name="BANK" fmt="9(04)" />
+			<field name="TYPE-OF-ACCO" fmt="X(02)">
+				<option name="BILLING" value="B" />
+				<option name="CBA" value="C" />
+				<option name="DUAL-CURREN-BNS" value="D" />
+				<option name="USD" value="DL" />
+				<option name="DUAL-CURRENCY" value="DU" />
+				<option name="INDIVIDUAL" value="I" />
+				<option name="LOCAL-CURREN" value="L" />
+				<option name="PRIMARY" value="P" />
+				<option name="SECOND" value="S" />
+				<option name="US-CURREN" value="U" />
+			</field>
+			<field name="CREDIT-LIM" fmt="9(08)" />
+			<field name="BALANCE" fmt="X(11)" />
+			<field name="EXP-DATE" fmt="X(08)" />
+			<field name="CREDIT-RAT" fmt="9(02)" />
+			<field name="STATUS" fmt="X(01)">
+				<option name="APPROVE" value="A" />
+				<option name="DECLINE" value="D" />
+				<option name="PICK-UP-CARD" value="P" />
+				<option name="REFER" value="R" />
+				<option name="FRAUD" value="F" />
+				<option name="CLOSED-PICK-UP-C" value="C" />
+			</field>
+			<field name="REASON" fmt="X(18)" />
+			<field name="AVAILABLE" fmt="9(07)" />
+			<field name="NUM-OF-AUTHO-TODAY" fmt="9(03)" />
+			<field name="AMOU-OF-AUTHO-TODAY" fmt="X(11)" />
+			<field name="CASH-LIM" fmt="9(08)" />
+			<field name="CASH-AVAIL" fmt="9(07)" />
+			<field name="AMOU-CASH-AUTHO-TODAY" fmt="X(11)" />
+			<field name="TOT-NUM-AUTHO-APPROV" fmt="9(05)" />
+			<field name="TOT-AMOU-AUTHO-APPROV" fmt="9(05)" />
+			<field name="TOT-NUM-AUTHO-DECLINE" fmt="9(05)" />
+			<field name="TOT-AMOU-AUTHO-DECLINE" fmt="9(05)" />
+			<field name="TOT-NUM-OF-REFER-APPROV" fmt="9(05)" />
+			<field name="TOT-REFER-APPROV-AMOU" fmt="9(05)" />
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(03)" />
+			<field name="MORE-DATA-IND" fmt="X(01)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="SEGMENT-LENGTH" fmt="9(4)" />
+			<array name="TRANS-SEGMENT" min="0" max="444" depends="NBR-TRAN-SEGMENTS">
+				<field name="AUTHO-DATE" fmt="9(07)" />
+				<field name="AUTHO-TIME" fmt="9(04)" />
+				<field name="SOURCE" fmt="X(10)">
+					<option name="BASE-I" value="BIN" />
+					<option name="MAGNETIC" value="HOS" />
+					<option name="INAS" value="ICA" />
+					<option name="NAT-DATA-CORP" value="NDC" />
+					<option name="TSYS-HOST-TERM" value="TRM" />
+					<option name="TANDEM-TERM" value="TXP" />
+					<option name="USER-INTER" value="USR" />
+				</field>
+				<field name="APPROVAL-CODE" fmt="X(06)" />
+				<field name="APPROVAL-MOUNT" fmt="X(11)" />
+				<field name="APPROVAL-RESPONSE" fmt="X(22)">
+					<option name="APPROVED" value="APPROVED" />
+					<option name="DECLINED" value="DECLINED" />
+					<option name="PICK-UP" value="PICK-UP" />
+					<option name="REFERRAL" value="REFERRAL" />
+					<option name="DELAYED" value="DELAYED" />
+					<option name="NEG-FILE" value="NEG-FILE" />
+					<option name="OVERRIDE" value="OVERRIDE" />
+					<option name="APPROVED-DELAYED" value="APPROVED-DELAYED" />
+				</field>
+				<field name="TERMINAL" fmt="X(04)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet SI61-->
+	<!-- Inicio del packet S301 -->
+	<packet id="S301">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="FROM-DATE" fmt="9(08)" />
+			<field name="TO-DATE" fmt="9(08)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="FROM-DATE" fmt="9(08)" />
+			<field name="TO-DATE" fmt="9(08)" />
+			<field name="MORE-DATA-IND" fmt="X(1)">
+				<option name="MORE-DATA-EXISTS" value="Y" />
+				<option name="END-OF-DATA" value="N" />
+			</field>
+			<field name="SEGMENT-LENGTH" fmt="9(04)" />
+			<field name="NBR-TRAN-SEGMENTS" fmt="9(03)" />
+			<array name="TRANS-SEGMENT" min="0" max="610" depends="NBR-TRAN-SEGMENTS">
+				<field name="STATEMENT-DATE" fmt="9(08)" />
+				<field name="PREV-BAL-SIGN" fmt="X(01)" />
+				<field name="PREV-BALANCE" fmt="9(18)" />
+				<field name="ENDING-BAL-SIGN" fmt="X(01)" />
+				<field name="ENDING-BALANCE" fmt="9(18)" />
+				<field name="NBR-OF-TRANS" fmt="9(04)" />
+			</array>
+		</struct>
+	</packet>
+	<!-- Final del packet S301 -->
+	<!-- Inicio del packet S304 -->
+	<packet id="S304">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="STATEMENT-DATE" fmt="9(08)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="STATEMENT-DATE" fmt="9(08)" />
+			<field name="PREV-BAL-SIGN" fmt="X(01)" />
+			<field name="PREV-BALANCE" fmt="9(18)" />
+			<field name="ENDING-BAL-SIGN" fmt="X(01)" />
+			<field name="ENDING-BALANCE" fmt="9(18)" />
+			<field name="PAYMENT-DUE-SIGN" fmt="X(01)" />
+			<field name="PAYMENT-DUE" fmt="9(18)" />
+			<field name="PAYMENT-SIGN" fmt="X(01)" />
+			<field name="PAYMENT" fmt="9(18)" />
+			<field name="NBR-OF-PURCHASES" fmt="9(07)" />
+			<field name="PURCHASES-SIGN" fmt="X(01)" />
+			<field name="PURCHASES" fmt="9(18)" />
+			<field name="NBR-OF-CREDITS" fmt="9(07)" />
+			<field name="CREDITS-SIGN" fmt="X(01)" />
+			<field name="CREDITS" fmt="9(18)" />
+			<field name="NBR-OF-CASH-ADV" fmt="9(07)" />
+			<field name="CASH-ADV-SIGN" fmt="X(01)" />
+			<field name="CASH-ADV" fmt="9(18)" />
+			<field name="NBR-OF-MISC-TRANS" fmt="9(07)" />
+			<field name="MISC-TRANS-SIGN" fmt="X(01)" />
+			<field name="MISC-TRANS" fmt="9(18)" />
+			<field name="PURCHASE-FIN-CHARGE-SIGN" fmt="X(01)" />
+			<field name="PURCHASE-FIN-CHARGE" fmt="9(18)" />
+			<field name="CASH-FIN-CHARGE-SIGN" fmt="X(01)" />
+			<field name="CASH-FIN-CHARGE" fmt="9(18)" />
+			<field name="OVERLIMIT-FEE-SIGN" fmt="X(01)" />
+			<field name="OVERLIMIT-FEE" fmt="9(18)" />
+			<field name="LATE-CHARGE-SIGN" fmt="X(01)" />
+			<field name="LATE-CHARGE" fmt="9(18)" />
+			<field name="INSURANCE-CHARGE-SIGN" fmt="X(01)" />
+			<field name="INSURANCE-CHARGE" fmt="9(18)" />
+			<field name="CREDIT-LIMIT-SIGN" fmt="X(01)" />
+			<field name="CREDIT-LIMIT" fmt="9(18)" />
+			<field name="PAST-DUE-AMOUNT-SIGN" fmt="X(01)" />
+			<field name="PAST-DUE-AMOUNT" fmt="9(18)" />
+			<field name="CHARGEOFF-SIGN" fmt="X(01)" />
+			<field name="CHARGEOFF-AMOUNT" fmt="9(18)" />
+			<field name="DISPUTED-SIGN" fmt="X(01)" />
+			<field name="DISPUTED-AMOUNT" fmt="9(18)" />
+			<field name="NBR-PAYMENTS-PAST-DUE" fmt="9(04)" />
+			<field name="HIGHEST-DELINQ-PERIOD" fmt="X(02)" />
+			<field name="ACCOUNT-DISPUTE-FLAG" fmt="X(01)" />
+			<field name="MEMO-FLAG" fmt="X(01)" />
+			<field name="MONTHLY-BALANCE-SIGN" fmt="X(01)" />
+			<field name="MONTHLY-BALANCE" fmt="9(09)" /> <!-- Modificado 24 Noviembre 2008 Antes X(09) -->
+			<field name="OS-USR-BAL-SIGN" fmt="X(01)" />
+			<field name="OS-USR-BALANCE" fmt="9(18)" />
+			<field name="OS-PUR-FIN-CH-SIGN" fmt="X(01)" />
+			<field name="OS-PUR-FIN-CHARGES" fmt="9(18)" />
+			<field name="OS-CASH-FIN-CH-SIGN" fmt="X(01)" />
+			<field name="OS-CASH-FIN-CHARGES" fmt="9(18)" />
+			<field name="NUM-PAYMENTS" fmt="9(04)" />
+			<field name="PUR-BALANCE-OS-SIGN" fmt="X(01)" />
+			<field name="PUR-BALANCE-OS" fmt="9(18)" />
+			<field name="CASH-BALANCE-OS-SIGN" fmt="X(01)" />
+			<field name="CASH-BALANCE-OS" fmt="9(18)" />
+			<field name="MISC-BALANCE-OS-SIGN" fmt="X(01)" />
+			<field name="MISC-BALANCE-OS" fmt="9(18)" />
+		</struct>
+	</packet>
+	<!-- Final del packet S304 -->
+	<!-- Inicio del packet PING-->
+	<packet id="PING">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(08)" />
+			<field name="id" fmt="X(04)" />
+			<field name="version" fmt="X(04)" />
+			<field name="error" fmt="X(6)" />
+			<field name="ELAPSED-TIME" fmt="9(07)" />
+		</struct>
+	</packet>
+	<!-- Final del packet PING -->
+	<!-- Inicio del TEND -->
+	<packet id="TEND">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+		</struct>
+	</packet>
+	<!-- Final del TEND -->
+	<!-- Inicio del MEND -->
+	<packet id="MEND">
+		<struct name="REQUEST-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+		</struct>
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+		</struct>
+	</packet>
+	<!-- Final del MEND -->
+	<!-- Inicio del E900 -->
+	<packet id="E900">
+		<struct name="RESPONSE-DATA">
+			<field name="length" fmt="9(8)" />
+			<field name="packetID" fmt="X(4)" />
+			<field name="version" fmt="X(4)" />
+			<field name="errorCode" fmt="X(6)" />
+			<field name="message" fmt="X(77)" />
+		</struct>
+	</packet>
+	<!-- Final del E900 -->
+</packets>
