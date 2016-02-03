@@ -35,27 +35,12 @@
 					<br></br>
 					<h:outputLabel value="Status:" for="status" />
 					<h:selectOneMenu value="#{reporteBean.status}" id="status">
-						<f:selectItem itemLabel="---" itemValue="" />
+						<f:selectItem itemLabel="Todas" itemValue="T" />
 						<f:selectItem itemLabel="Aplicadas" itemValue="A" />
 						<f:selectItem itemLabel="Enviadas" itemValue="E" />
-						<f:selectItem itemLabel="Pendientes" itemValue="P" />
+						
 					</h:selectOneMenu>
-					<br></br>
-					<h:message for="cuenta" errorClass="error" />
-					<br></br>
-					<h:outputLabel value="Cuenta:" for="cuenta" />
-					<h:inputText value="#{reporteBean.cuenta}" id="cuenta">
-						<f:validateBean for="cuenta"></f:validateBean>
-					</h:inputText>
-					<br></br>
-					<h:message for="folio" errorClass="error" />
-					<br></br>
-
-					<h:outputLabel value="Folio:" for="folio" />
-					<h:inputText value="#{reporteBean.folio}" id="folio">
-						<f:validateBean for="folio"></f:validateBean>
-					</h:inputText>
-					<br></br>
+										<br></br>
 					<h:commandButton value="Buscar"
 						action="#{reporteBean.consultarCompras}"
 						onclick="#{rich:component('popup')}.show()" />

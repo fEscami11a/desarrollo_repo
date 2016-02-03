@@ -4,17 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.tsys.xmlmessaging.ch.InqGeneralAcct;
 import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
@@ -131,6 +136,23 @@ public class MSIHelper {
     	compra.setNumRefTran(compraWSDTO.getNumRefTran());
     	compra.setTipoTransaccion(compraWSDTO.getTipoTransaccion());
     	compra.setUsername(compraWSDTO.getUsername());
+    	GregorianCalendar gc1 =new GregorianCalendar();
+    	try {
+			gc1.setTime(sdf.parse(compraWSDTO.getDateStmtBegin()));
+			 XMLGregorianCalendar xmlgc1 = DatatypeFactory.newInstance()
+				        .newXMLGregorianCalendar(gc1);
+	    	compra.setDateStmtBegin(xmlgc1);
+	    	GregorianCalendar gc2 =new GregorianCalendar();
+	    	gc2.setTime(sdf.parse(compraWSDTO.getDatePost()));
+	    	 XMLGregorianCalendar xmlgc2 = DatatypeFactory.newInstance()
+				        .newXMLGregorianCalendar(gc2);
+	    	 compra.setDatePost(xmlgc2);
+	    	 compra.setTimePost(new BigInteger(compraWSDTO.getTimePost()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	return compra;
 }
 	
@@ -152,6 +174,9 @@ public class MSIHelper {
     	compraWSDTO.setMontoPromo(compra.getMontoPromo());
     	compraWSDTO.setNumRefTran(compra.getNumRefTran());
     	compraWSDTO.setTipoTransaccion(compra.getTipoTransaccion());
+    	compraWSDTO.setDateStmtBegin(sdf.format(compra.getDateStmtBegin().toGregorianCalendar().getTime()));
+    	compraWSDTO.setDatePost(sdf.format(compra.getDatePost().toGregorianCalendar().getTime()));
+    	compraWSDTO.setTimePost(compra.getTimePost().toString());
     	Map<String,Promocion> mapPromos=compra.getPromosCombo();
     	List<String> lPromosString=new ArrayList<String>();
     	if(mapPromos!= null && !mapPromos.isEmpty()){

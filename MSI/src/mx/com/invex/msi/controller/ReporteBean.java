@@ -1,6 +1,7 @@
 package mx.com.invex.msi.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -8,17 +9,19 @@ import java.util.concurrent.TimeUnit;
 import javax.validation.constraints.Pattern;
 
 import mx.com.invex.msi.model.Compra;
+import mx.com.invex.msi.model.RepConcentradoDTO;
 import mx.com.invex.msi.service.CompraService;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 @Component
-@Scope("request")
+@Scope("session")
 public class ReporteBean extends MessagesMBean  implements Serializable{
 	
 	public ReporteBean() {
@@ -32,28 +35,16 @@ public class ReporteBean extends MessagesMBean  implements Serializable{
 	private static final Logger logger = Logger.getLogger(ReporteBean.class);
 	
 	private Date fechaInicio, fechaFin;
-	@Pattern(regexp="(\\d{16})?")
-	private String cuenta;
 	
 	private String status;
-	@Pattern(regexp="(\\d{1,10})?")
-	private String folio;
+
 	
 	@Autowired
 	CompraService compraService;
 	
-	private List<Compra> compras;
+	private List<RepConcentradoDTO> repRegs;
 	
 	
-
-	public String getCuenta() {
-		return cuenta;
-	}
-
-	public void setCuenta(String cuenta) {
-		this.cuenta = cuenta;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -62,12 +53,14 @@ public class ReporteBean extends MessagesMBean  implements Serializable{
 		this.status = status;
 	}
 
-	public List<Compra> getCompras() {
-		return compras;
+	
+
+	public List<RepConcentradoDTO> getRepRegs() {
+		return repRegs;
 	}
 
-	public void setCompras(List<Compra> compras) {
-		this.compras = compras;
+	public void setRepRegs(List<RepConcentradoDTO> repRegs) {
+		this.repRegs = repRegs;
 	}
 
 	public Date getFechaInicio() {
@@ -87,24 +80,21 @@ public class ReporteBean extends MessagesMBean  implements Serializable{
 	}
 	
 	
-	
-	public String getFolio() {
-		return folio;
-	}
-
-	public void setFolio(String folio) {
-		this.folio = folio;
-	}
 
 	public String consultarCompras(){
-		if("".equals(status) && cuenta.isEmpty() && folio.isEmpty()){
-			sendErrorMessageToUser("Favor de ingresar cuenta, folio o estatus de promocion");
-			return null;
-		}
 		DetachedCriteria criteria = DetachedCriteria.forClass(Compra.class);
-		
-		if(!"".equals(status)){
+		criteria.setProjection(Projections.projectionList()
+				.add(Projections.rowCount(),"countCompras")
+				.add( Projections.property("origen"), "origen" )
+				.add( Projections.property("idEdoPromocion"), "status" )
+				.add( Projections.groupProperty("origen") )
+				.add( Projections.groupProperty("idEdoPromocion") )
+				);
+		criteria.add(Restrictions.or(Restrictions.like("origen", "PU%"), Restrictions.like("origen", "WSPortal%")));
+		criteria.add(Restrictions.or(Restrictions.eq("idEdoPromocion", "A"), Restrictions.eq("idEdoPromocion", "E")));
+		if(!"T".equals(status)){
 			criteria.add(Restrictions.eq("idEdoPromocion", status));
+		}
 			if(fechaInicio == null || fechaFin== null){
 				sendErrorMessageToUser("Fecha de Inicio y fecha Final son requeridas");
 				return null;
@@ -113,32 +103,24 @@ public class ReporteBean extends MessagesMBean  implements Serializable{
 				Date maxDate = new Date(fechaFin.getTime()+TimeUnit.DAYS.toMillis(1));
 				criteria.add(Restrictions.between("fechaAplicacionPromocion", getFechaInicio(), maxDate));
 			}
-		}
-		if(cuenta != null && !cuenta.isEmpty()){
-			criteria.add(Restrictions.eq("cuenta", cuenta));
-			if(fechaInicio == null || fechaFin== null){
-				sendErrorMessageToUser("Fecha de Inicio y fecha Final son requeridas");
-				return null;
-				
-			}else{
-				Date maxDate = new Date(fechaFin.getTime()+TimeUnit.DAYS.toMillis(1));
-				criteria.add(Restrictions.between("fechaAplicacionPromocion", getFechaInicio(), maxDate));
-			}
-		}
-		if(folio != null && !folio.isEmpty()){
-			criteria.add(Restrictions.eq("folio", new Integer(folio)));
-		}
-		criteria.addOrder(Order.desc("fechaCompra"));
-		compras =compraService.findByCriteria(criteria);
 		
-		if(compras == null || compras.isEmpty()){
+		
+		List<Object[]>reporte =compraService.getReporte(criteria);
+		 repRegs = new ArrayList<RepConcentradoDTO>();
+		for (Object[] objects : reporte) {
+			RepConcentradoDTO repReg = new RepConcentradoDTO();
+			repReg.setNumCompras(((Long) objects[0]).intValue());
+			repReg.setOrigen("PU".equals(objects[1].toString().trim())?"Pantalla Unica":"Portal");
+			repReg.setStatus("A".equals(objects[2].toString().trim())?"Aplicadas":"Enviadas");
+			repRegs.add(repReg);
+			logger.info("ob0 "+objects[0] +" ob1 "+ objects[1] +" ob2 "+objects[2]);
+		}
+		
+		if(repRegs.isEmpty()){
 			sendErrorMessageToUser("No se encontraron resultados");
 			return null;
 		}
-		logger.info("num compras compras "+compras.size());
-		for (Compra compra : compras) {
-			compra.setCuenta("***********"+compra.getCuenta().substring(compra.getCuenta().length()-4));
-		}
+		
 		return "RepComprasList";  
 	}
 	

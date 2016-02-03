@@ -71,8 +71,15 @@ import com.tsys.xmlmessaging.ch.InqTransResponseType;
 import com.tsys.xmlmessaging.ch.TSYSfault;
 import com.tsys.xmlmessaging.ch.TSYSfaultType;
 import com.tsys.xmlmessaging.ch.TSYSprofileType;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjResponse;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransfer;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.TranKey;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.Adj;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.AmtTran;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.MerchantInfo;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType.TermTransfer;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType.TransferFrom;
 
@@ -160,7 +167,7 @@ public class ComprasServiceImpl{
 			
 			for (CompraWSDTO compraWSDTO : comprasWSDTO) {
 				Compra compra =MSIHelper.getCompraFromCompraWSDTO(compraWSDTO);
-				logger.info("compra id edo promo "+compra.getIdEdoPromocion());
+				logger.info("compra id edo promo "+compra.getIdEdoPromocion() +" cuenta "+compra.getCuenta());
 				compra.setFolio(folio);
 				compra.setOrigen("WSPortal");
 				if(compraWSDTO.getPromocion()!= null){
@@ -187,7 +194,7 @@ public class ComprasServiceImpl{
 				if(ists2){
 					compra.setMontoPromo(compra.getMonto());
 					compra.setMontoOriginal(compra.getMonto());
-					compraService.save(compra);
+					
 					res=enviarPromoTs2(compra);
 				}else{
 					MxpParam param = new MxpParam();
@@ -204,20 +211,20 @@ public class ComprasServiceImpl{
 					param.setDescription(compra.getDescripcion());
 					compra.setMontoOriginal(compra.getMonto());
 					compra.setMonto(compra.getMontoPromo());
-					compraService.save(compra);
+				
 					ClientePromosWS cliMXP = new ClientePromosWS(parametroService.getParamById(MSIConstants.MXP_SERVICE_ENDPOINT).getValor());
 						res = MSIConstants.desa?"OK":cliMXP.aplicarPromocion(param);
 				}
 					if("OK".equalsIgnoreCase(res)){
 						compra.setEnPromocion(true);
 						compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
-						
+						compra.setFechaAplicacionPromocion(new Date());
+						compraService.save(compra);
 					}else{
-						compra.setEnPromocion(false);
-						compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_PENDIENTE);
+						resp.setStatus(2);
+						resp.setMsgError("ERROR al aplicar promocion "+ compra.getDescripcion() +" "+compra.getMontoOriginal());
 					}
-					compra.setFechaAplicacionPromocion(new Date());
-					compraService.update(compra);
+					
 				
 				compras.add(compra);
 			}
@@ -690,110 +697,101 @@ public class ComprasServiceImpl{
 		 tp.setUserID("invdev");
 		 tp.setVendorID("00000000");
 		String res=null;
+		
 		logger.info("inqAcctAvailTLPOpt assesfee false tlptype Installment tbal code 0001 amtToMove "+compra.getMontoPromo());
-		InqAcctAvailTLPOpt inqAcctAvailTLPOpt = new InqAcctAvailTLPOpt();
-		InqAcctAvailTLPOptRequestType inqAcctAvailTLPOptReq= new InqAcctAvailTLPOptRequestType();
+		String pattern = "###.##";
+		DecimalFormat decimalFormat = new DecimalFormat(pattern);
+		MntCustServiceAdjRequestType mntCustServiceAdjReq = new MntCustServiceAdjRequestType();
+		mntCustServiceAdjReq.setVersion("2.12.0");
+		mntCustServiceAdjReq.setKeyType("cardNbr");
+		mntCustServiceAdjReq.setKey(compra.getCuenta());
+		TranKey trankey = new TranKey();
+		com.tsys.xmlmessaging.ch2.Date dateStmBegin = new com.tsys.xmlmessaging.ch2.Date();
+		dateStmBegin.setValue(compra.getDateStmtBegin());
+		trankey.setDateStmtBegin(dateStmBegin);
+		com.tsys.xmlmessaging.ch2.Date datePost = new com.tsys.xmlmessaging.ch2.Date();
+		datePost.setValue(compra.getDatePost());
+		trankey.setDatePost(datePost);
+		trankey.setTimePost(compra.getTimePost());
+		mntCustServiceAdjReq.setTranKey(trankey);
+		ActionInfo actionInfo = new ActionInfo();
+		actionInfo.setAction("Adjustment");
+		actionInfo.setType("Initial");
+		actionInfo.setTranCode("0106");
+		AmtTran amtTran = new AmtTran();
+		amtTran.setCode("MXN");
+		amtTran.setValue(new BigDecimal(decimalFormat.format(compra.getMontoPromo())));
+		actionInfo.setAmtTran(amtTran);
+		MerchantInfo merchantInfo = new MerchantInfo();
+		merchantInfo.setDBAName(String.format("%1$.25s", compra.getDescripcion()));
+		actionInfo.setMerchantInfo(merchantInfo);
+		Adj adj = new Adj();
+		com.tsys.xmlmessaging.ch2.Boolean b = new com.tsys.xmlmessaging.ch2.Boolean();
+		b.setValue(false);
+		adj.setForcePost(b);
+		actionInfo.setAdj(adj);
 		
-		inqAcctAvailTLPOptReq.setKey(compra.getCuenta());
-		inqAcctAvailTLPOptReq.setKeyType("cardNbr");
-		inqAcctAvailTLPOptReq.setVersion("2.0.0");
-		inqAcctAvailTLPOptReq.setTLPType("Installment");
-		Boolean assessFee = new Boolean();
-		assessFee.setValue(false);
-		inqAcctAvailTLPOptReq.setAssessFee(assessFee);
-		InqAcctAvailTLPOptRequestType.TransferInfo transferInfo = new InqAcctAvailTLPOptRequestType.TransferInfo();
-		InqAcctAvailTLPOptRequestType.TransferInfo.TBALs tbals= new InqAcctAvailTLPOptRequestType.TransferInfo.TBALs();
-		List<TBAL> ltbal=tbals.getTBAL();
-		TBAL tbal = new TBAL();
-		AmtToMove amtToMove = new AmtToMove();
-		amtToMove.setCode("MXN");
-		amtToMove.setValue(new BigDecimal(""+compra.getMontoPromo()));
-		tbal.setAmtToMove(amtToMove);
-		tbal.setCode("0001");
-		ltbal.add(tbal);
-		transferInfo.setTBALs(tbals);
-		inqAcctAvailTLPOptReq.setTransferInfo(transferInfo);
-		
-		inqAcctAvailTLPOpt.setInqAcctAvailTLPOptRequest(inqAcctAvailTLPOptReq);
-		InqAcctAvailTLPOptResponse inqAcctAvailTLPOptResp= cts2.inqAcctAvailTLPOpt(tp, inqAcctAvailTLPOpt);
-		String status=inqAcctAvailTLPOptResp.getInqAcctAvailTLPOptResult().getStatus();
-		if(!"000".equals(status)){
-			String msg = inqAcctAvailTLPOptResp.getInqAcctAvailTLPOptResult().getStatusMsg();
-			logger.info(msg);
-			TSYSfaultType fault =inqAcctAvailTLPOptResp.getInqAcctAvailTLPOptResult().getFaults();
-			List<TSYSfault> lfaulta =fault.getFault();
-			for (TSYSfault sfault : lfaulta) {
-				logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-			}
-		}
-		logger.info("reqAcctTermTransfer transfer to type installment assessFee fales meses "+compra.getPromocion().getPlazoMeses()+" tbal monto "+compra.getMontoPromo());
-		ReqAcctTermTransfer reqAcctTermTransfer = new ReqAcctTermTransfer();
-		ReqAcctTermTransferRequestType reqAcctTermTransferReq = new ReqAcctTermTransferRequestType();
-		reqAcctTermTransferReq.setKeyType("cardNbr");
-		reqAcctTermTransferReq.setKey(compra.getCuenta());
-		reqAcctTermTransferReq.setVersion("2.1.0");
-		TermTransfer termTransf= new TermTransfer();
-		termTransf.setTransferToType("Installment");
-		com.tsys.xmlmessaging.ch2.Boolean assessFee2 = new com.tsys.xmlmessaging.ch2.Boolean();
-		assessFee2.setValue(false);
-		termTransf.setAssessFee(assessFee2);
+		ActionInfo actInfo2 = new ActionInfo();
+		actInfo2.setAction("Adjustment Offset");
+		actInfo2.setType("Offset");
+		actInfo2.setTranCode("0101");
+		actInfo2.setAcctNbr(compra.getCuenta());
+		actInfo2.setAmtTran(amtTran);
+		actInfo2.setMerchantInfo(merchantInfo);
+		Adj adj2= new Adj();
+		adj2.setForcePost(b);
+		adj2.setTLPType("S");
+		String tlpopt= null;
 		int meses =compra.getPromocion().getPlazoMeses();
-		if(meses==3){
-			termTransf.setTransferToTLPOpt("1420");
-		}else if(meses==6){
-			termTransf.setTransferToTLPOpt("1421");
-		}else if(meses==9){
-			termTransf.setTransferToTLPOpt("1422");
-		}else if(meses==12){
-			termTransf.setTransferToTLPOpt("1423");
-		}else if(meses==11){
-			termTransf.setTransferToTLPOpt("1450");
-		}else if(meses==18){
-			termTransf.setTransferToTLPOpt("1453");
-		}else if(meses==24){
-			termTransf.setTransferToTLPOpt("1455");
-		}else if(meses==7){
-			termTransf.setTransferToTLPOpt("1448");
+		switch(meses){
+			case 3:
+				tlpopt ="1539";
+				break;
+			case 6:
+				tlpopt="1540";
+				break;
+			case 9:
+				tlpopt="1541";
+				break;
+			case 12:	
+				tlpopt="1542";
+				break;
+			case 7:	
+				tlpopt="1545";
+				break;
+			case 11:	
+				tlpopt="1546";
+				break;
+			case 18:	
+				tlpopt="1542";
+				break;
 		}
+		adj2.setTLPOptSet(tlpopt);
+		actInfo2.setAdj(adj2);
 		
-		reqAcctTermTransferReq.setTermTransfer(termTransf);
-		TransferFrom transferFrom = new TransferFrom();
-		List<ReqAcctTermTransferRequestType.TransferFrom.TBAL> tbals2=transferFrom.getTBAL();
+		List<ActionInfo> actInfos=mntCustServiceAdjReq.getActionInfo();
+		actInfos.add(actionInfo);
+		actInfos.add(actInfo2);
 		
-		ReqAcctTermTransferRequestType.TransferFrom.TBAL tbal2 = new ReqAcctTermTransferRequestType.TransferFrom.TBAL();
-		tbal2.setCode("0001");
-		ReqAcctTermTransferRequestType.TransferFrom.TBAL.AmtToMove amtToMove2 = new ReqAcctTermTransferRequestType.TransferFrom.TBAL.AmtToMove();
-		amtToMove2.setCode("MXN");
-		amtToMove2.setValue(new BigDecimal(""+compra.getMontoPromo()));
-		tbal2.setAmtToMove(amtToMove2);
-		
-		tbals2.add(tbal2);
-		reqAcctTermTransferReq.setTransferFrom(transferFrom);
-		reqAcctTermTransfer.setReqAcctTermTransferRequest(reqAcctTermTransferReq);
-		com.tsys.xmlmessaging.ch2.TSYSprofileType profile = new com.tsys.xmlmessaging.ch2.TSYSprofileType();
-		 profile.setClientID("7401");
-		 profile.setUserID("gp5rwf");
-		 profile.setVendorID("00000000");
+		res="OK";
 		if (!MSIConstants.desa) {
-//			ReqAcctTermTransferResponseType reqAcctTermTransferRes = cts2
-//					.reqAcctTermTransfer(profile, reqAcctTermTransfer)
-//					.getReqAcctTermTransferResult();
-//			status = reqAcctTermTransferRes.getStatus();
-//			if (!"000".equals(status)) {
-//				String msg = reqAcctTermTransferRes.getStatusMsg();
-//				logger.info(msg);
-//				com.tsys.xmlmessaging.ch2.TSYSfaultType fault = reqAcctTermTransferRes
-//						.getFaults();
-//				List<com.tsys.xmlmessaging.ch2.TSYSfault> lfaulta = fault
-//						.getFault();
-//				for (com.tsys.xmlmessaging.ch2.TSYSfault sfault : lfaulta) {
-//					logger.info(sfault.getStatus() + " "
-//							+ sfault.getFaultDesc());
-//				}
-//				return "error";
-//			}
+			MntCustServiceAdjResponse mntCustServiceAdjResp= cts2.mntCustServiceAdj(mntCustServiceAdjReq);
+			String status = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatus();
+			if(!"000".equals(status)){
+				String msg = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatusMsg();
+				logger.info(msg);
+				com.tsys.xmlmessaging.ch2.TSYSfaultType fault =mntCustServiceAdjResp.getMntCustServiceAdjResult().getFaults();
+				List<com.tsys.xmlmessaging.ch2.TSYSfault> lfaulta =fault.getFault();
+				for (com.tsys.xmlmessaging.ch2.TSYSfault sfault : lfaulta) {
+					logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
+				}
+				res="ERROR";
+			}
+			
 		}
-		return "OK";
+		
+		
+		return res;
 	
 		
 	}
@@ -1027,6 +1025,9 @@ public class ComprasServiceImpl{
 									compra.setNumRefTran(td.getRefNbr().getValue());
 									compra.setTipoTransaccion("ITA");
 									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+									compra.setDateStmtBegin(td.getDateStmtBegin());
+									compra.setDatePost(td.getDatePost());
+									compra.setTimePost(td.getTimePost());
 									for (Promocion promo : promosCampExt) {
 										if("si".equalsIgnoreCase(promo.getProgramaCero())){
 											if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1094,7 +1095,9 @@ public class ComprasServiceImpl{
 									compra.setNumRefTran(td.getRefNbr().getValue());
 									compra.setTipoTransaccion("IPS");
 									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-
+									compra.setDateStmtBegin(td.getDateStmtBegin());
+									compra.setDatePost(td.getDatePost());
+									compra.setTimePost(td.getTimePost());
 									for (Promocion promo : promosCampExt) {
 
 										if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1213,6 +1216,9 @@ public class ComprasServiceImpl{
 										compra.setNumRefTran(td.getRefNbr().getValue());
 										compra.setTipoTransaccion("ITA");
 										compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+										compra.setDateStmtBegin(td.getDateStmtBegin());
+										compra.setDatePost(td.getDatePost());
+										compra.setTimePost(td.getTimePost());
 										for (Promocion promo : promosProg0) {
 
 											if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1300,7 +1306,9 @@ public class ComprasServiceImpl{
 		                				 compra.setNumRefTran(td.getRefNbr().getValue());
 		                				 compra.setTipoTransaccion("IPS");
 		                				 compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-
+		                					compra.setDateStmtBegin(td.getDateStmtBegin());
+		                					compra.setDatePost(td.getDatePost());
+		                					compra.setTimePost(td.getTimePost());
 		                				 for (Promocion promo : promosProg0) {
 
 		                					 if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){

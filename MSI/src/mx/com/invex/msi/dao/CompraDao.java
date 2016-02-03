@@ -26,4 +26,6 @@ public interface CompraDao {
 			Date fechaFin, String tipoTrans);
 
 	String getStatusCompraItau(Compra compra);
+
+	List<Object[]> getReporte(DetachedCriteria criteria);
 }

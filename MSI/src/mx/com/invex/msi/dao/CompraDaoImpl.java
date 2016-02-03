@@ -98,6 +98,12 @@ public class CompraDaoImpl implements CompraDao{
 	}
 
 	@Override
+	public List<Object[]> getReporte(DetachedCriteria criteria) {
+		Session session=sessionFactory.getCurrentSession();
+		return (List<Object[]>) criteria.getExecutableCriteria(session).setMaxResults(1000).list();
+	}
+	
+	@Override
 	public List<Compra> findByCriteria(DetachedCriteria criteria) {
 		Session session=sessionFactory.getCurrentSession();
 		List<Compra> results = criteria.getExecutableCriteria(session).setMaxResults(1000).list();

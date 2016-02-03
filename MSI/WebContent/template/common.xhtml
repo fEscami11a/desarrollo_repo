@@ -43,7 +43,11 @@
 
                 <rich:menuItem value="Promociones MSI"  label="Promociones MSI" action="/user/ConsultaCuentaForm"  rendered="#{request.isUserInRole('ROLE_USER') or request.isUserInRole('ROLE_SUPERVISOR')}"/>
                
-                <rich:menuItem value="Reporte" label="Reporte" action="/reports/ReporteComprasForm" rendered="#{request.isUserInRole('ROLE_USER') or request.isUserInRole('ROLE_SUPERVISOR')}"/>
+                <rich:menuGroup label="Reportes" rendered="#{request.isUserInRole('ROLE_USER') or request.isUserInRole('ROLE_SUPERVISOR')}">
+                	<rich:menuItem label="Reporte Concentrado" action="/reports/ReporteComprasForm"/>
+                	<rich:menuItem label="Reporte Compras" action="/reports/ReporteComprasForm2"/>
+                	 
+                </rich:menuGroup>
                 <rich:menuGroup label="Administracion de Campañas" rendered="#{request.isUserInRole('ROLE_ADMIN')}">
                 	<rich:menuItem label="Alta de Campañas" action="#{altaCampaniaBean.nuevaCamp}" onclick="#{rich:component('popup')}.show()"/>
                 	<rich:menuItem label="Consulta de Campañas" action="#{consultaCampaniaBean.init}"/>

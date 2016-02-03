@@ -91,11 +91,36 @@ public class CompraWSDTO implements Serializable {
     
     private Double montoOriginal;
     
-    
-    
+    private String dateStmtBegin;
+   private String datePost; 
+    private String timePost;
     
 	public Double getMontoOriginal() {
 		return montoOriginal;
+	}
+
+	public String getDateStmtBegin() {
+		return dateStmtBegin;
+	}
+
+	public void setDateStmtBegin(String dateStmtBegin) {
+		this.dateStmtBegin = dateStmtBegin;
+	}
+
+	public String getDatePost() {
+		return datePost;
+	}
+
+	public void setDatePost(String datePost) {
+		this.datePost = datePost;
+	}
+
+	public String getTimePost() {
+		return timePost;
+	}
+
+	public void setTimePost(String timePost) {
+		this.timePost = timePost;
 	}
 
 	public void setMontoOriginal(Double montoOriginal) {

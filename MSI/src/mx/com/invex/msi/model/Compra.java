@@ -1,6 +1,7 @@
 package mx.com.invex.msi.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import mx.com.invex.msi.util.MSIConstants;
 
@@ -110,6 +112,40 @@ public class Compra implements Serializable {
     @Transient
     private Double montoOriginal;
     
+    @Transient
+    private XMLGregorianCalendar dateStmtBegin;
+    
+    @Transient
+    private XMLGregorianCalendar datePost;
+    
+    @Transient
+    private BigInteger timePost;
+    
+    
+	public XMLGregorianCalendar getDateStmtBegin() {
+		return dateStmtBegin;
+	}
+
+	public void setDateStmtBegin(XMLGregorianCalendar dateStmtBegin) {
+		this.dateStmtBegin = dateStmtBegin;
+	}
+
+	public XMLGregorianCalendar getDatePost() {
+		return datePost;
+	}
+
+	public void setDatePost(XMLGregorianCalendar datePost) {
+		this.datePost = datePost;
+	}
+
+	public BigInteger getTimePost() {
+		return timePost;
+	}
+
+	public void setTimePost(BigInteger timePost) {
+		this.timePost = timePost;
+	}
+
 	public Double getMontoOriginal() {
 		return montoOriginal;
 	}

@@ -29,6 +29,9 @@ import com.tsys.xmlmessaging.ch.InqTransResponse;
 import com.tsys.xmlmessaging.ch.TSYSXMLMessagingInquiry;
 import com.tsys.xmlmessaging.ch.TSYSXMLMessagingSoapInquiry;
 import com.tsys.xmlmessaging.ch.TSYSprofileType;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdj;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType;
+import com.tsys.xmlmessaging.ch2.MntCustServiceAdjResponse;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransfer;
 import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferResponse;
 import com.tsys.xmlmessaging.ch2.TSYSXMLMessagingMaintenance;
@@ -47,7 +50,20 @@ public class ClientTS2 {
 	       mntPort= servMnt.getTSYSXMLMessagingSoapMaintenance04();
 	}
 	
-
+	public MntCustServiceAdjResponse mntCustServiceAdj(MntCustServiceAdjRequestType req ){
+		Holder<com.tsys.xmlmessaging.ch2.TSYSprofileType> holder = new Holder<com.tsys.xmlmessaging.ch2.TSYSprofileType>();
+		MntCustServiceAdj mntCustServiceAdj = new MntCustServiceAdj();
+		mntCustServiceAdj.setMntCustServiceAdjRequest(req);
+		//MntCustServiceAdjRequestType req = new MntCustServiceAdjRequestType();
+		//req.se
+		 com.tsys.xmlmessaging.ch2.TSYSprofileType tp = new com.tsys.xmlmessaging.ch2.TSYSprofileType();
+		 tp.setClientID("7401");
+		 tp.setUserID("invdev");
+		 tp.setVendorID("00000000");
+		holder.value=tp;
+		return mntPort.mntCustServiceAdj(mntCustServiceAdj, holder);
+	}
+	
 	public InqAcctStatusResponse inqAcctStatus(
 	TSYSprofileType profile, InqAcctStatus inqAcctStatus) {
 		Holder<com.tsys.xmlmessaging.ch.TSYSprofileType> holder = new Holder<com.tsys.xmlmessaging.ch.TSYSprofileType>();

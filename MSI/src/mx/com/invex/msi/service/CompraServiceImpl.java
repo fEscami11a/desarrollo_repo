@@ -68,6 +68,11 @@ public class CompraServiceImpl implements CompraService{
 		return compraDao.findByCriteria(criteria);
 	}
 
+	@Transactional(readOnly=true)
+	public List<Object[]> getReporte(DetachedCriteria criteria) {
+		return compraDao.getReporte(criteria);
+	}
+
 
 
 	@Transactional(readOnly=true)

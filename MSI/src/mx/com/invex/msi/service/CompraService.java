@@ -25,4 +25,6 @@ public interface CompraService {
 			Date fechaFin,String tipoTrans);
 
 	String getStatusCompraItau(Compra compra);
+	
+	public List<Object[]> getReporte(DetachedCriteria criteria);
 }
