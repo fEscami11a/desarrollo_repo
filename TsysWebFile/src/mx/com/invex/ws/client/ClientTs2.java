@@ -56,6 +56,8 @@ import com.tsys.xmlmessaging.ch2.MntEmbossingInfo;
 import com.tsys.xmlmessaging.ch2.MntEmbossingInfoResponse;
 import com.tsys.xmlmessaging.ch2.MntName;
 import com.tsys.xmlmessaging.ch2.MntNameResponse;
+import com.tsys.xmlmessaging.ch2.ReqAcctTermTransfer;
+import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferResponse;
 import com.tsys.xmlmessaging.ch2.ReqCreditBureau;
 import com.tsys.xmlmessaging.ch2.ReqCreditBureauResponse;
 import com.tsys.xmlmessaging.ch2.ReqPINMailer;
@@ -273,6 +275,12 @@ public class ClientTs2 {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public ReqAcctTermTransferResponse reqAcctTermTransfer(com.tsys.xmlmessaging.ch2.TSYSprofileType profile, ReqAcctTermTransfer reqAcctTermTransfer){
+		Holder<com.tsys.xmlmessaging.ch2.TSYSprofileType> holder = new Holder<com.tsys.xmlmessaging.ch2.TSYSprofileType>();
+		holder.value=profile;
+		return port.reqAcctTermTransfer(reqAcctTermTransfer, holder);
 	}
 
 }

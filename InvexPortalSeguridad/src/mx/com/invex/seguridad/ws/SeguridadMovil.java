@@ -79,7 +79,7 @@ public String autentificarUsuario(@WebParam(name="username") String username)thr
 	try {
 		
 		
-		usrnamecrypt = CryptoAES.encrypt(username.trim());
+		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new WSSeguridadException("Error al encriptar username "
@@ -129,7 +129,7 @@ try {
 	//1.- Validamos que el usuario exista en base al usuario y contraseña
 	String usrnamecrypt = null;
 	try {
-		usrnamecrypt = CryptoAES.encrypt(username.trim());
+		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new WSSeguridadException("Error al encriptar username "
@@ -144,7 +144,7 @@ try {
 	logger.info("nombreusuario "+ usrnamecrypt+ "contrasenia "+contrasenia.trim()+"<<<");
 	usrCrit.add(Restrictions.eq("nombreusuario", usrnamecrypt));
 	usrCrit.add(Restrictions.eq("estatus",true));
-	usrCrit.add(Restrictions.eq("contrasenia",contrasenia.trim()));
+	usrCrit.add(Restrictions.eq("contrasenia",ClientHSM.encript(contrasenia.trim())));
 	Calendar haceUnAnio = Calendar.getInstance();
 	haceUnAnio.add(Calendar.YEAR, -1);
 	usrCrit.add(Restrictions.gt("ultimoacceso", haceUnAnio.getTime()));
@@ -353,9 +353,7 @@ try {
 	
 	numLuci = infoCliente.getInfoGeneralTHIGB().getCuentaUsuarioUno();
 }//fin else
-	//actuliza ultimo acceso
-	usr.setUltimoacceso(new Date());
-	usrDao.merge(usr);
+	
 	//UUID apSolNom = UUID.fromString("35397790-2A9E-476F-B4F9-4F8697163B59");
 	UUID nuevaSesId = UUID.randomUUID();
 	Sesion sesion = new Sesion();
@@ -372,7 +370,9 @@ try {
 	res = MessageFormat.format("OK|{0}|{1}|{2}", nuevaSesId,
 			usr.getUltimoacceso(), numLuci);
 	
-	
+	//actuliza ultimo acceso
+		usr.setUltimoacceso(new Date());
+		usrDao.merge(usr);
 	tiempo = Calendar.getInstance();
 	tiempo.add(Calendar.MINUTE, -SegConstants.MINS_PSW_BOLQUEADO);
 	
@@ -489,7 +489,7 @@ public String getCuentaByUsername(@WebParam(name="username") String username)thr
 	UsuarioService usrDao = (UsuarioService) contexta.getBean("usuarioServiceImpl");
 	String usrnamecrypt = null;
 	try {
-		usrnamecrypt = CryptoAES.encrypt(username.trim());
+		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new WSSeguridadException("Error al encriptar username "

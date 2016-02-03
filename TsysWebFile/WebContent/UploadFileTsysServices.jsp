@@ -76,6 +76,7 @@ document.forms[0].setAttribute("method", "post");
 				<option value="UploadMsgFileICM">Enviar Mensajes ICM</option>
 				
 				<option value="UploadTs2CreditLimitFile">Limite de credito TS2</option>
+				<option value="UploadReqAcctTermTransferFile">ReqAcctTermTransfer (MATT)</option>
 				<option value="UploadPPNGI">Generar PPNGI</option>
 			</SELECT>
 		</td>

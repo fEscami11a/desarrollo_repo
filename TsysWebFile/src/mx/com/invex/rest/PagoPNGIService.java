@@ -20,10 +20,60 @@ import mx.com.invex.ws.client.ClientTs2;
 
 @Path("/ppngi")
 public class PagoPNGIService {
+	
 	@GET
 	@Path("/{param}")
+	public Response calcularPago(@PathParam("param") String cuenta) {
+
+		//String result = "Restful example : " + msg;
+		
+		ClientTs2 cts2 = new ClientTs2();
+		InqCurrBalByTBALResponseType resp=cts2.inqCurrBalByTBAL(cuenta).getInqCurrBalByTBALResult();
+		String respStr="";
+
+		if (!"000".equals(resp.getStatus())) {
+			
+			TSYSfaultType fault = resp.getFaults();
+			List<TSYSfault> lfaulta = fault.getFault();
+			for (TSYSfault sfault : lfaulta) {
+				respStr=sfault.getStatus() + " "
+						+ sfault.getFaultDesc();
+			}
+			
+		}else{
+		
+		
+		double ppngi=0;
+		
+			try {
+				List<NTBTBALsResponseDataType.TBAL> tbals = resp.getTBALs()
+						.getValue().getTBAL();
+				for (NTBTBALsResponseDataType.TBAL tbal : tbals) {
+					String id = tbal.getId();
+					if ("0001".equals(id) || "0002".equals(id)) {
+						ppngi += tbal.getAmtPrevCycleUnpaid().getValue()
+								.doubleValue();
+						ppngi += tbal.getBalPrev().getFinChrg().getValue()
+								.doubleValue();
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		
+		respStr=""+ppngi;
+		}
+
+
+		return Response.status(200).entity(respStr).build();
+
+	}
+	
+	@GET
+	@Path("/saldos/{param}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public SaldosCuenta calcularPago(@PathParam("param") String cuenta) {
+	public SaldosCuenta calcularSaldos(@PathParam("param") String cuenta) {
 
 	
 		SaldosCuenta sc= new SaldosCuenta();
@@ -79,6 +129,8 @@ public class PagoPNGIService {
 			double revAlCorte =0;
 			double msiAlCorte=0;
 			double mciAlCorte=0;
+			double sacoRev=0;
+			double sacoRevAlCorte=0;
 			for (NTBTBALsResponseDataType.TBAL tbal : tbals) {
 				String id = tbal.getId();
 				if ("0001".equals(id) || "0002".equals(id)) {
@@ -154,6 +206,26 @@ public class PagoPNGIService {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}else if(Integer.parseInt(id)>80){
+					
+					try {
+						sacoRev +=tbal.getAmtOutstanding().getTtl().getValue().doubleValue();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						sacoRevAlCorte+=tbal.getBalPrev().getPrincipal().getValue().doubleValue();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						sacoRevAlCorte+=tbal.getBalPrev().getFinChrg().getValue().doubleValue();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -164,6 +236,8 @@ public class PagoPNGIService {
 			sc.setMsi(msi);
 			sc.setPpngi(ppngi);
 			sc.setRevolvente(revolvente);
+			sc.setSacosRev(sacoRev);
+			sc.setSacoRevAlCorte(sacoRevAlCorte);
 		} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

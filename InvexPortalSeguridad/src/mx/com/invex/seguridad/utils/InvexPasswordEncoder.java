@@ -34,7 +34,7 @@ public final class InvexPasswordEncoder {
 	}
 	public static void main(String[] args) {
 		mx.com.invex.seguridad.utils.InvexPasswordEncoder encoder = new InvexPasswordEncoder();
-    	String result = encoder.encode("Cvb0156%");
+    	String result = encoder.encode("fEscami11a");
     	System.out.println(result);
 	}
 }

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SaldosCuenta {
 private double ppngi,revolvente,msi,mci;
-private double revolventeAlcorte,msiAlcorte,mciAlcorte;
+private double revolventeAlcorte,msiAlcorte,mciAlcorte,sacosRev,sacoRevAlCorte;
 @XmlElement
 public double getPpngi() {
 	return ppngi;
@@ -63,6 +63,22 @@ public double getMciAlcorte() {
 
 public void setMciAlcorte(double mciAlcorte) {
 	this.mciAlcorte = mciAlcorte;
+}
+@XmlElement
+public double getSacosRev() {
+	return sacosRev;
+}
+
+public void setSacosRev(double sacosRev) {
+	this.sacosRev = sacosRev;
+}
+@XmlElement
+public double getSacoRevAlCorte() {
+	return sacoRevAlCorte;
+}
+
+public void setSacoRevAlCorte(double sacoRevAlCorte) {
+	this.sacoRevAlCorte = sacoRevAlCorte;
 }
 
 

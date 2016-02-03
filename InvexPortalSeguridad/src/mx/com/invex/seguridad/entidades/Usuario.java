@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
 	private String apellidomaterno;
 
 	private String apellidopaterno;
-
+	@Column(name="CONTRASENIAHSM")
 	private String contrasenia;
 
 	private String correoelectronico;
@@ -46,7 +46,7 @@ public class Usuario implements Serializable {
 	private String nombre;
 
 	private String nombretarjeta;
-
+	@Column(name="USUARIOHSM")
 	private String nombreusuario;
 
 	private String rfc;

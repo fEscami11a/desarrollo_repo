@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel styleClass="panel">
+				<f:facet name="header">
+					<h:outputText value="Reporte de promociones enviadas" />
+				</f:facet>
+				
+				<p></p>
+				<h:form>
+					<h:panelGrid>
+						<rich:dataTable value="#{reporteBean2.compras}" var="compra"
+							rows="20" id="table">
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Folio" />
+								</f:facet>
+								<h:outputText value="#{compra.folio}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Cuenta" />
+								</f:facet>
+								<h:outputText value="#{compra.cuenta}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Fecha de compra" />
+								</f:facet>
+								<h:outputText value="#{compra.fechaCompra}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Monto" />
+								</f:facet>
+								<h:outputText value="#{compra.monto}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Promocion" />
+								</f:facet>
+								<h:outputText value="#{compra.promocion.descripcion}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Meses" />
+								</f:facet>
+								<h:outputText value="#{compra.promocion.plazoMeses}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Status" />
+								</f:facet>
+								<h:outputText value="#{compra.statusDesc}" />
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Fecha Promocion" />
+								</f:facet>
+								<h:outputText value="#{compra.fechaAplicacionPromocion}" />
+							</rich:column>
+							<f:facet name="footer">
+
+								<rich:dataScroller for="table" pageIndexVar="pageIndex"
+									pagesVar="pages">
+
+									<f:facet name="pages">
+
+										<h:outputText value="#{pageIndex} / #{pages}" />
+
+									</f:facet>
+
+								</rich:dataScroller>
+
+							</f:facet>
+						</rich:dataTable>
+
+
+						<h:commandLink
+							actionListener="#{normal.XLSX(reporteBean2.compras)}">
+							<h:graphicImage value='/img/ico_file_excel.png'
+								style="border: none;" />
+						</h:commandLink>
+
+<h:commandButton action="/reports/ReporteComprasForm2.xhtml" value="Regresar"></h:commandButton>
+
+
+					</h:panelGrid>
+				</h:form>
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

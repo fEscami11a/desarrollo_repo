@@ -411,6 +411,7 @@ public class CommonDAO {
 					return strDate;
 				}
 				finally {
+					
 					if (con != null) {
 						ConnectionFactory.closeConnection(con);
 					}
@@ -431,6 +432,7 @@ public class CommonDAO {
 					stm.close();		
 				}
 				finally {
+					
 					if (con != null) {
 						ConnectionFactory.closeConnection(con);
 					}
@@ -481,6 +483,12 @@ public class CommonDAO {
 				res = rs.getString(1);
 			}
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConnectionFactoryUPTARJETAS.closeConnection(con);
 			}
@@ -508,6 +516,12 @@ public class CommonDAO {
 			rs = ps.executeQuery();
 			return (rs.next());
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConFactoryUsrCatalogos.closeConnection(con);
 			}
@@ -537,6 +551,12 @@ public class CommonDAO {
 				prod=rs.getString(1);
 			}
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConFactoryUsrCatalogos.closeConnection(con);
 			}
@@ -563,6 +583,12 @@ public class CommonDAO {
 				res = rs.getString(1);
 			}
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConFactoryUsrCatalogos.closeConnection(con);
 			}
@@ -589,6 +615,12 @@ public class CommonDAO {
 				statuses.put(rs.getString(1),rs.getString(2));
 			}
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConFactoryUsrCatalogos.closeConnection(con);
 			}
@@ -623,6 +655,12 @@ public class CommonDAO {
 				res = rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3);
 			}
 		}finally {
+			if(rs!= null){
+				rs.close();
+			}
+			if(ps!= null){
+				ps.close();
+			}
 			if (con != null) {
 				ConnectionFactoryPLealtad.closeConnection(con);
 			}

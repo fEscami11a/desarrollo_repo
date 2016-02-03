@@ -117,8 +117,15 @@ public class MobilImplWeb implements MobilWeb{
 			if(CommonDAO.isCuentaTs2(cuenta)){
 				int i= 0;
 				List<CuentaTs2Info> lcuentas=Ts2dwhDAO.getCuentasRelacionadas(cuenta);
-				arrCuentas= new String[lcuentas.size()];
-				for (CuentaTs2Info cts2 : lcuentas) {
+				List<CuentaTs2Info> cuentasSinAds = new ArrayList<CuentaTs2Info>();
+				for (CuentaTs2Info cuentaTs2Info : lcuentas) {
+					if(!"Authorized User".equals(cuentaTs2Info.getTipoCuenta())){
+						cuentasSinAds.add(cuentaTs2Info);
+					}
+				}
+				
+				arrCuentas= new String[cuentasSinAds.size()];
+				for (CuentaTs2Info cts2 : cuentasSinAds) {
 					
 					String[] arr =cts2.getProducto().split("\\|")[0].split(",");
 					String tpc= arr[0];

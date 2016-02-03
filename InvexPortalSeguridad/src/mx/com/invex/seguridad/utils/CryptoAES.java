@@ -83,17 +83,17 @@ public class CryptoAES {
     public static void main(String[] args) throws Exception {
     	//=== original: adminUsr
     	//=== cifrado: q7gWckUbcUNH8P95ln7bLw
-	String str = "miguelgomezvoi01";
+	String str = "miguelgomezmx@gmail.com".toUpperCase();
     	//String str = "salsamendi5";
 	System.out.println("=== original: " + str);
 
 	String cifrado = encrypt(str);
 	System.out.println("=== cifrado: " + cifrado);
 //
-	String decifrado = decrypt("AytMofQnOw7pCC6z89EY-g");
+	String decifrado = decrypt("AaaGVNH-gTpiSIze_oGjbw");
 	System.out.println("=== decifrado: >" + decifrado+"<");
 	
 	System.out.println("cuenta "+ decrypt2("Atd-saO2TE-wSKGfk1IMJeLH65N5X7UX6wf9oqyW104"));
-	System.out.println("cuenta encr "+encrypt2("4196910121129650"));
+	System.out.println("cuenta encr "+encrypt2("4631860004262933"));
     }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<rich:panel styleClass="panel">
+				<f:facet name="header">
+					<h:outputText value="Reporte de promociones enviadas" />
+				</f:facet>
+				<p>
+
+					<h:messages infoClass="info" errorClass="error" globalOnly="true" />
+				</p>
+				<h:form>
+
+
+					<h:outputText value="Fecha de Aplicación inicio:" />
+					<rich:calendar popup="true" id="fechaIn" enableManualInput="false"
+						value="#{reporteBean2.fechaInicio}" datePattern="yyyy/MM/dd"
+						 />
+					<h:outputText value="Fecha fin:" />
+					<rich:calendar popup="true" id="fechaFin" enableManualInput="false"
+						value="#{reporteBean2.fechaFin}" datePattern="yyyy/MM/dd"
+						 />
+					<br></br>
+					<h:message for="fechaIn" errorClass="error" />
+					<h:message for="fechaFin" errorClass="error" />
+					<br></br>
+					<h:outputLabel value="Status:" for="status" />
+					<h:selectOneMenu value="#{reporteBean2.status}" id="status">
+						<f:selectItem itemLabel="---" itemValue="" />
+						<f:selectItem itemLabel="Aplicadas" itemValue="A" />
+						<f:selectItem itemLabel="Enviadas" itemValue="E" />
+						
+					</h:selectOneMenu>
+					<br></br>
+					<h:message for="cuenta" errorClass="error" />
+					<br></br>
+					<h:outputLabel value="Cuenta:" for="cuenta" />
+					<h:inputText value="#{reporteBean2.cuenta}" id="cuenta">
+						<f:validateBean for="cuenta"></f:validateBean>
+					</h:inputText>
+					<br></br>
+					<h:message for="folio" errorClass="error" />
+					<br></br>
+
+					<h:outputLabel value="Folio:" for="folio" />
+					<h:inputText value="#{reporteBean2.folio}" id="folio">
+						<f:validateBean for="folio"></f:validateBean>
+					</h:inputText>
+					<br></br>
+					<h:commandButton value="Buscar"
+						action="#{reporteBean2.consultarCompras}"
+						onclick="#{rich:component('popup')}.show()" />
+				</h:form>
+
+			</rich:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
