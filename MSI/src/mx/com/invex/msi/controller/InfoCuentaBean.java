@@ -868,6 +868,10 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 								compra.setNumRefTran(td.getRefNbr().getValue());
 								compra.setTipoTransaccion("ITA");
 								compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+								compra.setDateStmtBegin(td.getDateStmtBegin());
+								compra.setDatePost(td.getDatePost());
+								compra.setTimePost(td.getTimePost());
+							
 								for (Promocion promo : promosCampExt) {
 									if("si".equalsIgnoreCase(promo.getProgramaCero())){
 										if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -923,7 +927,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 								compra.setNumRefTran(td.getRefNbr().getValue());
 								compra.setTipoTransaccion("IPS");
 								compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-
+								compra.setDateStmtBegin(td.getDateStmtBegin());
+								compra.setDatePost(td.getDatePost());
+								compra.setTimePost(td.getTimePost());
 								for (Promocion promo : promosCampExt) {
 
 									if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1047,6 +1053,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 									compra.setNumRefTran(td.getRefNbr().getValue());
 									compra.setTipoTransaccion("ITA");
 									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+									compra.setDateStmtBegin(td.getDateStmtBegin());
+									compra.setDatePost(td.getDatePost());
+									compra.setTimePost(td.getTimePost());
 									for (Promocion promo : promosProg0) {
 
 										if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1122,7 +1131,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 	                				 compra.setNumRefTran(td.getRefNbr().getValue());
 	                				 compra.setTipoTransaccion("IPS");
 	                				 compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-
+	                				 compra.setDateStmtBegin(td.getDateStmtBegin());
+	 								compra.setDatePost(td.getDatePost());
+	 								compra.setTimePost(td.getTimePost());
 	                				 for (Promocion promo : promosProg0) {
 
 	                					 if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
@@ -1234,6 +1245,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 								compra.setNumRefTran(td.getRefNbr().getValue());
 								compra.setTipoTransaccion("ITA");
 								compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+								compra.setDateStmtBegin(td.getDateStmtBegin());
+								compra.setDatePost(td.getDatePost());
+								compra.setTimePost(td.getTimePost());
 								for (Campania cam : lcampMasivas) {
 									//obtener rango fecha
 									fechaIn= cam.getFechaInicial();
@@ -1313,6 +1327,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 								compra.setNumRefTran(td.getRefNbr().getValue());
 								compra.setTipoTransaccion("IPS");
 								compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+								compra.setDateStmtBegin(td.getDateStmtBegin());
+								compra.setDatePost(td.getDatePost());
+								compra.setTimePost(td.getTimePost());
 								for (Campania cam : lcampMasivas) {
 									//obtener rango fecha
 									fechaIn= cam.getFechaInicial();
@@ -1836,6 +1853,9 @@ private List<Compra> getComprasts2(String account,double monto,String codigo,Dat
 						compra.setTipoTransaccion("ITA");
 						compra.setIdEdoPromocion(compraService
 								.getStatusCompraItau(compra));
+						compra.setDateStmtBegin(td.getDateStmtBegin());
+						compra.setDatePost(td.getDatePost());
+						compra.setTimePost(td.getTimePost());
 						for (Promocion promo : camp.getPromociones()) {
 
 							if (compra.getMonto().doubleValue() >= promo
@@ -1907,6 +1927,9 @@ private List<Compra> getComprasts2(String account,double monto,String codigo,Dat
 				compra.setTipoTransaccion("IPS");
 				compra.setIdEdoPromocion(compraService
 						.getStatusCompraItau(compra));
+				compra.setDateStmtBegin(td.getDateStmtBegin());
+				compra.setDatePost(td.getDatePost());
+				compra.setTimePost(td.getTimePost());
 				for (Promocion promo : camp.getPromociones()) {
 
 					if (compra.getMonto().doubleValue() >= promo
