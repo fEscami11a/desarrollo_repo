@@ -21,7 +21,8 @@ public static final String URL_SERVICIO_REMOVE_USUARIO_WEB= "http://172.16.18.18
 public static final String WEB_SERVICE_BANCA_MOVIL = "http://172.16.18.185:9083/BancaMovilServices/ServiciosBancaMovilImplService";
 public static final String LSWS_END_POINT="http://172.16.18.185:9083/TsysWS/services/LSWS";
 public static final String SI02WS="http://172.16.18.185:9083/TsysWS/services/SI02WS";
-
+public static final String HSM_KEY_USR="RDKEYHSMTRAN01";
+public static final String HSM_KEY_PSW="RPKEYHSMTRAN01";
 
 public static final int MINS_PSW_BOLQUEADO =20;
 public static final int DIAS_EXPIRA_CONTRASENIA =30;

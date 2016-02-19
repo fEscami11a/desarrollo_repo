@@ -83,14 +83,14 @@ public class CryptoAES {
     public static void main(String[] args) throws Exception {
     	//=== original: adminUsr
     	//=== cifrado: q7gWckUbcUNH8P95ln7bLw
-	String str = "miguelgomezmx@gmail.com".toUpperCase();
+	String str = "<info><nombre>JESUS AZAEL GONZALEZ CASTILLO</nombre><tarjeta>4461389000594045</tarjeta><fhcorte>20/5/13</fhcorte><fhlimitepago>10/6/13</fhlimitepago><saldoactual>22155.20</saldoactual><saldoalcorte>20731.98</saldoalcorte><pagominimo>606.6</pagominimo><pagominimongi>17695</pagominimongi><aleatorio>000102</aleatorio></info>";
     	//String str = "salsamendi5";
 	System.out.println("=== original: " + str);
 
 	String cifrado = encrypt(str);
 	System.out.println("=== cifrado: " + cifrado);
 //
-	String decifrado = decrypt("AaaGVNH-gTpiSIze_oGjbw");
+	String decifrado = decrypt("oPaPDOiAbKf-xM6dVDu7i7Fnik_ya8viuesYxUkIdRFPITTf6rvDFB4G7qGF1HuqFKKmhXwUomFTHYS29Tmq4NDKpQBfE45oGvyrJcjcN79p1YDZlPZBeKtzJfPnFgXiPXD3lCOzCZxhXoD8G_UFq0GLYXjNIS6cMN0NEZABqk0WP5wQJ9kwLA3J0JXWOV9-LPSUwOlTa1lJo5IOUWlxKxUrxRGP2GCBzfT4gQq62ZJ4o4lTj2gtYPf__X6woZ41qYyr_f0gHH6n1DdEDeNOBwR33NvkBcWOCXWeGpbS-vBKSIIrlqMfCnkJJWTKbpfT06RY3NjsD986vP3fX4HX41tEd9-6ewe3m5CiMglCHEgh1HmB0o4Rg2SGzvYtZtK7w0P7kVKJgVX3QcDstWUzUTVJtwXe68O2NRI9JauVTgmT16VzsCpvq4xt8nugce0M");
 	System.out.println("=== decifrado: >" + decifrado+"<");
 	
 	System.out.println("cuenta "+ decrypt2("Atd-saO2TE-wSKGfk1IMJeLH65N5X7UX6wf9oqyW104"));

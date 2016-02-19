@@ -71,7 +71,7 @@ public boolean updatePassword (String username,String contrasenia){
 			//1.- Validamos que el usuario exista en base al usuario y contraseña
 			String usrnamecrypt = null;
 			try {
-				usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
+				usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()), SegConstants.HSM_KEY_USR);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new WSSeguridadException("Error al encriptar username "
@@ -102,7 +102,7 @@ public String autentificarUsuario(@WebParam(name="username") String username)thr
 	//1.- Validamos que el usuario exista en base al usuario y contraseña
 	String usrnamecrypt = null;
 	try {
-		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
+		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()), SegConstants.HSM_KEY_USR);
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new WSSeguridadException("Error al encriptar username "
@@ -140,7 +140,7 @@ try {
 	//1.- Validamos que el usuario exista en base al usuario y contraseña
 	String usrnamecrypt = null;
 	try {
-		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()));
+		usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()), SegConstants.HSM_KEY_USR);
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new WSSeguridadException("Error al encriptar username "
@@ -154,7 +154,7 @@ try {
 	DetachedCriteria usrCrit = DetachedCriteria.forClass(Usuario.class);
 	usrCrit.add(Restrictions.eq("nombreusuario", usrnamecrypt));
 	usrCrit.add(Restrictions.eq("estatus",true));
-	usrCrit.add(Restrictions.eq("contrasenia",ClientHSM.encript(contrasenia.trim())));
+	usrCrit.add(Restrictions.eq("contrasenia",ClientHSM.encript(contrasenia.trim(), SegConstants.HSM_KEY_PSW)));
 	Calendar haceUnAnio = Calendar.getInstance();
 	haceUnAnio.add(Calendar.YEAR, -1);
 	usrCrit.add(Restrictions.gt("ultimoacceso", haceUnAnio.getTime()));
