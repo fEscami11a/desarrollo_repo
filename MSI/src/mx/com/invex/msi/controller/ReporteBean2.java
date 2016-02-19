@@ -97,10 +97,10 @@ public class ReporteBean2 extends MessagesMBean  implements Serializable{
 	}
 
 	public String consultarCompras(){
-		if("".equals(status) && cuenta.isEmpty() && folio.isEmpty()){
-			sendErrorMessageToUser("Favor de ingresar cuenta, folio o estatus de promocion");
-			return null;
-		}
+//		if("".equals(status) && cuenta.isEmpty() && folio.isEmpty()){
+//			sendErrorMessageToUser("Favor de ingresar cuenta, folio o estatus de promocion");
+//			return null;
+//		}
 		DetachedCriteria criteria = DetachedCriteria.forClass(Compra.class);
 		
 		if(!"".equals(status)){

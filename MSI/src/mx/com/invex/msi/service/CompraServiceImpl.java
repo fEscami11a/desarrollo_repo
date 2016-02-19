@@ -87,4 +87,11 @@ public class CompraServiceImpl implements CompraService{
 		return compraDao.getMontoComprasByDateRange(cuenta, fechaIn, fechaFin, tipoTrans);
 	}
 
+
+
+	@Transactional(readOnly=true)
+	public List<Object[]> getReporteDias(Date fechaIn, Date fechaFin) {
+		return compraDao.getReporteDias(fechaIn, fechaFin);
+	}
+
 }

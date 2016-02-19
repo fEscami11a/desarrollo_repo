@@ -20,10 +20,26 @@ import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import javax.faces.component.html.HtmlSelectOneListbox;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.rpc.ServiceException;
+
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import com.tsys.xmlmessaging.ch.IASstatusCodeResponseDataType;
+import com.tsys.xmlmessaging.ch.ICAaddrInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.ICIcustInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IGAacctGeneralInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IGBgeneralBalInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IPIpmtInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.ITAcustomDataResponseDataType;
+import com.tsys.xmlmessaging.ch.ITRtranDetailResponseDataType;
 
 import mx.com.interware.spira.ls.facade.igbinaenca.ArrayUDataDTO;
 import mx.com.interware.spira.ls.facade.igbinaenca.InfoDemograficaINA;
@@ -54,54 +70,6 @@ import mx.com.invex.msi.util.MSIHelper;
 import mx.com.invex.msi.ws.ClientLSWS;
 import mx.com.invex.msi.ws.ClientTS2;
 import mx.com.invex.msi.ws.ClienteGetMovs;
-
-import org.apache.log4j.Logger;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import com.tsys.xmlmessaging.ch.IASstatusCodeResponseDataType;
-import com.tsys.xmlmessaging.ch.ICAaddrInfoResponseDataType;
-import com.tsys.xmlmessaging.ch.ICIcustInfoResponseDataType;
-import com.tsys.xmlmessaging.ch.IPIpmtInfoResponseDataType;
-import com.tsys.xmlmessaging.ch.ITRtranDetailResponseDataType;
-import com.tsys.xmlmessaging.ch.InqAcctStatus;
-import com.tsys.xmlmessaging.ch.InqAcctStatusRequestType;
-import com.tsys.xmlmessaging.ch.InqAcctStatusResponseType;
-import com.tsys.xmlmessaging.ch.InqCreditLmt;
-import com.tsys.xmlmessaging.ch.InqCreditLmtRequestType;
-import com.tsys.xmlmessaging.ch.InqCreditLmtResponseType;
-import com.tsys.xmlmessaging.ch.InqCustAddr;
-import com.tsys.xmlmessaging.ch.InqCustAddrRequestType;
-import com.tsys.xmlmessaging.ch.InqCustAddrResponseType;
-import com.tsys.xmlmessaging.ch.InqCustInfo;
-import com.tsys.xmlmessaging.ch.InqCustInfoRequestType;
-import com.tsys.xmlmessaging.ch.InqCustInfoResponseType;
-import com.tsys.xmlmessaging.ch.InqCustomData;
-import com.tsys.xmlmessaging.ch.InqCustomDataRequestType;
-import com.tsys.xmlmessaging.ch.InqCustomDataRequestType.CustomDataCodes;
-import com.tsys.xmlmessaging.ch.InqCustomDataResponseType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcct;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctResponseType;
-import com.tsys.xmlmessaging.ch.InqGeneralBal;
-import com.tsys.xmlmessaging.ch.InqGeneralBalRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralBalResponseType;
-import com.tsys.xmlmessaging.ch.InqPmtInfo;
-import com.tsys.xmlmessaging.ch.InqPmtInfoRequestType;
-import com.tsys.xmlmessaging.ch.InqPmtInfoResponseType;
-import com.tsys.xmlmessaging.ch.InqRealTimeAuthSys;
-import com.tsys.xmlmessaging.ch.InqRealTimeAuthSysRequestType;
-import com.tsys.xmlmessaging.ch.InqRealTimeAuthSysResponseType;
-import com.tsys.xmlmessaging.ch.InqTrans;
-import com.tsys.xmlmessaging.ch.InqTransRequestType;
-import com.tsys.xmlmessaging.ch.InqTransResponse;
-import com.tsys.xmlmessaging.ch.InqTransResponseType;
-import com.tsys.xmlmessaging.ch.TSYSfault;
-import com.tsys.xmlmessaging.ch.TSYSfaultType;
-import com.tsys.xmlmessaging.ch.TSYSprofileType;
 @Component
 @Scope("session")
 public class InfoCuentaBean extends MessagesMBean implements Serializable{
@@ -452,105 +420,33 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				
 				HttpSession session = (HttpSession)  getContext().getExternalContext().getSession(false);
 				session.setAttribute("cuenta", cuenta);
-				ClientTS2 cts2= new ClientTS2();
-				 TSYSprofileType tp = new TSYSprofileType();
-				 tp.setClientID("7401");
-				 tp.setUserID("invdev");
-				 tp.setVendorID("00000000");
-				 InqAcctStatus inqAcctStatus = new InqAcctStatus();
-				 InqAcctStatusRequestType inqAcctStatusReq = new InqAcctStatusRequestType();
-				 //key="4196910074855913" keyType="cardNbr" version="1.0.0"/>
-				 inqAcctStatusReq.setKey(cuenta);
-				 inqAcctStatusReq.setKeyType("cardNbr");
-				 inqAcctStatusReq.setVersion("1.0.0");
-				 inqAcctStatus.setInqAcctStatusRequest(inqAcctStatusReq);
-				
-				
-				InqAcctStatusResponseType resSt= cts2.inqAcctStatus(tp,inqAcctStatus).getInqAcctStatusResult();
-				logger.info("inqAcctStatus");
-				if(!"000".equals(resSt.getStatus())){
-					logger.info(resSt.getStatusMsg());
-					TSYSfaultType fault = resSt.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-						sendErrorMessageToUser(sfault.getFaultDesc());
-						return null;
-					}
-				}
-				
-				
-				IASstatusCodeResponseDataType statusCode =resSt.getStatusCode().getValue();
+			
+				IASstatusCodeResponseDataType statusCode =ClientTS2.getStatusCode(cuenta);
 				for (IASstatusCodeResponseDataType.Status status : statusCode.getStatus()) {
 					if(MSIHelper.statusCodes.contains(status.getCode()+" "+status.getReason())){
-					
 						//no lo voa deja pasar
 						logger.info("Tiene reason code "+status.getCode() + " " +status.getReason());
 						sendErrorMessageToUser("La cuenta presenta un bloqueo ");
 						return null;
-						
-					}
-					//saca tipo de cuenta Primary, AUTOHARIZED(ADICIONAL)
-					//cts2.inqCustInfo(cuenta).getCustInfo().get(0).getCustType();
-				}
-				
-				 InqCustInfo inqCustInfo = new InqCustInfo();
-				 InqCustInfoRequestType inqCustInfoReq = new InqCustInfoRequestType();
-				 //key="4196910074855913" keyType="cardNbr" version="1.0.0"/>
-				 inqCustInfoReq.setKey(cuenta);
-				 inqCustInfoReq.setKeyType("cardNbr");
-				 inqCustInfoReq.setVersion("2.10.0");
-				 inqCustInfo.setInqCustInfoRequest(inqCustInfoReq);
-				
-				InqCustInfoResponseType custInfoResponse = cts2.inqCustInfo(tp,inqCustInfo).getInqCustInfoResult();
-				logger.info("custInfoResponse");
-				if("999".equals(custInfoResponse.getStatus())){
-					logger.info(custInfoResponse.getStatusMsg());
-					TSYSfaultType fault = custInfoResponse.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
 					}
 				}
 				
 				SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM 'de' yyyy", new Locale("ES"));
-                List<ICIcustInfoResponseDataType> listCustInfos = custInfoResponse.getCustInfo();
+                List<ICIcustInfoResponseDataType> listCustInfos = ClientTS2.getCustInfo(cuenta);
                 for (ICIcustInfoResponseDataType custInfo : listCustInfos) {
-                    
-                    if(custInfo.getCustType().equals("Primary") ){                
-                                                                   
-                                    
+                    if(custInfo.getCustType().equals("Primary") ){
                                    nombreCompleto= custInfo.getCustName().getWhole() == null?"": custInfo.getCustName().getWhole()  ;
                                     email= custInfo.getEmailAddr()  == null?"":  custInfo.getEmailAddr().getValue() ;
                                fechaNacimiento= custInfo.getDateBirth() == null?"":  sdf2.format(custInfo.getDateBirth().getValue().getValue().toGregorianCalendar().getTime());
                                     if(custInfo.getPhnNbrs().getValue().getAlt1()!= null){
                                     telCel= ""+custInfo.getPhnNbrs().getValue().getAlt1().getValue();  
                                     }
-                                    
-                                             
                                     rfc=custInfo.getVerifID().getValue()  == null?"": custInfo.getVerifID().getValue();
-                                    
                     }
                 }
                 
-                InqCustAddr inqCustAddr = new InqCustAddr();
-       		 InqCustAddrRequestType inqCustAddrReq = new InqCustAddrRequestType();
-       		
-       		 inqCustAddrReq.setKey(cuenta);
-       		 inqCustAddrReq.setKeyType("cardNbr");
-       		 inqCustAddrReq.setVersion("1.0.0");
-       		 inqCustAddr.setInqCustAddrRequest(inqCustAddrReq);
-               InqCustAddrResponseType custAdrrResponse = cts2.inqCustAddr(tp,inqCustAddr).getInqCustAddrResult();
-               logger.info("custAdrrResponse");
-				if("999".equals(custAdrrResponse.getStatus())){
-					logger.info(custAdrrResponse.getStatusMsg());
-					TSYSfaultType fault = custAdrrResponse.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}
-                List<ICAaddrInfoResponseDataType> listaAddr =  custAdrrResponse.getAddrInfo();
+             
+                List<ICAaddrInfoResponseDataType> listaAddr =  ClientTS2.getAddrInfo(cuenta);
                 if (listaAddr.size() > 0 ){
                     
                     for (ICAaddrInfoResponseDataType myCustAddrList : listaAddr) {
@@ -565,128 +461,38 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
                                     }
                                     
                     }
-    
-    }
+                }
                 
-
-           	 InqGeneralBal inqGeneralBal = new InqGeneralBal();
-    		 InqGeneralBalRequestType inqGeneralBalReq = new InqGeneralBalRequestType();
-    		 
-    		 inqGeneralBalReq.setKey(cuenta);
-    		 inqGeneralBalReq.setKeyType("cardNbr");
-    		 inqGeneralBalReq.setVersion("2.5.0");
-    		 inqGeneralBal.setInqGeneralBalRequest(inqGeneralBalReq);
-                InqGeneralBalResponseType gralBalRes = cts2.inqGeneralBal(tp,inqGeneralBal).getInqGeneralBalResult();
-           
-                logger.info("gralBalRes status "+gralBalRes.getStatus());
-				if(!"000".equals(gralBalRes.getStatus())){
-					logger.info(gralBalRes.getStatusMsg());
-					TSYSfaultType fault =gralBalRes.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}
+  
+                IGBgeneralBalInfoResponseDataType  gralBal = ClientTS2.getGeneralBal(cuenta);
                 
-               saldoAlDia= ""+ (gralBalRes.getGeneralBalInfo().getValue().getBalInfo().getValue().getCurr() == null ?"0": gralBalRes.getGeneralBalInfo().getValue().getBalInfo().getValue().getCurr().getValue() ) ;
-            if(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo()!= null){
-				fechaLimitePago= sdf.format(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo().getValue().getDateDue().getValue().getValue().toGregorianCalendar().getTime());
-				if(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo().getValue().getStmtMin() == null){
+               saldoAlDia= ""+ (gralBal.getBalInfo().getValue().getCurr() == null ?"0": gralBal.getBalInfo().getValue().getCurr().getValue() ) ;
+            if(gralBal.getPmtInfo()!= null){
+				fechaLimitePago= sdf.format(gralBal.getPmtInfo().getValue().getDateDue().getValue().getValue().toGregorianCalendar().getTime());
+				if(gralBal.getPmtInfo().getValue().getStmtMin() == null){
 					sendInfoMessageToUser("Su pago mínimo se verá reflejado hasta el siguiente corte.");
 				}
-				pagoMinimo= "" +(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo().getValue().getStmtMin() == null?"0": gralBalRes.getGeneralBalInfo().getValue().getPmtInfo().getValue().getStmtMin().getValue().getValue().doubleValue());
+				pagoMinimo= "" +(gralBal.getPmtInfo().getValue().getStmtMin() == null?"0": gralBal.getPmtInfo().getValue().getStmtMin().getValue().getValue().doubleValue());
 		           
             }
                 
                
-                InqCreditLmt inqCreditLmt = new InqCreditLmt();
-       		 InqCreditLmtRequestType inqCreditLmtReq = new InqCreditLmtRequestType();
-       		 
-       		 inqCreditLmtReq.setKey(cuenta);
-       		 inqCreditLmtReq.setKeyType("cardNbr");
-       		 inqCreditLmtReq.setVersion("1.0.0");
-       		 inqCreditLmt.setInqCreditLmtRequest(inqCreditLmtReq);
-                InqCreditLmtResponseType lmtResponse= cts2.inqCreditLmt(tp,inqCreditLmt).getInqCreditLmtResult();
-                logger.info("lmtResponse");
-				if(!"000".equals(lmtResponse.getStatus())){
-					logger.info(lmtResponse.getStatusMsg());
-					TSYSfaultType fault =lmtResponse.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}
+                BigDecimal bdcredLim =ClientTS2.getCreditLimit(cuenta);
                 
-				creditLimit="" + (lmtResponse.getCreditLmtInfo().getValue().getCreditLmt().getValue().getAmt().getValue() == null?"0": lmtResponse.getCreditLmtInfo().getValue().getCreditLmt().getValue().getAmt().getValue().doubleValue() );
-                //creditLimit="" + (lmtResponse.getCreditLmtInfo().getValue().getCashLmt().getValue().getAmt().getValue() == null?"0": lmtResponse.getCreditLmtInfo().getValue().getCashLmt().getValue().getAmt().getValue().getValue().doubleValue() );
+				creditLimit="" + (bdcredLim == null?"0": bdcredLim.doubleValue() );
                 
-                InqRealTimeAuthSys inqRealTimeAuthSys = new InqRealTimeAuthSys();
-                InqRealTimeAuthSysRequestType inqRealTimeAuthSysReq= new InqRealTimeAuthSysRequestType();
-                inqRealTimeAuthSysReq.setKey(cuenta);
-                inqRealTimeAuthSysReq.setKeyType("cardNbr");
-                inqRealTimeAuthSysReq.setVersion("1.0.0");
-                inqRealTimeAuthSys.setInqRealTimeAuthSysRequest(inqRealTimeAuthSysReq);
-                InqRealTimeAuthSysResponseType inqRealTimeAuthSysResp = cts2.inqRealTimeAuthSys(tp, inqRealTimeAuthSys).getInqRealTimeAuthSysResult();
-              
-                if(!"000".equals( inqRealTimeAuthSysResp.getStatus())){
-					logger.info( inqRealTimeAuthSysResp.getStatusMsg());
-					TSYSfaultType fault = inqRealTimeAuthSysResp.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}else{
-					BigDecimal amtMoney =inqRealTimeAuthSysResp.getRealTimeAuthInfo().getValue().getAvail().getAmtMoney().getValue();
-					creditoDisponible=""+amtMoney.doubleValue();
-				}
-                
-                InqPmtInfo inqPmtInfo = new InqPmtInfo();
-       		 InqPmtInfoRequestType inqPmtInfoReq = new InqPmtInfoRequestType();
-       		
-       		 inqPmtInfoReq.setKey(cuenta);
-       		 inqPmtInfoReq.setKeyType("cardNbr");
-       		 inqPmtInfoReq.setVersion("1.2.0");
-       		 inqPmtInfoReq.setCycleType("Current");
-       		 inqPmtInfo.setInqPmtInfoRequest(inqPmtInfoReq);
-                InqPmtInfoResponseType pmtInfoResponse = cts2.inqPmtInfo(tp,inqPmtInfo).getInqPmtInfoResult();
-                logger.info("pmtInfoResponse");
-				if(!"000".equals(pmtInfoResponse.getStatus())){
-					logger.info(pmtInfoResponse.getStatusMsg());
-					TSYSfaultType fault =pmtInfoResponse.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}else{
-	                List<IPIpmtInfoResponseDataType> pmtInfo=pmtInfoResponse.getPmtInfo();
+                creditoDisponible=ClientTS2.getCreditoDisponible(cuenta);
+				
+            
+	                List<IPIpmtInfoResponseDataType> pmtInfo=ClientTS2.getPmtInfo(cuenta);
 	                for (IPIpmtInfoResponseDataType ipIpmtInfoResp : pmtInfo) {
 	                	BigDecimal ppNI =ipIpmtInfoResp.getAmtProjectedPaidInFull().getValue().getValue();
 	                	 pagoNoIntereses=ppNI.toString();
 					}
-				}
-                
-                
-                
-
-                InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-           	 req.setVersion("2.19.0");
-           	 req.setKey(cuenta);
-           	 req.setKeyType("cardNbr");
-           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-				InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
-				 logger.info("InqGeneralAcct");
-					if("999".equals(res.getStatus())){
-						logger.info(res.getStatusMsg());
-						TSYSfaultType fault =res.getFaults();
-						List<TSYSfault> lfaulta =fault.getFault();
-						for (TSYSfault sfault : lfaulta) {
-							logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-						}
-					}
+	                IGAacctGeneralInfoResponseDataType getGeneralAcct=ClientTS2.getGeneralAcct(cuenta);
 				
-				String tpc = res.getAcctGeneralInfo().getValue().getTSYSProductCode() == null?"": res.getAcctGeneralInfo().getValue().getTSYSProductCode() ;
-				String cpc = res.getAcctGeneralInfo().getValue().getClientProductCode() == null?"": res.getAcctGeneralInfo().getValue().getClientProductCode().getValue();
+				String tpc = getGeneralAcct.getTSYSProductCode() == null?"": getGeneralAcct.getTSYSProductCode() ;
+				String cpc = getGeneralAcct.getClientProductCode() == null?"": getGeneralAcct.getClientProductCode().getValue();
 				logger.info("tpc "+tpc +" cpc " +cpc );
 				ProductoTs2 prodts2 = productoTs2Service.getProductoItau(cuenta, tpc, cpc);
 				if(prodts2!= null){
@@ -694,7 +500,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				}
 			     logger.info("tipo prod "+tipoProd);
                
-				int cycle=res.getAcctGeneralInfo().getValue().getBillingCycle().getValue();
+				int cycle=getGeneralAcct.getBillingCycle().getValue();
 
 				DecimalFormat df2 = new DecimalFormat( "00" );
 				//calcular corte anterior
@@ -726,32 +532,10 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				
 				// calcular prog
 				int numDiasProg0=0;
-				InqCustomData inqCustomData = new InqCustomData();
-				InqCustomDataRequestType inqCustomDataReq = new InqCustomDataRequestType();
-				inqCustomDataReq.setKey(cuenta);
-				inqCustomDataReq.setKeyType("cardNbr");
-				inqCustomDataReq.setVersion("1.0.0");
-				
-				CustomDataCodes customDataCodes = new CustomDataCodes();
-				List<String> custDatas =customDataCodes.getCustomDataCode();
-				//fecha vencimiento
-				custDatas.add("61");
-				//fecha inscrtipcion prgo cero
-				custDatas.add("81");
-				inqCustomDataReq.setCustomDataCodes(customDataCodes);
-				inqCustomData.setInqCustomDataRequest(inqCustomDataReq);
-				InqCustomDataResponseType customDataResp= cts2.inqCustomData(tp, inqCustomData).getInqCustomDataResult();
-				if(!"000".equals( customDataResp.getStatus())){
-					logger.info( customDataResp.getStatusMsg());
-					TSYSfaultType fault = customDataResp.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}else{
-					if(customDataResp.getCustomData()!= null){
-						if(customDataResp.getCustomData().getValue().getCode61()!= null){
-							String strFchVenProgCero =customDataResp.getCustomData().getValue().getCode61().getValue();
+				JAXBElement<ITAcustomDataResponseDataType> cdatas=ClientTS2.getCustomDatas(cuenta);
+				if(cdatas!= null){
+						if(cdatas.getValue().getCode61()!= null){
+							String strFchVenProgCero =cdatas.getValue().getCode61().getValue();
 							logger.info("fecha vencimiento prog cero "+strFchVenProgCero);
 							SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
 							Date dateFchVen = sdf.parse(strFchVenProgCero);
@@ -763,17 +547,17 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 								logger.info("tien prog cero");
 								this.prog0=true;
 								//15 dias o menos desde que contrato el programa cero?
-								if(customDataResp.getCustomData().getValue().getCode81()!= null){
-									String strFchInProgCero =customDataResp.getCustomData().getValue().getCode81().getValue();
+								if(cdatas.getValue().getCode81()!= null){
+									String strFchInProgCero =cdatas.getValue().getCode81().getValue();
 									logger.info("fecha in prog cero "+strFchInProgCero);
 									Date dateFchIn = sdf.parse(strFchInProgCero);
 									Calendar fechaInProgCero = Calendar.getInstance();
 									fechaInProgCero.setTime(dateFchIn);
-									long diasDesdeQueTieneProgCero=(hoy.getTimeInMillis()-fechaInProgCero.getTimeInMillis())/(1000*60*60*24);
-									if(diasDesdeQueTieneProgCero<=15){
-										//numdias es igual al numero de dias
-										numDiasProg0=(int) (diasDesdeQueTieneProgCero+2);
-									}
+//									long diasDesdeQueTieneProgCero=(hoy.getTimeInMillis()-fechaInProgCero.getTimeInMillis())/(1000*60*60*24);
+//									if(diasDesdeQueTieneProgCero<=15){
+//										//numdias es igual al numero de dias
+//										numDiasProg0=(int) (diasDesdeQueTieneProgCero+2);
+//									}
 									
 								}
 								
@@ -781,7 +565,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 						}
 					}
 					
-				}
+				
 				//fin prog0
 				//inciia cmapañas compras
 				//compras Extr
@@ -824,26 +608,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 
 				antes.add(Calendar.DAY_OF_YEAR, -numDiasCampExt);
 				logger.info("antes "+antes.getTime());
-				InqTrans inqTrans = new InqTrans();
-				InqTransRequestType reqInqTrans = new InqTransRequestType();
 				
-				reqInqTrans.setOnlyForeign(false);
-				reqInqTrans.setOnlyCurr(true);
-				reqInqTrans.setVersion("1.9.0");
-				reqInqTrans.setKey(cuenta);
-				reqInqTrans.setKeyType("cardNbr");
-				reqInqTrans.setPageItems(300);
-				inqTrans.setInqTransRequest(reqInqTrans);
-				InqTransResponseType respExt =cts2.inqTrans(tp, inqTrans).getInqTransResult();
-				
-				if(!"000".equals( respExt.getStatus())){
-					logger.info( respExt.getStatusMsg());
-					TSYSfaultType fault = respExt.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}
 				compras = new ArrayList<Compra>();
 				List<Compra> comprasComercios = comprasCampComercios(cuenta, null,null,true);
 				if(comprasComercios!= null && !comprasComercios.isEmpty()){
@@ -853,7 +618,8 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 					logger.info("no hay compras comercios");
 				}
 				logger.info("buscar compras extranjero corte actual monto min "+montoMinCompras +" de fecha >=  "+ antes.getTime());
-				for (ITRtranDetailResponseDataType td : respExt.getTranDetail()) {
+				List<ITRtranDetailResponseDataType> movsActuales = ClientTS2.getTrans(cuenta, true,null,null);
+				for (ITRtranDetailResponseDataType td : movsActuales) {
 					logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 					if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode())){
 						if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
@@ -892,25 +658,10 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				}//for compras corte actual
 				
 			
-				InqTransRequestType reqInqTrans2 = new InqTransRequestType();
-				InqTrans igrala = new InqTrans();
-				reqInqTrans2.setVersion("1.9.0");
-				reqInqTrans2.setKey(cuenta);
-				reqInqTrans2.setKeyType("cardNbr");
-				reqInqTrans2.setPageItems(300);
-				com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange cycleRange = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-				XMLGregorianCalendar calendarIn = DatatypeFactory.newInstance().newXMLGregorianCalendar(antes);
-				XMLGregorianCalendar calendarFin = DatatypeFactory.newInstance().newXMLGregorianCalendar(hoy);
-				cycleRange.setFrom(calendarIn);
-				cycleRange.setTo(calendarFin);          
-				reqInqTrans2.setCycleRange(cycleRange);
-				reqInqTrans2.setOnlyForeign(false);
-				igrala.setInqTransRequest(reqInqTrans2);
-
-				InqTransResponse resp= cts2.inqTrans(tp, igrala);
+				
 				logger.info("se traen compras entre el "+antes.getTime() +" y el "+ hoy.getTime());
 				logger.info("buascar extranjero monto min"+montoMinCompras +" de fecha >=  "+ antes.getTime() );
-				for (ITRtranDetailResponseDataType td : resp.getInqTransResult().getTranDetail()) {
+				for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, false, antes, hoy)) {
 					logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
 					if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode()) ){
@@ -1007,38 +758,17 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 
 					}
 					
-
 					//obternr compras prog 0
 					antes = new GregorianCalendar();
 					antes.set(Calendar.HOUR_OF_DAY, 0);
 					antes.set(Calendar.MINUTE, 0);
 					antes.set(Calendar.SECOND, 0);
-					antes.set(Calendar.MILLISECOND, 0);
-					
-
+					antes.set(Calendar.MILLISECOND, 0);					
 					antes.add(Calendar.DAY_OF_YEAR, -numDiasProg0);
 					logger.info("antes "+antes.getTime());
-					inqTrans = new InqTrans();
-					reqInqTrans = new InqTransRequestType();
-					reqInqTrans.setOnlyCurr(true);
-					reqInqTrans.setVersion("1.9.0");
-					reqInqTrans.setKey(cuenta);
-					reqInqTrans.setKeyType("cardNbr");
-					reqInqTrans.setPageItems(300);
-					inqTrans.setInqTransRequest(reqInqTrans);
-					InqTransResponseType respPro0 =cts2.inqTrans(tp, inqTrans).getInqTransResult();
-					logger.info("InqTrans 1 Obtener compras prog cero corte actual");
-					if("999".equals( respPro0.getStatus())){
-						logger.info( respPro0.getStatusMsg());
-						TSYSfaultType fault = respPro0.getFaults();
-						List<TSYSfault> lfaulta =fault.getFault();
-						for (TSYSfault sfault : lfaulta) {
-							logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-						}
-					}
-					//compras = new ArrayList<Compra>();
+
 					logger.info("Compras nal corte actual prog 0");
-					for (ITRtranDetailResponseDataType td : respPro0.getTranDetail()) {
+					for (ITRtranDetailResponseDataType td : movsActuales) {
 						logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 						if("7146".equals(td.getTranCode())){
 							if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
@@ -1098,23 +828,8 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 					}//for compras corte actual
 					
 					
-					 reqInqTrans2 = new InqTransRequestType();
-					 igrala = new InqTrans();
-	                 reqInqTrans2.setVersion("1.9.0");
-	                 reqInqTrans2.setKey(cuenta);
-	                 reqInqTrans2.setKeyType("cardNbr");
-	                 reqInqTrans2.setPageItems(300);
-						cycleRange = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-						calendarIn = DatatypeFactory.newInstance().newXMLGregorianCalendar(antes);
-						calendarFin = DatatypeFactory.newInstance().newXMLGregorianCalendar(hoy);
-						cycleRange.setFrom(calendarIn);
-						cycleRange.setTo(calendarFin);          
-					reqInqTrans2.setCycleRange(cycleRange);
-	                 igrala.setInqTransRequest(reqInqTrans2);
-	                 
-	                 resp= cts2.inqTrans(tp, igrala);
 	                 logger.info("Compras prog 0 corte actual");
-	                 for (ITRtranDetailResponseDataType td : resp.getInqTransResult().getTranDetail()) {
+	                 for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, false, antes, hoy)) {
 	                	 logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
 	                	 if("7146".equals(td.getTranCode())){
@@ -1181,8 +896,6 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 				
 				else{
 					
-
-
 					//obtener compras ita nacionales y extranjeras
 					for (Campania camp : lcampMasivas) {
 						logger.info("camp activa "+camp.getNombre());
@@ -1192,27 +905,6 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 						calIn.setTime(fechaIn);
 						Calendar calFin = Calendar.getInstance();
 						calFin.setTime(fechaFin);
-
-						InqTransRequestType reqInqTrans4 = new InqTransRequestType();
-						reqInqTrans4.setVersion("1.9.0");
-						reqInqTrans4.setKey(cuenta);
-						reqInqTrans4.setKeyType("cardNbr");
-						reqInqTrans4.setPageItems(300);
-						reqInqTrans4.setOnlyCurr(true);
-						InqTrans inqTrans4 = new InqTrans();
-						inqTrans4.setInqTransRequest(reqInqTrans4);
-						InqTransResponse respInqTrans4= cts2.inqTrans(tp, inqTrans4);
-
-
-
-						if("999".equals( respInqTrans4.getInqTransResult().getStatus())){
-							logger.info( respInqTrans4.getInqTransResult().getStatusMsg());
-							TSYSfaultType fault = respInqTrans4.getInqTransResult().getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
 
 						montos.clear();
 						Set<Promocion> promos = camp.getPromociones();
@@ -1230,8 +922,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 							}
 						}
 						
-						
-						for (ITRtranDetailResponseDataType td : respInqTrans4.getInqTransResult().getTranDetail()) {
+						for (ITRtranDetailResponseDataType td : movsActuales) {
 							logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
 
@@ -1276,15 +967,7 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 
 						}
 
-
-						InqTransRequestType reqInqTrans3 = new InqTransRequestType();
-						InqTrans igrala2 = new InqTrans();
-
-						reqInqTrans3.setVersion("1.9.0");
-						reqInqTrans3.setKey(cuenta);
-						reqInqTrans3.setKeyType("cardNbr");
-
-						com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange cycleRange2 = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
+	
 						XMLGregorianCalendar calendarIn2 = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 						calendarIn2.setYear(calIn.get(Calendar.YEAR));
 						calendarIn2.setMonth(calIn.get(Calendar.MONTH)+1);
@@ -1293,27 +976,9 @@ public class InfoCuentaBean extends MessagesMBean implements Serializable{
 						calendarFin2.setYear(calFin.get(Calendar.YEAR));
 						calendarFin2.setMonth(calFin.get(Calendar.MONTH)+1);
 
-						cycleRange2.setFrom(calendarIn2);
-						cycleRange2.setTo(calendarFin2);          
-						reqInqTrans3.setCycleRange(cycleRange2);
-						reqInqTrans3.setOnlyForeign(false);
-						reqInqTrans3.setPageItems(300);
-						igrala2.setInqTransRequest(reqInqTrans3);
-
-						InqTransResponse respInqTrans= cts2.inqTrans(tp, igrala2);
-						logger.info("InqTrans 3");
-						if("999".equals( respInqTrans.getInqTransResult().getStatus())){
-							logger.info( respInqTrans.getInqTransResult().getStatusMsg());
-							TSYSfaultType fault = respInqTrans.getInqTransResult().getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
-
 						//obtener nacionales ips
 						logger.info("comrpas nacionales corte anterior");
-						for (ITRtranDetailResponseDataType td : respInqTrans.getInqTransResult().getTranDetail()) {
+						for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, calendarIn2, calendarFin2)) {
 							logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
 
@@ -1707,7 +1372,7 @@ private List<Compra> comprasExt(String cuenta,String cuentaCBA,ClienteGetMovs mo
 	return compras;
 }
 
-private List<Compra> comprasCampComercios(String cuenta,String cuentaCBA,ClienteGetMovs movclient,boolean isItau){
+private List<Compra> comprasCampComercios(String cuenta,String cuentaCBA,ClienteGetMovs movclient,boolean isItau) throws NumberFormatException, Exception{
 	Date diahoy = new Date();
 	List<Campania> campComercios = campaniaService.getCampaniaByParams(null,null, "comercio", null);
 	List<Compra> compras = new ArrayList<Compra>();
@@ -1796,32 +1461,9 @@ private List<Compra> comprasCampComercios(String cuenta,String cuentaCBA,Cliente
 	return compras;
 }
 
-private List<Compra> getComprasts2(String account,double monto,String codigo,Date fechaAntes,Date fechaDespues,Campania camp,String descripcion){
-	ClientTS2 cts2= new ClientTS2();
-	 TSYSprofileType tp = new TSYSprofileType();
-	 tp.setClientID("7401");
-	 tp.setUserID("invdev");
-	 tp.setVendorID("00000000");
-	InqTrans inqTrans = new InqTrans();
-	InqTransRequestType reqInqTrans = new InqTransRequestType();
-
-	//reqInqTrans.setOnlyForeign(true);
-	reqInqTrans.setOnlyCurr(true);
-	reqInqTrans.setVersion("1.9.0");
-	reqInqTrans.setKey(account);
-	reqInqTrans.setKeyType("cardNbr");
-
-	inqTrans.setInqTransRequest(reqInqTrans);
-	InqTransResponseType respExt =cts2.inqTrans(tp, inqTrans).getInqTransResult();
+private List<Compra> getComprasts2(String account,double monto,String codigo,Date fechaAntes,Date fechaDespues,Campania camp,String descripcion) throws NumberFormatException, Exception{
 	
-	if(!"000".equals( respExt.getStatus())){
-		logger.info( respExt.getStatusMsg());
-		TSYSfaultType fault = respExt.getFaults();
-		List<TSYSfault> lfaulta =fault.getFault();
-		for (TSYSfault sfault : lfaulta) {
-			logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-		}
-	}
+	
 	List<Compra> comprasComer = new ArrayList<Compra>();
 	logger.info("Compras comercios");
 	GregorianCalendar antes = new GregorianCalendar();
@@ -1829,126 +1471,101 @@ private List<Compra> getComprasts2(String account,double monto,String codigo,Dat
 	GregorianCalendar despues = new GregorianCalendar();
 	despues.setTime(fechaDespues);
 	
-	for (ITRtranDetailResponseDataType td : respExt.getTranDetail()) {
-		logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-		
-		if(td.getTranCode().equals(codigo)){
-			if(monto<= td.getAmtTran().getValue().getValue().doubleValue()){
-				if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0)
-						&& (td.getDateTran().getValue().getValue().toGregorianCalendar().before(despues) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(despues)==0)){
-					logger.info("agregar compra");
-					if (td.getMerchantInfo().getValue()
-								.getDBAName().getValue().contains(descripcion)) {
-						Compra compra = new Compra();
-						compra.setCuenta(account);
-						compra.setCodigoTransaccion(Integer.parseInt(td
-								.getTranCode()));
-						compra.setFechaCompra(td.getDateTran().getValue()
-								.getValue().toGregorianCalendar().getTime());
-						compra.setMonto(td.getAmtTran().getValue().getValue()
-								.doubleValue());
-						compra.setDescripcion(td.getMerchantInfo().getValue()
-								.getDBAName().getValue());
-						compra.setNumRefTran(td.getRefNbr().getValue());
-						compra.setTipoTransaccion("ITA");
-						compra.setIdEdoPromocion(compraService
-								.getStatusCompraItau(compra));
-						compra.setDateStmtBegin(td.getDateStmtBegin());
-						compra.setDatePost(td.getDatePost());
-						compra.setTimePost(td.getTimePost());
-						for (Promocion promo : camp.getPromociones()) {
 
-							if (compra.getMonto().doubleValue() >= promo
-									.getMonto().doubleValue()) {
-								compra.addComboPromo(promo.getPlazoMeses()
-										+ " " + promo.getDescripcion(), promo);
+		for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(account, true, null,null)) {
+			logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+			
+			if(td.getTranCode().equals(codigo)){
+				if(monto<= td.getAmtTran().getValue().getValue().doubleValue()){
+					if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0)
+							&& (td.getDateTran().getValue().getValue().toGregorianCalendar().before(despues) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(despues)==0)){
+						logger.info("agregar compra");
+						if (td.getMerchantInfo().getValue()
+									.getDBAName().getValue().contains(descripcion)) {
+							Compra compra = new Compra();
+							compra.setCuenta(account);
+							compra.setCodigoTransaccion(Integer.parseInt(td
+									.getTranCode()));
+							compra.setFechaCompra(td.getDateTran().getValue()
+									.getValue().toGregorianCalendar().getTime());
+							compra.setMonto(td.getAmtTran().getValue().getValue()
+									.doubleValue());
+							compra.setDescripcion(td.getMerchantInfo().getValue()
+									.getDBAName().getValue());
+							compra.setNumRefTran(td.getRefNbr().getValue());
+							compra.setTipoTransaccion("ITA");
+							compra.setIdEdoPromocion(compraService
+									.getStatusCompraItau(compra));
+							compra.setDateStmtBegin(td.getDateStmtBegin());
+							compra.setDatePost(td.getDatePost());
+							compra.setTimePost(td.getTimePost());
+							for (Promocion promo : camp.getPromociones()) {
+
+								if (compra.getMonto().doubleValue() >= promo
+										.getMonto().doubleValue()) {
+									compra.addComboPromo(promo.getPlazoMeses()
+											+ " " + promo.getDescripcion(), promo);
+								}
+
 							}
-
+							comprasComer.add(compra);
 						}
-						comprasComer.add(compra);
-					}
 
+					}
 				}
 			}
 		}
-	}//for compras corte actual
-
 	
-	InqTransRequestType reqInqTrans2 = new InqTransRequestType();
-	InqTrans igrala = new InqTrans();
-    reqInqTrans2.setVersion("1.9.0");
-    reqInqTrans2.setKey(cuenta);
-    reqInqTrans2.setKeyType("cardNbr");
-    reqInqTrans2.setPageItems(300);
-    com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange	cycleRange = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-		XMLGregorianCalendar calendarIn=null;
-		try {
-			calendarIn = DatatypeFactory.newInstance().newXMLGregorianCalendar(antes);
-		} catch (DatatypeConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		XMLGregorianCalendar calendarFin=null;
-		try {
-			calendarFin = DatatypeFactory.newInstance().newXMLGregorianCalendar(despues);
-		} catch (DatatypeConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		cycleRange.setFrom(calendarIn);
-		cycleRange.setTo(calendarFin);          
-	reqInqTrans2.setCycleRange(cycleRange);
-    igrala.setInqTransRequest(reqInqTrans2);
-    
-    InqTransResponse resp= cts2.inqTrans(tp, igrala);
     logger.info("Compras prog 0 corte actual");
-    for (ITRtranDetailResponseDataType td : resp.getInqTransResult().getTranDetail()) {
-   	 logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+   
+		for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta,false, antes, despues)) {
+		 logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
-   	 if(codigo.equals(td.getTranCode())){
-   		 if(monto<= td.getAmtTran().getValue().getValue().doubleValue()){
-   			 logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-   			 if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) 
-   					 && (td.getDateTran().getValue().getValue().toGregorianCalendar().before(despues) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(despues)==0)){
+		 if(codigo.equals(td.getTranCode())){
+			 if(monto<= td.getAmtTran().getValue().getValue().doubleValue()){
+				 logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+				 if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) 
+						 && (td.getDateTran().getValue().getValue().toGregorianCalendar().before(despues) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(despues)==0)){
 
-   				if (td.getMerchantInfo().getValue()
-						.getDBAName().getValue().contains(descripcion)) {
-				Compra compra = new Compra();
-				compra.setCuenta(account);
-				compra.setCodigoTransaccion(Integer.parseInt(td
-						.getTranCode()));
-				compra.setFechaCompra(td.getDateTran().getValue()
-						.getValue().toGregorianCalendar().getTime());
-				compra.setMonto(td.getAmtTran().getValue().getValue()
-						.doubleValue());
-				compra.setDescripcion(td.getMerchantInfo().getValue()
-						.getDBAName().getValue());
-				compra.setNumRefTran(td.getRefNbr().getValue());
-				compra.setTipoTransaccion("IPS");
-				compra.setIdEdoPromocion(compraService
-						.getStatusCompraItau(compra));
-				compra.setDateStmtBegin(td.getDateStmtBegin());
-				compra.setDatePost(td.getDatePost());
-				compra.setTimePost(td.getTimePost());
-				for (Promocion promo : camp.getPromociones()) {
+					if (td.getMerchantInfo().getValue()
+							.getDBAName().getValue().contains(descripcion)) {
+					Compra compra = new Compra();
+					compra.setCuenta(account);
+					compra.setCodigoTransaccion(Integer.parseInt(td
+							.getTranCode()));
+					compra.setFechaCompra(td.getDateTran().getValue()
+							.getValue().toGregorianCalendar().getTime());
+					compra.setMonto(td.getAmtTran().getValue().getValue()
+							.doubleValue());
+					compra.setDescripcion(td.getMerchantInfo().getValue()
+							.getDBAName().getValue());
+					compra.setNumRefTran(td.getRefNbr().getValue());
+					compra.setTipoTransaccion("IPS");
+					compra.setIdEdoPromocion(compraService
+							.getStatusCompraItau(compra));
+					compra.setDateStmtBegin(td.getDateStmtBegin());
+					compra.setDatePost(td.getDatePost());
+					compra.setTimePost(td.getTimePost());
+					for (Promocion promo : camp.getPromociones()) {
 
-					if (compra.getMonto().doubleValue() >= promo
-							.getMonto().doubleValue()) {
-						compra.addComboPromo(promo.getPlazoMeses()
-								+ " " + promo.getDescripcion(), promo);
+						if (compra.getMonto().doubleValue() >= promo
+								.getMonto().doubleValue()) {
+							compra.addComboPromo(promo.getPlazoMeses()
+									+ " " + promo.getDescripcion(), promo);
+						}
+
 					}
-
+					comprasComer.add(compra);
 				}
-				comprasComer.add(compra);
-			}
-   				 
-   			 }	 
-   				 
-   			
-   		 }
+					 
+				 }	 
+					 
+				
+			 }
 
-   	 }
-    }//for compras corte anteriorr
+		 }
+		}
+	
 	return comprasComer;
 }
 
@@ -2045,7 +1662,7 @@ private List<Compra> comprasNalCampMasivas(String cuenta,String cuentaCBA,Client
 	return compras;
 }
 
-private List<Compra> comprasNacionalesProg0(String cuenta,String cuentaCBA,ClienteGetMovs movclient,List<Campania> campMasivas){
+private List<Compra> comprasNacionalesProg0(String cuenta,String cuentaCBA,ClienteGetMovs movclient,List<Campania> campMasivas) throws RemoteException, ServiceException{
 	List<Compra> compras = new ArrayList<Compra>();
 	List<Campania> campProg0Nals =campaniaService.getCampaniaByTipo("compras.nal.prog.cero");
 
@@ -2070,18 +1687,10 @@ private List<Compra> comprasNacionalesProg0(String cuenta,String cuentaCBA,Clien
 		}
 		Collections.sort(montos);
 	
-			try {
+		
 				movs =movclient.webMovEdoCtaFech(sdf.format(antes.getTime()),sdf.format(hoy.getTime()), cuentaCBA, 
 							new String[]{MSIConstants.TRANS_CODIGO_COMPRAS_NACIONALES},montos.get(0));
-			} catch (RemoteException e) {
-				sendErrorMessageToUser("Error Servicio Tsys "+e.getMessage());
-				logger.error("Error Servicio Tsys "+e.getMessage());
-				e.printStackTrace();
-			} catch (ServiceException e) {
-				sendErrorMessageToUser("Error Servicio Tsys "+e.getMessage());
-				logger.error("Error Servicio Tsys "+e.getMessage());
-				e.printStackTrace();
-			}
+		
 		if(movs!= null){	
 		
 			for (String strMov : movs) {
@@ -2132,7 +1741,7 @@ private List<Compra> comprasNacionalesProg0(String cuenta,String cuentaCBA,Clien
 	return compras;
 }
 
-private List<Compra> comprasCampSeg(String cuenta,String cuentaCBA,ClienteGetMovs movclient){
+private List<Compra> comprasCampSeg(String cuenta,String cuentaCBA,ClienteGetMovs movclient) throws RemoteException, ServiceException{
 	List<ArchivoDetalle> listArD=archivoDetalleService.getArDetalleByCuenta(cuenta);
 	
 	List<Compra> compras = new ArrayList<Compra>();
@@ -2157,18 +1766,10 @@ private List<Compra> comprasCampSeg(String cuenta,String cuentaCBA,ClienteGetMov
 					Collections.sort(montos);
 						logger.info("campSeg id "+campSeg.getIdCampania());
 						String[] movs=null;
-						try {
+						
 							movs = movclient.webMovEdoCtaFech(sdf.format(archivoDetalle.getFechaInicio()),sdf.format(archivoDetalle.getFechaFin()), cuentaCBA, 
 									new String[]{campSeg.getCodigoTransaccion1().toString()},montos.get(0));
-						} catch (RemoteException e) {
-							sendErrorMessageToUser("Error Servicio Tsys "+e.getMessage());
-							logger.error("Error Servicio Tsys "+e.getMessage());
-							e.printStackTrace();
-						} catch (ServiceException e) {
-							sendErrorMessageToUser("Error Servicio Tsys "+e.getMessage());
-							logger.error("Error Servicio Tsys "+e.getMessage());
-							e.printStackTrace();
-						}
+						
 					if(movs!= null){	
 						for (String strMov : movs) {
 							Compra compra=MSIHelper.fromStringToCompra(strMov);

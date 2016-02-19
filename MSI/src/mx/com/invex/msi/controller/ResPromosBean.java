@@ -18,11 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.tsys.xmlmessaging.ch.IRTretailTransResponseDataType;
+
 import mx.com.invex.msi.model.Compra;
 import mx.com.invex.msi.model.InfoEnviadaDTO;
 import mx.com.invex.msi.service.CompraService;
 import mx.com.invex.msi.util.ComparadorCompraMonto;
 import mx.com.invex.msi.util.MSIException;
+import mx.com.invex.msi.ws.ClientTS2;
 
 @Component
 @Scope("session")
@@ -296,6 +299,7 @@ public class ResPromosBean extends MessagesMBean implements Serializable{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			HttpSession session = (HttpSession)  getContext().getExternalContext().getSession(false);
 			String cuenta= (String) session.getAttribute("cuenta");
+			logger.info("cuenta "+cuenta);
 			compras = new ArrayList<Compra>();
 			for(Compra compra:lcompras){
 				//cuenta = compra.getCuenta();
@@ -316,38 +320,18 @@ public class ResPromosBean extends MessagesMBean implements Serializable{
 				sendErrorMessageToUser("Favor de seleccionar la(s) compra(s) y sus mensualidades");
 				return null;
 			}
-			
-//			ClientTS2 cts2 = new ClientTS2();
-//			 TSYSprofileType tp = new TSYSprofileType();
-//			 tp.setClientID("7401");
-//			 tp.setUserID("Invex");
-//			 tp.setVendorID("00000000");
-//			 InqRetailTrans inqRetailTrans = new InqRetailTrans();
-//			 InqRetailTransRequestType req= new InqRetailTransRequestType();
-//			 req.setKey(cuenta);
-//			 req.setKeyType("cardNbr");
-//			 req.setVersion("1.0.0");
-//			 InqRetailTransResponseType res= cts2.inqRetailTrans(tp, inqRetailTrans).getInqRetailTransResult();
-//			 if(!"000".equals(res.getStatus())){
-//					logger.info(res.getStatusMsg());
-//					TSYSfaultType fault = res.getFaults();
-//					List<TSYSfault> lfaulta =fault.getFault();
-//					for (TSYSfault sfault : lfaulta) {
-//						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-//						sendErrorMessageToUser(sfault.getFaultDesc());
-//						return null;
-//					}
-//				}
-//			 int promos = 0;
-//			 promos= compras.size();
-//			 if(res.getRetailTrans()!= null && !res.getRetailTrans().isEmpty()){
-//				 promos += res.getRetailTrans().size();
-//			 }
-//			 //num maXIMO de promos
-//			 if(promos > 90){
-//				 sendErrorMessageToUser("No se permite tener mas de 90 promociones , tiene seleccionadas "+(promos-90) +" promociones de más.");
-//					return null;
-//			 }
+			int promos=0;
+			List<IRTretailTransResponseDataType> retailTrans = ClientTS2.getNumPromos(cuenta);
+			 if(retailTrans!= null && !retailTrans.isEmpty()){
+				 promos += retailTrans.size();
+			 }
+			 promos+=compras.size();
+			 logger.info("num promos "+promos);
+			 //num maXIMO de promos
+			 if(promos > 90){
+				 sendErrorMessageToUser("No se permite tener mas de 90 promociones , tiene seleccionadas "+(promos-90) +" promociones de más.");
+					return null;
+			 }
 			 
 			Collections.sort(compras,new ComparadorCompraMonto());
 			double montoCompraMenor=compras.get(0).getMonto();

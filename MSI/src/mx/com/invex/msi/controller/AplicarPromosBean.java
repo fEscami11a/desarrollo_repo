@@ -1,9 +1,7 @@
 package mx.com.invex.msi.controller;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,25 +21,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.tsys.xmlmessaging.ch.ICIcustInfoResponseDataType;
-import com.tsys.xmlmessaging.ch.InqCustInfo;
-import com.tsys.xmlmessaging.ch.InqCustInfoRequestType;
-import com.tsys.xmlmessaging.ch.InqCustInfoResponse;
-import com.tsys.xmlmessaging.ch.InqGeneralAcct;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctResponseType;
-import com.tsys.xmlmessaging.ch.InqGeneralBal;
-import com.tsys.xmlmessaging.ch.InqGeneralBalRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralBalResponseType;
-import com.tsys.xmlmessaging.ch.TSYSfault;
-import com.tsys.xmlmessaging.ch.TSYSfaultType;
-import com.tsys.xmlmessaging.ch.TSYSprofileType;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.Adj;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.AmtTran;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.MerchantInfo;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.TranKey;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjResponse;
+import com.tsys.xmlmessaging.ch.IGAacctGeneralInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IGBgeneralBalInfoResponseDataType;
 
 import mx.com.interware.spira.web.mxp.MxpParam;
 import mx.com.invex.msi.mail.CompraEmailDto;
@@ -284,7 +265,7 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 				cuenta= compra.getCuenta();
 				compra.setUsername(username);
 				compra.setOrigen("PU");
-				compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_PENDIENTE);
+				//compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_PENDIENTE);
 				if(compra.getDescripcion()== null || "".equals(compra.getDescripcion().trim())){
 					compra.setDescripcion("NEGOCIO GENERICO");
 				}
@@ -308,148 +289,25 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 					return null;
 				}
 			}
-			ClientTS2 cts2= new ClientTS2();
 
-			 TSYSprofileType tp = new TSYSprofileType();
-			 tp.setClientID("7401");
-			 tp.setUserID("invdev");
-			 tp.setVendorID("00000000");
-			String res=null;
-			String pattern = "###.##";
-			DecimalFormat decimalFormat = new DecimalFormat(pattern);
 			for(Compra compra:compras){
 				compra.setMontoOriginal(compra.getMonto());
 				compra.setMonto(compra.getMontoPromo());
 				compra.setFechaAplicacionPromocion(new Date());
-				compraService.save(compra);
-				
+			
 					logger.info("inqAcctAvailTLPOpt assesfee false tlptype Installment tbal code 0001 amtToMove "+compra.getMontoPromo());
 					
-					MntCustServiceAdjRequestType mntCustServiceAdjReq = new MntCustServiceAdjRequestType();
-					mntCustServiceAdjReq.setVersion("2.12.0");
-					mntCustServiceAdjReq.setKeyType("cardNbr");
-					mntCustServiceAdjReq.setKey(cuenta);
-					TranKey trankey = new TranKey();
-					com.tsys.xmlmessaging.ch2.Date dateStmBegin = new com.tsys.xmlmessaging.ch2.Date();
-					dateStmBegin.setValue(compra.getDateStmtBegin());
-					trankey.setDateStmtBegin(dateStmBegin);
-					com.tsys.xmlmessaging.ch2.Date datePost = new com.tsys.xmlmessaging.ch2.Date();
-					datePost.setValue(compra.getDatePost());
-					trankey.setDatePost(datePost);
-					trankey.setTimePost(compra.getTimePost());
-					mntCustServiceAdjReq.setTranKey(trankey);
-					
-					ActionInfo actionInfo = new ActionInfo();
-					actionInfo.setAction("Adjustment");
-					actionInfo.setType("Initial");
-					actionInfo.setTranCode("0106");
-					AmtTran amtTran = new AmtTran();
-					amtTran.setCode("MXN");
-					amtTran.setValue(new BigDecimal(decimalFormat.format(compra.getMontoPromo())));
-					actionInfo.setAmtTran(amtTran);
-					MerchantInfo merchantInfo = new MerchantInfo();
-					merchantInfo.setDBAName(String.format("%1$.25s", compra.getDescripcion()));
-					actionInfo.setMerchantInfo(merchantInfo);
-					Adj adj = new Adj();
-					com.tsys.xmlmessaging.ch2.Boolean b = new com.tsys.xmlmessaging.ch2.Boolean();
-					b.setValue(false);
-					adj.setForcePost(b);
-					actionInfo.setAdj(adj);
-					
-					ActionInfo actInfo2 = new ActionInfo();
-					actInfo2.setAction("Adjustment Offset");
-					actInfo2.setType("Offset");
-					actInfo2.setTranCode("0101");
-					actInfo2.setAcctNbr(cuenta);
-					actInfo2.setAmtTran(amtTran);
-					actInfo2.setMerchantInfo(merchantInfo);
-					Adj adj2= new Adj();
-					adj2.setForcePost(b);
-					adj2.setTLPType("S");
-					String tlpopt= null;
-					int meses =compra.getPromocion().getPlazoMeses();
-					switch(meses){
-						case 3:
-							tlpopt ="1539";
-							break;
-						case 6:
-							tlpopt="1540";
-							break;
-						case 9:
-							tlpopt="1541";
-							break;
-						case 12:	
-							tlpopt="1542";
-							break;
-						case 7:	
-							tlpopt="1545";
-							break;
-						case 11:	
-							tlpopt="1546";
-							break;
-						case 18:	
-							tlpopt="1542";
-							break;
-					}
-					adj2.setTLPOptSet(tlpopt);
-					actInfo2.setAdj(adj2);
-					
-					List<ActionInfo> actInfos=mntCustServiceAdjReq.getActionInfo();
-					actInfos.add(actionInfo);
-					actInfos.add(actInfo2);
-					
-					res="OK";
-					if (!MSIConstants.desa) {
-						MntCustServiceAdjResponse mntCustServiceAdjResp= cts2.mntCustServiceAdj(mntCustServiceAdjReq);
-						String status = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatus();
-						if(!"000".equals(status)){
-							String msg = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatusMsg();
-							logger.info(msg);
-							com.tsys.xmlmessaging.ch2.TSYSfaultType fault =mntCustServiceAdjResp.getMntCustServiceAdjResult().getFaults();
-							List<com.tsys.xmlmessaging.ch2.TSYSfault> lfaulta =fault.getFault();
-							for (com.tsys.xmlmessaging.ch2.TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-							res="ERROR";
-						}
-						
-					}
-					
-					
-					
-				if("OK".equalsIgnoreCase(res)){
+					ClientTS2.aplicarCompra(compra);
 					compra.setEnPromocion(true);
 					compra.setFechaAplicacionPromocion(new Date());
 					compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
 					compraService.save(compra);
-
-				}else{
-					compra.setEnPromocion(false);
-					sendErrorMessageToUser("Error Tsys al aplicar la promocion cuenta "+compra.getCuenta() +" monto "+ compra.getMontoPromo()+" a  fecha "+compra.getFechaCompra()+" msg: "+res);
-					logger.error("Error Tsys al aplicar la promocion cuenta "+compra.getCuenta()
-							+" monto "+ compra.getMonto()+" meses  fecha "+compra.getFechaCompra() +" res "+res );
-					return null;
-				}
-
 						
 					}
 					
 			 
-			 InqCustInfo inqCustInfo = new InqCustInfo();
-			 InqCustInfoRequestType inqCustInfoReq = new InqCustInfoRequestType();
-			 inqCustInfoReq.setKey(cuenta);
-			 inqCustInfoReq.setKeyType("cardNbr");
-			 inqCustInfoReq.setVersion("2.0.0");
-			 inqCustInfo.setInqCustInfoRequest(inqCustInfoReq);
-			 com.tsys.xmlmessaging.ch.TSYSprofileType tp2 = new com.tsys.xmlmessaging.ch.TSYSprofileType();
-			 tp2.setClientID("7401");
-			 tp2.setUserID("gp5rwf");
-			 tp2.setVendorID("00000000");
-			 logger.info("custInfoResp");
-			 InqCustInfoResponse custInfoResp= cts2.inqCustInfo(tp2, inqCustInfo);
-			 logger.info("despues");
-			 List<ICIcustInfoResponseDataType> listCustInfos = custInfoResp.getInqCustInfoResult().getCustInfo();
-			 String custId=null;
+			 String custId= null;
+			 List<ICIcustInfoResponseDataType> listCustInfos =ClientTS2.getCustInfo(cuenta);
 			 logger.info("tam custinfos "+listCustInfos.size());
             for (ICIcustInfoResponseDataType custInfo : listCustInfos) {
                             logger.info("custInfo custiyer "+custInfo.getCustType());
@@ -473,28 +331,11 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 				email="fescamilla@invex.com";
 			}
 			
-			
-			InqGeneralBal inqGeneralBal = new InqGeneralBal();
-   		 InqGeneralBalRequestType inqGeneralBalReq = new InqGeneralBalRequestType();
-   		 
-   		 inqGeneralBalReq.setKey(cuenta);
-   		 inqGeneralBalReq.setKeyType("cardNbr");
-   		 inqGeneralBalReq.setVersion("2.5.0");
-   		 inqGeneralBal.setInqGeneralBalRequest(inqGeneralBalReq);
-               InqGeneralBalResponseType gralBalRes = cts2.inqGeneralBal(tp,inqGeneralBal).getInqGeneralBalResult();
-          
-               logger.info("gralBalRes status "+gralBalRes.getStatus());
-				if(!"000".equals(gralBalRes.getStatus())){
-					logger.info(gralBalRes.getStatusMsg());
-					TSYSfaultType fault =gralBalRes.getFaults();
-					List<TSYSfault> lfaulta =fault.getFault();
-					for (TSYSfault sfault : lfaulta) {
-						logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-					}
-				}
+				IGBgeneralBalInfoResponseDataType gralBal=ClientTS2.getGeneralBal(cuenta);
+				
 				String msg= null;
-				 if(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo()!= null){
-						if(gralBalRes.getGeneralBalInfo().getValue().getPmtInfo().getValue().getStmtMin() == null){
+				 if(gralBal.getPmtInfo()!= null){
+						if(gralBal.getPmtInfo().getValue().getStmtMin() == null){
 							msg="Su pago m&iacute;nimo se ver&aacute; reflejado hasta el siguiente corte.";
 									sendInfoMessageToUser("Su pago mínimo se verá reflejado hasta el siguiente corte.");
 						}
@@ -549,29 +390,10 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 //si es itau
 			if(productoTs2Service.cuentaITAU(cuenta)){
 				
-				ClientTS2 cts2= new ClientTS2();
-				 TSYSprofileType tp = new TSYSprofileType();
-				 tp.setClientID("7401");
-				 tp.setUserID("invdev");
-				 tp.setVendorID("00000000");
-				InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-	           	 req.setVersion("2.19.0");
-	           	 req.setKey(cuenta);
-	           	 req.setKeyType("cardNbr");
-	           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-	           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-					InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
-					 logger.info("InqGeneralAcct");
-						if("999".equals(res.getStatus())){
-							logger.info(res.getStatusMsg());
-							TSYSfaultType fault =res.getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
-					
-					String cpc = res.getAcctGeneralInfo().getValue().getTSYSProductCode() == null?"": res.getAcctGeneralInfo().getValue().getClientProductCode().getValue() ;
+			
+						IGAacctGeneralInfoResponseDataType  acctGral=ClientTS2.getGeneralAcct(cuenta);
+						
+					String cpc = acctGral.getTSYSProductCode() == null?"": acctGral.getClientProductCode().getValue() ;
 					//if("VL2".equals(cpc)){
 						//volaris
 						//crear correo volaris 2

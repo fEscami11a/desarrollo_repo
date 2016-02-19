@@ -28,4 +28,6 @@ public interface CompraDao {
 	String getStatusCompraItau(Compra compra);
 
 	List<Object[]> getReporte(DetachedCriteria criteria);
+
+	List<Object[]> getReporteDias(Date fechaIn,Date fechaFin);
 }

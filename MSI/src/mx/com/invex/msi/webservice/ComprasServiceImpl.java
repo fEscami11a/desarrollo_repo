@@ -21,9 +21,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.bind.JAXBElement;
 import javax.xml.rpc.ServiceException;
 
 import org.apache.http.HttpEntity;
@@ -42,46 +40,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tsys.xmlmessaging.ch.Boolean;
 import com.tsys.xmlmessaging.ch.ICIcustInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IGAacctGeneralInfoResponseDataType;
 import com.tsys.xmlmessaging.ch.IPIpmtInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.IRTretailTransResponseDataType;
+import com.tsys.xmlmessaging.ch.ITAcustomDataResponseDataType;
 import com.tsys.xmlmessaging.ch.ITRtranDetailResponseDataType;
-import com.tsys.xmlmessaging.ch.InqAcctAvailTLPOpt;
-import com.tsys.xmlmessaging.ch.InqAcctAvailTLPOptRequestType;
-import com.tsys.xmlmessaging.ch.InqAcctAvailTLPOptRequestType.TransferInfo.TBALs.TBAL;
-import com.tsys.xmlmessaging.ch.InqAcctAvailTLPOptRequestType.TransferInfo.TBALs.TBAL.AmtToMove;
-import com.tsys.xmlmessaging.ch.InqAcctAvailTLPOptResponse;
-import com.tsys.xmlmessaging.ch.InqCustInfo;
-import com.tsys.xmlmessaging.ch.InqCustInfoRequestType;
-import com.tsys.xmlmessaging.ch.InqCustInfoResponse;
-import com.tsys.xmlmessaging.ch.InqCustomData;
-import com.tsys.xmlmessaging.ch.InqCustomDataRequestType;
-import com.tsys.xmlmessaging.ch.InqCustomDataRequestType.CustomDataCodes;
-import com.tsys.xmlmessaging.ch.InqCustomDataResponseType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcct;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctResponseType;
-import com.tsys.xmlmessaging.ch.InqPmtInfo;
-import com.tsys.xmlmessaging.ch.InqPmtInfoRequestType;
-import com.tsys.xmlmessaging.ch.InqPmtInfoResponseType;
-import com.tsys.xmlmessaging.ch.InqTrans;
-import com.tsys.xmlmessaging.ch.InqTransRequestType;
-import com.tsys.xmlmessaging.ch.InqTransResponse;
-import com.tsys.xmlmessaging.ch.InqTransResponseType;
-import com.tsys.xmlmessaging.ch.TSYSfault;
-import com.tsys.xmlmessaging.ch.TSYSfaultType;
-import com.tsys.xmlmessaging.ch.TSYSprofileType;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjResponse;
-import com.tsys.xmlmessaging.ch2.ReqAcctTermTransfer;
-import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.TranKey;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.Adj;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.AmtTran;
-import com.tsys.xmlmessaging.ch2.MntCustServiceAdjRequestType.ActionInfo.MerchantInfo;
-import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType.TermTransfer;
-import com.tsys.xmlmessaging.ch2.ReqAcctTermTransferRequestType.TransferFrom;
 
 import mx.com.interware.spira.ls.facade.igbinaenca.ArrayUDataDTO;
 import mx.com.interware.spira.ls.facade.igbinaenca.ResultadoIGBINAEnca;
@@ -112,7 +76,6 @@ import mx.com.invex.msi.service.ProductoTs2Service;
 import mx.com.invex.msi.service.PromocionService;
 import mx.com.invex.msi.util.ComparadorCompraMonto;
 import mx.com.invex.msi.util.ComparadorFecha;
-import mx.com.invex.msi.util.EnviarMail;
 import mx.com.invex.msi.util.MSIConstants;
 import mx.com.invex.msi.util.MSIHelper;
 import mx.com.invex.msi.ws.ClientLSWS;
@@ -164,6 +127,19 @@ public class ComprasServiceImpl{
 			Integer folio=compraService.getFolio();
 			List<Compra> compras = new ArrayList<Compra>();
 		
+			int promos = 0;
+			List<IRTretailTransResponseDataType> retailTrans = ClientTS2.getNumPromos(cuenta);
+			 if(retailTrans!= null && !retailTrans.isEmpty()){
+				 promos += retailTrans.size();
+			 }
+			 promos+=comprasWSDTO.size();
+			 logger.info("num promos "+promos);
+			 //num maXIMO de promos
+			 if(promos > 90){
+					resp.setStatus(1);
+					resp.setMsgError("No se permite tener mas de 90 promociones , tiene seleccionadas "+(promos-90) +" promociones de más.");
+					return resp;
+			 }
 			
 			for (CompraWSDTO compraWSDTO : comprasWSDTO) {
 				Compra compra =MSIHelper.getCompraFromCompraWSDTO(compraWSDTO);
@@ -194,8 +170,11 @@ public class ComprasServiceImpl{
 				if(ists2){
 					compra.setMontoPromo(compra.getMonto());
 					compra.setMontoOriginal(compra.getMonto());
-					
-					res=enviarPromoTs2(compra);
+					enviarPromoTs2(compra);
+					compra.setEnPromocion(true);
+					compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
+					compra.setFechaAplicacionPromocion(new Date());
+					compraService.save(compra);
 				}else{
 					MxpParam param = new MxpParam();
 					param.setAccount(compra.getCuentaFacturadora());
@@ -214,16 +193,17 @@ public class ComprasServiceImpl{
 				
 					ClientePromosWS cliMXP = new ClientePromosWS(parametroService.getParamById(MSIConstants.MXP_SERVICE_ENDPOINT).getValor());
 						res = MSIConstants.desa?"OK":cliMXP.aplicarPromocion(param);
+						if("OK".equalsIgnoreCase(res)){
+							compra.setEnPromocion(true);
+							compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
+							compra.setFechaAplicacionPromocion(new Date());
+							compraService.save(compra);
+						}else{
+							resp.setStatus(2);
+							resp.setMsgError("ERROR al aplicar promocion "+ compra.getDescripcion() +" "+compra.getMontoOriginal());
+						}
 				}
-					if("OK".equalsIgnoreCase(res)){
-						compra.setEnPromocion(true);
-						compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
-						compra.setFechaAplicacionPromocion(new Date());
-						compraService.save(compra);
-					}else{
-						resp.setStatus(2);
-						resp.setMsgError("ERROR al aplicar promocion "+ compra.getDescripcion() +" "+compra.getMontoOriginal());
-					}
+					
 					
 				
 				compras.add(compra);
@@ -437,22 +417,8 @@ public class ComprasServiceImpl{
 						msgWS.insertaMsgTs2(username, "0", cuenta, sbICM2.toString());
 						
 					}else{
-						 InqCustInfo inqCustInfo = new InqCustInfo();
-						 InqCustInfoRequestType inqCustInfoReq = new InqCustInfoRequestType();
-						 inqCustInfoReq.setKey(cuenta);
-						 inqCustInfoReq.setKeyType("cardNbr");
-						 inqCustInfoReq.setVersion("2.0.0");
-						 inqCustInfo.setInqCustInfoRequest(inqCustInfoReq);
-						 com.tsys.xmlmessaging.ch.TSYSprofileType tp2 = new com.tsys.xmlmessaging.ch.TSYSprofileType();
-						 tp2.setClientID("7401");
-						 tp2.setUserID("invdev");
-						 tp2.setVendorID("00000000");
-						 logger.info("custInfoResp");
-						 ClientTS2 cts2= new ClientTS2();
 
-						 InqCustInfoResponse custInfoResp= cts2.inqCustInfo(tp2, inqCustInfo);
-						 logger.info("despues");
-						 List<ICIcustInfoResponseDataType> listCustInfos = custInfoResp.getInqCustInfoResult().getCustInfo();
+						 List<ICIcustInfoResponseDataType> listCustInfos = ClientTS2.getCustInfo(cuenta);
 						 String custId=null;
 						 logger.info("tam custinfos "+listCustInfos.size());
 						 String nombreCompleto= null;
@@ -535,29 +501,9 @@ public class ComprasServiceImpl{
 			
 			if(isItau){
 				
-				ClientTS2 cts2= new ClientTS2();
-				 TSYSprofileType tp = new TSYSprofileType();
-				 tp.setClientID("7401");
-				 tp.setUserID("invdev");
-				 tp.setVendorID("00000000");
-				InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-	           	 req.setVersion("2.19.0");
-	           	 req.setKey(cuenta);
-	           	 req.setKeyType("cardNbr");
-	           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-	           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-					InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
 				
-						if(!"000".equals(res.getStatus())){
-						
-							TSYSfaultType fault =res.getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								//logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
-					
-					String cpc = res.getAcctGeneralInfo().getValue().getClientProductCode() == null?"": res.getAcctGeneralInfo().getValue().getClientProductCode().getValue() ;
+						IGAacctGeneralInfoResponseDataType acctGral= ClientTS2.getGeneralAcct(cuenta);
+					String cpc = acctGral.getClientProductCode() == null?"": acctGral.getClientProductCode().getValue() ;
 					MailDto mailParams = new MailDto();
 					mailParams.setNombre(nombre.trim());
 					mailParams.setFecha(Character.toUpperCase(fecha.charAt(0))+fecha.substring(1));
@@ -621,64 +567,22 @@ public class ComprasServiceImpl{
 	}
 	
 	
-	private String sadloNoIntTs2(String cuenta){
-		ClientTS2 cts2= new ClientTS2();
-		 TSYSprofileType tp = new TSYSprofileType();
-		 tp.setClientID("7401");
-		 tp.setUserID("invdev");
-		 tp.setVendorID("00000000");
-		InqPmtInfo inqPmtInfo = new InqPmtInfo();
-  		 InqPmtInfoRequestType inqPmtInfoReq = new InqPmtInfoRequestType();
-  		
-  		 inqPmtInfoReq.setKey(cuenta);
-  		 inqPmtInfoReq.setKeyType("cardNbr");
-  		 inqPmtInfoReq.setVersion("1.2.0");
-  		 inqPmtInfoReq.setCycleType("Current");
-  		 inqPmtInfo.setInqPmtInfoRequest(inqPmtInfoReq);
-           InqPmtInfoResponseType pmtInfoResponse = cts2.inqPmtInfo(tp,inqPmtInfo).getInqPmtInfoResult();
-           logger.info("pmtInfoResponse");
-			if("999".equals(pmtInfoResponse.getStatus())){
-				logger.info(pmtInfoResponse.getStatusMsg());
-				TSYSfaultType fault =pmtInfoResponse.getFaults();
-				List<TSYSfault> lfaulta =fault.getFault();
-				for (TSYSfault sfault : lfaulta) {
-					logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-				}
-			}else{
-               List<IPIpmtInfoResponseDataType> pmtInfo=pmtInfoResponse.getPmtInfo();
-               for (IPIpmtInfoResponseDataType ipIpmtInfoResp : pmtInfo) {
-               	BigDecimal ppNI =ipIpmtInfoResp.getAmtProjectedPaidInFull().getValue().getValue();
-               	 return ppNI.toString();
-				}
+	private String sadloNoIntTs2(String cuenta) throws Exception{
+
+		List<IPIpmtInfoResponseDataType> pmtInfo =ClientTS2.getPmtInfo(cuenta);
+		 for (IPIpmtInfoResponseDataType ipIpmtInfoResp : pmtInfo) {
+        	BigDecimal ppNI =ipIpmtInfoResp.getAmtProjectedPaidInFull().getValue().getValue();
+        	 return ppNI.toString();
 			}
 			return null;
 	}
 	
-		private String obtenerProductoTs2(String cuenta){
-			ClientTS2 cts2= new ClientTS2();
-			 TSYSprofileType tp = new TSYSprofileType();
-			 tp.setClientID("7401");
-			 tp.setUserID("invdev");
-			 tp.setVendorID("00000000");
-			 InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-           	 req.setVersion("2.19.0");
-           	 req.setKey(cuenta);
-           	 req.setKeyType("cardNbr");
-           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-				InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
-				 logger.info("InqGeneralAcct");
-					if("999".equals(res.getStatus())){
-						logger.info(res.getStatusMsg());
-						TSYSfaultType fault =res.getFaults();
-						List<TSYSfault> lfaulta =fault.getFault();
-						for (TSYSfault sfault : lfaulta) {
-							logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-						}
-					}
+		private String obtenerProductoTs2(String cuenta) throws Exception{
+
+			IGAacctGeneralInfoResponseDataType gralInfo=ClientTS2.getGeneralAcct(cuenta);
 				
-				String tpc = res.getAcctGeneralInfo().getValue().getTSYSProductCode() == null?"": res.getAcctGeneralInfo().getValue().getTSYSProductCode() ;
-				String cpc = res.getAcctGeneralInfo().getValue().getClientProductCode() == null?"": res.getAcctGeneralInfo().getValue().getClientProductCode().getValue();
+				String tpc = gralInfo.getTSYSProductCode() == null?"": gralInfo.getTSYSProductCode() ;
+				String cpc = gralInfo.getClientProductCode() == null?"": gralInfo.getClientProductCode().getValue();
 				logger.info("tpc "+tpc +" cpc " +cpc );
 				ProductoTs2 prodts2 = productoTs2Service.getProductoItau(cuenta, tpc, cpc);
 				String tipoProd=null;
@@ -689,109 +593,10 @@ public class ComprasServiceImpl{
 			     return tipoProd;
 		}
 	
-	private String enviarPromoTs2(Compra compra) {
-		ClientTS2 cts2= new ClientTS2();
-
-		 TSYSprofileType tp = new TSYSprofileType();
-		 tp.setClientID("7401");
-		 tp.setUserID("invdev");
-		 tp.setVendorID("00000000");
-		String res=null;
+	private void enviarPromoTs2(Compra compra) throws Exception {
 		
-		logger.info("inqAcctAvailTLPOpt assesfee false tlptype Installment tbal code 0001 amtToMove "+compra.getMontoPromo());
-		String pattern = "###.##";
-		DecimalFormat decimalFormat = new DecimalFormat(pattern);
-		MntCustServiceAdjRequestType mntCustServiceAdjReq = new MntCustServiceAdjRequestType();
-		mntCustServiceAdjReq.setVersion("2.12.0");
-		mntCustServiceAdjReq.setKeyType("cardNbr");
-		mntCustServiceAdjReq.setKey(compra.getCuenta());
-		TranKey trankey = new TranKey();
-		com.tsys.xmlmessaging.ch2.Date dateStmBegin = new com.tsys.xmlmessaging.ch2.Date();
-		dateStmBegin.setValue(compra.getDateStmtBegin());
-		trankey.setDateStmtBegin(dateStmBegin);
-		com.tsys.xmlmessaging.ch2.Date datePost = new com.tsys.xmlmessaging.ch2.Date();
-		datePost.setValue(compra.getDatePost());
-		trankey.setDatePost(datePost);
-		trankey.setTimePost(compra.getTimePost());
-		mntCustServiceAdjReq.setTranKey(trankey);
-		ActionInfo actionInfo = new ActionInfo();
-		actionInfo.setAction("Adjustment");
-		actionInfo.setType("Initial");
-		actionInfo.setTranCode("0106");
-		AmtTran amtTran = new AmtTran();
-		amtTran.setCode("MXN");
-		amtTran.setValue(new BigDecimal(decimalFormat.format(compra.getMontoPromo())));
-		actionInfo.setAmtTran(amtTran);
-		MerchantInfo merchantInfo = new MerchantInfo();
-		merchantInfo.setDBAName(String.format("%1$.25s", compra.getDescripcion()));
-		actionInfo.setMerchantInfo(merchantInfo);
-		Adj adj = new Adj();
-		com.tsys.xmlmessaging.ch2.Boolean b = new com.tsys.xmlmessaging.ch2.Boolean();
-		b.setValue(false);
-		adj.setForcePost(b);
-		actionInfo.setAdj(adj);
-		
-		ActionInfo actInfo2 = new ActionInfo();
-		actInfo2.setAction("Adjustment Offset");
-		actInfo2.setType("Offset");
-		actInfo2.setTranCode("0101");
-		actInfo2.setAcctNbr(compra.getCuenta());
-		actInfo2.setAmtTran(amtTran);
-		actInfo2.setMerchantInfo(merchantInfo);
-		Adj adj2= new Adj();
-		adj2.setForcePost(b);
-		adj2.setTLPType("S");
-		String tlpopt= null;
-		int meses =compra.getPromocion().getPlazoMeses();
-		switch(meses){
-			case 3:
-				tlpopt ="1539";
-				break;
-			case 6:
-				tlpopt="1540";
-				break;
-			case 9:
-				tlpopt="1541";
-				break;
-			case 12:	
-				tlpopt="1542";
-				break;
-			case 7:	
-				tlpopt="1545";
-				break;
-			case 11:	
-				tlpopt="1546";
-				break;
-			case 18:	
-				tlpopt="1542";
-				break;
-		}
-		adj2.setTLPOptSet(tlpopt);
-		actInfo2.setAdj(adj2);
-		
-		List<ActionInfo> actInfos=mntCustServiceAdjReq.getActionInfo();
-		actInfos.add(actionInfo);
-		actInfos.add(actInfo2);
-		
-		res="OK";
-		if (!MSIConstants.desa) {
-			MntCustServiceAdjResponse mntCustServiceAdjResp= cts2.mntCustServiceAdj(mntCustServiceAdjReq);
-			String status = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatus();
-			if(!"000".equals(status)){
-				String msg = mntCustServiceAdjResp.getMntCustServiceAdjResult().getStatusMsg();
-				logger.info(msg);
-				com.tsys.xmlmessaging.ch2.TSYSfaultType fault =mntCustServiceAdjResp.getMntCustServiceAdjResult().getFaults();
-				List<com.tsys.xmlmessaging.ch2.TSYSfault> lfaulta =fault.getFault();
-				for (com.tsys.xmlmessaging.ch2.TSYSfault sfault : lfaulta) {
-					logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-				}
-				res="ERROR";
-			}
 			
-		}
-		
-		
-		return res;
+		ClientTS2.aplicarCompra(compra);
 	
 		
 	}
@@ -817,746 +622,442 @@ public class ComprasServiceImpl{
 	     
 	 	
 			if(productoTs2Service.cuentaITAU(cuenta)){
-				//validar bloqueo
-				ClientTS2 cts2= new ClientTS2();
-				 TSYSprofileType tp = new TSYSprofileType();
-				 tp.setClientID("7401");
-				 tp.setUserID("invdev");
-				 tp.setVendorID("00000000");
-				 InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-	           	 req.setVersion("2.19.0");
-	           	 req.setKey(cuenta);
-	           	 req.setKeyType("cardNbr");
-	           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-	           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-					InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
-					 logger.info("InqGeneralAcct");
-						if(!"000".equals(res.getStatus())){
-							logger.info(res.getStatusMsg());
-							TSYSfaultType fault =res.getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
+				try {
+					IGAacctGeneralInfoResponseDataType gralInfo=null;
 					
-					String tpc = res.getAcctGeneralInfo().getValue().getTSYSProductCode() == null?"": res.getAcctGeneralInfo().getValue().getTSYSProductCode() ;
-					String cpc = res.getAcctGeneralInfo().getValue().getClientProductCode() == null?"": res.getAcctGeneralInfo().getValue().getClientProductCode().getValue();
-					logger.info("tpc "+tpc +" cpc " +cpc );
-					ProductoTs2 prodts2 = productoTs2Service.getProductoItau(cuenta, tpc, cpc);
+						gralInfo = ClientTS2.getGeneralAcct(cuenta);
 					
-	               
-					int cycle=res.getAcctGeneralInfo().getValue().getBillingCycle().getValue();
-
-					DecimalFormat df2 = new DecimalFormat( "00" );
-					Calendar diaCorte = Calendar.getInstance();
-					diaCorte.set(Calendar.DAY_OF_MONTH, cycle);
-					Date fechaFin = new Date();
-					Date fechaIn = new Date();
-					//Date fechaUltimoCorte = new Date();
-					if(new GregorianCalendar().after(diaCorte)){
-						fechaFin = diaCorte.getTime();
+						String tpc = gralInfo.getTSYSProductCode() == null?"": gralInfo.getTSYSProductCode() ;
+						String cpc = gralInfo.getClientProductCode() == null?"": gralInfo.getClientProductCode().getValue();
+						logger.info("tpc "+tpc +" cpc " +cpc );
+						ProductoTs2 prodts2 = productoTs2Service.getProductoItau(cuenta, tpc, cpc);
 						
-						diaCorte.add(Calendar.MONTH, -1);
-						fechaIn = diaCorte.getTime();
-					}else{
-						diaCorte.add(Calendar.MONTH, -1);
-						fechaFin = diaCorte.getTime();
-						diaCorte.add(Calendar.MONTH, -1);
-						fechaIn = diaCorte.getTime();
-					}
-					
-					GregorianCalendar hoy = new GregorianCalendar();
-					String hoyStr=sdf.format(hoy.getTime());
-					try {
-						hoy.setTime(sdf.parse(hoyStr));
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					// calcular prog
-					boolean prog0=false;
-					int numDiasProg0=0;
-					InqCustomData inqCustomData = new InqCustomData();
-					InqCustomDataRequestType inqCustomDataReq = new InqCustomDataRequestType();
-					inqCustomDataReq.setKey(cuenta);
-					inqCustomDataReq.setKeyType("cardNbr");
-					inqCustomDataReq.setVersion("1.0.0");
-					
-					CustomDataCodes customDataCodes = new CustomDataCodes();
-					List<String> custDatas =customDataCodes.getCustomDataCode();
-					//fecha vencimiento
-					custDatas.add("61");
-					//fecha inscrtipcion prgo cero
-					custDatas.add("81");
-					inqCustomDataReq.setCustomDataCodes(customDataCodes);
-					inqCustomData.setInqCustomDataRequest(inqCustomDataReq);
-					InqCustomDataResponseType customDataResp= cts2.inqCustomData(tp, inqCustomData).getInqCustomDataResult();
-					if(!"000".equals( customDataResp.getStatus())){
-						logger.info( customDataResp.getStatusMsg());
-						TSYSfaultType fault = customDataResp.getFaults();
-						List<TSYSfault> lfaulta =fault.getFault();
-						for (TSYSfault sfault : lfaulta) {
-							logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
+					   
+						int cycle=gralInfo.getBillingCycle().getValue();
+
+						DecimalFormat df2 = new DecimalFormat( "00" );
+						Calendar diaCorte = Calendar.getInstance();
+						diaCorte.set(Calendar.DAY_OF_MONTH, cycle);
+						Date fechaFin = new Date();
+						Date fechaIn = new Date();
+						//Date fechaUltimoCorte = new Date();
+						if(new GregorianCalendar().after(diaCorte)){
+							fechaFin = diaCorte.getTime();
+							
+							diaCorte.add(Calendar.MONTH, -1);
+							fechaIn = diaCorte.getTime();
+						}else{
+							diaCorte.add(Calendar.MONTH, -1);
+							fechaFin = diaCorte.getTime();
+							diaCorte.add(Calendar.MONTH, -1);
+							fechaIn = diaCorte.getTime();
 						}
-					}else{
-						if(customDataResp.getCustomData()!= null){
-							if(customDataResp.getCustomData().getValue().getCode61()!= null){
-								String strFchVenProgCero =customDataResp.getCustomData().getValue().getCode61().getValue();
-								logger.info("fecha vencimiento prog cero "+strFchVenProgCero);
-								SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
-								Date dateFchVen=null;
-								try {
-									dateFchVen = sdf.parse(strFchVenProgCero);
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-								Calendar calFchVen = Calendar.getInstance();
-								calFchVen.setTime(dateFchVen);
-								
-								if(!hoy.after(calFchVen)){
-									logger.info("tien prog cero");
-									prog0=true;
-									//15 dias o menos desde que contrato el programa cero?
-									if(customDataResp.getCustomData().getValue().getCode81()!= null){
-										String strFchInProgCero =customDataResp.getCustomData().getValue().getCode81().getValue();
-										logger.info("fecha in prog cero "+strFchInProgCero);
-										Date dateFchIn=null;
-										try {
-											dateFchIn = sdf.parse(strFchInProgCero);
-										} catch (ParseException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										Calendar fechaInProgCero = Calendar.getInstance();
-										fechaInProgCero.setTime(dateFchIn);
-										long diasDesdeQueTieneProgCero=(hoy.getTimeInMillis()-fechaInProgCero.getTimeInMillis())/(1000*60*60*24);
-										if(diasDesdeQueTieneProgCero<=15){
-											//numdias es igual al numero de dias
-											numDiasProg0=(int) (diasDesdeQueTieneProgCero+2);
+						
+						GregorianCalendar hoy = new GregorianCalendar();
+						String hoyStr=sdf.format(hoy.getTime());
+						try {
+							hoy.setTime(sdf.parse(hoyStr));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						// calcular prog
+						boolean prog0=false;
+						int numDiasProg0=0;
+						
+							
+							JAXBElement<ITAcustomDataResponseDataType> lcdatas=null;
+						
+								lcdatas = ClientTS2.getCustomDatas(cuenta);
+							
+							
+							if(lcdatas!= null){
+								if(lcdatas.getValue().getCode61()!= null){
+									String strFchVenProgCero =lcdatas.getValue().getCode61().getValue();
+									logger.info("fecha vencimiento prog cero "+strFchVenProgCero);
+									SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
+									Date dateFchVen=null;
+									try {
+										dateFchVen = sdf.parse(strFchVenProgCero);
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									Calendar calFchVen = Calendar.getInstance();
+									calFchVen.setTime(dateFchVen);
+									
+									if(!hoy.after(calFchVen)){
+										logger.info("tien prog cero");
+										prog0=true;
+										//15 dias o menos desde que contrato el programa cero?
+										if(lcdatas.getValue().getCode81()!= null){
+											String strFchInProgCero =lcdatas.getValue().getCode81().getValue();
+											logger.info("fecha in prog cero "+strFchInProgCero);
+											Date dateFchIn=null;
+											try {
+												dateFchIn = sdf.parse(strFchInProgCero);
+											} catch (ParseException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											Calendar fechaInProgCero = Calendar.getInstance();
+											fechaInProgCero.setTime(dateFchIn);
+//										long diasDesdeQueTieneProgCero=(hoy.getTimeInMillis()-fechaInProgCero.getTimeInMillis())/(1000*60*60*24);
+//										if(diasDesdeQueTieneProgCero<=15){
+//											//numdias es igual al numero de dias
+//											numDiasProg0=(int) (diasDesdeQueTieneProgCero+2);
+//										}
+											
 										}
 										
 									}
-									
 								}
 							}
-						}
-						
-					}
-					//fin prog0
-					//inciia cmapañas compras
-					//compras Extr
-					//trae campania compras internacionales para no pro cero
-					List<Campania> campExt=campaniaService.getCampaniaByTipo("campania.ext.ts2");
-					
-					List<Double> montosExt=new ArrayList<Double>();
-					for (Campania camp : campExt) {
-						Set<Promocion> setPromos=camp.getPromociones();
-						for (Promocion promocion : setPromos) {
-							montosExt.add(promocion.getMonto());
-						}
-					}
-					Collections.sort(montosExt);
-					
-					Set<Promocion> promosCampExt=null;
-					double montoMinCompras = 0;
-					int numDiasCampExt=0;
-					for (Campania campania : campExt) {
-						
-							numDiasCampExt=campania.getNumMaxDiasRegistro();
-						
-						promosCampExt= campania.getPromociones();
-
-
-						for (Promocion promo : promosCampExt) {
-							montoMinCompras = promo.getMonto();
-							break;
-						}
-
-					}
-
-					//obternr compras extr
-					GregorianCalendar  antes = new GregorianCalendar();
-					antes.set(Calendar.HOUR_OF_DAY, 0);
-					antes.set(Calendar.MINUTE, 0);
-					antes.set(Calendar.SECOND, 0);
-					antes.set(Calendar.MILLISECOND, 0);
-					
-
-					antes.add(Calendar.DAY_OF_YEAR, -numDiasCampExt);
-					logger.info("antes "+antes.getTime());
-					InqTrans inqTrans = new InqTrans();
-					InqTransRequestType reqInqTrans = new InqTransRequestType();
-
-					reqInqTrans.setOnlyForeign(false);
-					reqInqTrans.setOnlyCurr(true);
-					reqInqTrans.setVersion("1.9.0");
-					reqInqTrans.setKey(cuenta);
-					reqInqTrans.setKeyType("cardNbr");
-					reqInqTrans.setPageItems(300);
-					inqTrans.setInqTransRequest(reqInqTrans);
-					InqTransResponseType respExt =cts2.inqTrans(tp, inqTrans).getInqTransResult();
-					logger.info("InqTrans 1 Obtener compras ext corte actual");
-					if(!"000".equals( respExt.getStatus())){
-						logger.info( respExt.getStatusMsg());
-						TSYSfaultType fault = respExt.getFaults();
-						List<TSYSfault> lfaulta =fault.getFault();
-						for (TSYSfault sfault : lfaulta) {
-							logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-						}
-					}
-					List<Compra> compras = new ArrayList<Compra>();
-					logger.info("Compras extranjero corte actual");
-					for (ITRtranDetailResponseDataType td : respExt.getTranDetail()) {
-						logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-						if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode())){
-							if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
-								if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
-									logger.info("agregar compra");
-									Compra compra = new Compra();
-									compra.setCuenta(cuenta);
-									compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-									compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-									compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-									compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-									compra.setNumRefTran(td.getRefNbr().getValue());
-									compra.setTipoTransaccion("ITA");
-									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-									compra.setDateStmtBegin(td.getDateStmtBegin());
-									compra.setDatePost(td.getDatePost());
-									compra.setTimePost(td.getTimePost());
-									for (Promocion promo : promosCampExt) {
-										if("si".equalsIgnoreCase(promo.getProgramaCero())){
-											if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-												compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-											}
-										}else{
-											if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-		
-												compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-											}
-										}
-									}
-									compras.add(compra);
-
-								}
-							}
-						}
-					}//for compras corte actual
-
-					InqTransRequestType reqInqTrans2 = new InqTransRequestType();
-					InqTrans igrala = new InqTrans();
-					reqInqTrans2.setVersion("1.9.0");
-					reqInqTrans2.setKey(cuenta);
-					reqInqTrans2.setKeyType("cardNbr");
-					reqInqTrans2.setPageItems(300);
-					com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange cycleRange = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-					XMLGregorianCalendar calendarIn;
-					try {
-						calendarIn = DatatypeFactory.newInstance().newXMLGregorianCalendar(antes);
-						cycleRange.setFrom(calendarIn);
-					} catch (DatatypeConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					XMLGregorianCalendar calendarFin;
-					try {
-						calendarFin = DatatypeFactory.newInstance().newXMLGregorianCalendar(hoy);
-						cycleRange.setTo(calendarFin);     
-					} catch (DatatypeConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					     
-					reqInqTrans2.setCycleRange(cycleRange);
-					reqInqTrans2.setOnlyForeign(false);
-					igrala.setInqTransRequest(reqInqTrans2);
-
-					InqTransResponse resp= cts2.inqTrans(tp, igrala);
-					logger.info("Compras ext corte anterior");
-					for (ITRtranDetailResponseDataType td : resp.getInqTransResult().getTranDetail()) {
-						logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-
-						if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode()) ){
-							if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
-								logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-								if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
-									logger.info("agregar compra");
-									Compra compra = new Compra();
-									compra.setCuenta(cuenta);
-									compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-									compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-									compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-									compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-									compra.setNumRefTran(td.getRefNbr().getValue());
-									compra.setTipoTransaccion("IPS");
-									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-									compra.setDateStmtBegin(td.getDateStmtBegin());
-									compra.setDatePost(td.getDatePost());
-									compra.setTimePost(td.getTimePost());
-									for (Promocion promo : promosCampExt) {
-
-										if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-											if("si".equalsIgnoreCase(promo.getProgramaCero())){
-												if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-													compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-												}
-											}else{
-
-												compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-											}
-
-											
-										}
-									}
-									compras.add(compra);
-
-								}
-							}
-
-						}
-					}//for compras corte anteriorr
-
-					//fin compras Ext
-					Date diahoy = new Date();
-					List<Campania> lcampMasivas=campaniaService.getCampaniaProdTs2(diahoy,diahoy,"masiva",prodts2);
-					if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
-						logger.info("tamMasivas "+lcampMasivas.size());
-						Set<Campania>  setMasivas = new HashSet<Campania>(lcampMasivas);
-						logger.info("setMasivas "+setMasivas.size());
-						lcampMasivas = new ArrayList<Campania>(setMasivas);
-					}
-				
-					List<Double> montos=new ArrayList<Double>();
-					for (Campania camp : lcampMasivas) {
-						Set<Promocion> setPromos=camp.getPromociones();
-						for (Promocion promocion : setPromos) {
-							montos.add(promocion.getMonto());
-						}
-					}
-					Collections.sort(montos);
-					if(prog0){
-						//obtener cmapaña prog 0 compras nacionales
-						List<Campania> campProgCero=campaniaService.getCampaniaByTipo("campania.prog0.ts2");
-						Set<Promocion> promosProg0=null;
-						montoMinCompras = 0;
-						
-						montos=new ArrayList<Double>();
-						for (Campania campania : campProgCero) {
 							
-							numDiasProg0=campania.getNumMaxDiasRegistro();
-							
-							promosProg0= campania.getPromociones();
-
-
-							for (Promocion promo : promosProg0) {
-								montos.add(promo.getMonto());
-								//montoMinCompras = promo.getMonto();
-								//break;
+						
+						//fin prog0
+						//inciia cmapañas compras
+						//compras Extr
+						//trae campania compras internacionales para no pro cero
+						List<Campania> campExt=campaniaService.getCampaniaByTipo("campania.ext.ts2");
+						
+						List<Double> montosExt=new ArrayList<Double>();
+						for (Campania camp : campExt) {
+							Set<Promocion> setPromos=camp.getPromociones();
+							for (Promocion promocion : setPromos) {
+								montosExt.add(promocion.getMonto());
 							}
-							if (!montos.isEmpty()) {
-								Collections.sort(montos);
-								for (Promocion promo : promosProg0) {
+						}
+						Collections.sort(montosExt);
+						
+						Set<Promocion> promosCampExt=null;
+						double montoMinCompras = 0;
+						int numDiasCampExt=0;
+						for (Campania campania : campExt) {
+							
+								numDiasCampExt=campania.getNumMaxDiasRegistro();
+							
+							promosCampExt= campania.getPromociones();
 
-									montoMinCompras = promo.getMonto();
-									break;
-								}
+
+							for (Promocion promo : promosCampExt) {
+								montoMinCompras = promo.getMonto();
+								break;
 							}
 
 						}
-						
 
-						//obternr compras prog 0
-						antes = new GregorianCalendar();
+						//obternr compras extr
+						GregorianCalendar  antes = new GregorianCalendar();
 						antes.set(Calendar.HOUR_OF_DAY, 0);
 						antes.set(Calendar.MINUTE, 0);
 						antes.set(Calendar.SECOND, 0);
 						antes.set(Calendar.MILLISECOND, 0);
 						
 
-						antes.add(Calendar.DAY_OF_YEAR, -numDiasProg0);
+						antes.add(Calendar.DAY_OF_YEAR, -numDiasCampExt);
 						logger.info("antes "+antes.getTime());
-						inqTrans = new InqTrans();
-						reqInqTrans = new InqTransRequestType();
-
 						
-						reqInqTrans.setOnlyCurr(true);
-						reqInqTrans.setVersion("1.9.0");
-						reqInqTrans.setKey(cuenta);
-						reqInqTrans.setKeyType("cardNbr");
-						reqInqTrans.setPageItems(300);
-						inqTrans.setInqTransRequest(reqInqTrans);
-						InqTransResponseType respPro0 =cts2.inqTrans(tp, inqTrans).getInqTransResult();
-						logger.info("InqTrans 1 Obtener compras prog cero corte actual");
-						if("999".equals( respPro0.getStatus())){
-							logger.info( respPro0.getStatusMsg());
-							TSYSfaultType fault = respPro0.getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
-						//compras = new ArrayList<Compra>();
-						logger.info("Compras nal corte actual prog 0");
-						for (ITRtranDetailResponseDataType td : respPro0.getTranDetail()) {
-							logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-							if("7146".equals(td.getTranCode()) ){
-								if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
-									if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
-										Compra compra = new Compra();
-										compra.setCuenta(cuenta);
-										compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-										compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-										compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-										compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-										compra.setNumRefTran(td.getRefNbr().getValue());
-										compra.setTipoTransaccion("ITA");
-										compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-										compra.setDateStmtBegin(td.getDateStmtBegin());
-										compra.setDatePost(td.getDatePost());
-										compra.setTimePost(td.getTimePost());
-										for (Promocion promo : promosProg0) {
+						List<Compra> compras = new ArrayList<Compra>();
+						logger.info("Compras extranjero corte actual");
+					
+							for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta,true,null,null)) {
+								logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+								if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode())){
+									if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
+										if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
+											logger.info("agregar compra");
+											Compra compra = new Compra();
+											compra.setCuenta(cuenta);
+											compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
+											compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+											compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
+											compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
+											compra.setNumRefTran(td.getRefNbr().getValue());
+											compra.setTipoTransaccion("ITA");
+											compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+											compra.setDateStmtBegin(td.getDateStmtBegin());
+											compra.setDatePost(td.getDatePost());
+											compra.setTimePost(td.getTimePost());
+											for (Promocion promo : promosCampExt) {
+												if("si".equalsIgnoreCase(promo.getProgramaCero())){
+													if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
+														compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
+													}
+												}else{
+													if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
 
-											if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-
-												compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-
-												//ver masivas
-												if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
-													//si hay cmap masivas actuales com promo pra prog 0 hay que agragarlas a las compras
-													for (Campania camp : lcampMasivas) {
-														Calendar calFechaIn = Calendar.getInstance();
-														calFechaIn.setTime(camp.getFechaInicial());
-														Calendar calFechaFin = Calendar.getInstance();
-														calFechaFin.setTime(camp.getFechaFinal());
-														Calendar calFechaCompra = td.getDateTran().getValue().getValue().toGregorianCalendar();
-														logger.info("fecha compra "+calFechaCompra.getTime() +" fecha in "+calFechaIn.getTime() +" fecha fin "+ calFechaFin.getTime() );
-														if(calFechaCompra.compareTo(calFechaIn)==0 || calFechaCompra.compareTo(calFechaFin)==0||(calFechaCompra.after(calFechaIn) && calFechaCompra.before(calFechaFin))){
-															logger.info("en tra en promo masiva");
-															for(Promocion promoMas:camp.getPromociones()){
-																 logger.info("promoMas progCero "+promoMas.getProgramaCero());
-																if("si".equalsIgnoreCase(promoMas.getProgramaCero())){
-																	logger.info("se agrega promo al combo camp masiva "+promoMas.getDescripcion());
-																	if(compra.getMonto().doubleValue()>= promoMas.getMonto().doubleValue()){
-																		compra.addComboPromo(promoMas.getPlazoMeses()+" "+promoMas.getDescripcion(), promoMas);
-																	}
-																}
-															}
-
-														}
+														compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
 													}
 												}
-												compras.add(compra);
 											}
+											compras.add(compra);
+
 										}
-
-
 									}
 								}
 							}
-						}//for compras corte actual
+					
+
+						logger.info("Compras ext corte anterior");
 						
-						
-						 reqInqTrans2 = new InqTransRequestType();
-						 igrala = new InqTrans();
-		                 reqInqTrans2.setVersion("1.9.0");
-		                 reqInqTrans2.setKey(cuenta);
-		                 reqInqTrans2.setKeyType("cardNbr");
-		                 reqInqTrans2.setPageItems(300);
-							cycleRange = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-							try {
-								calendarIn = DatatypeFactory.newInstance().newXMLGregorianCalendar(antes);
-								cycleRange.setFrom(calendarIn);
-							} catch (DatatypeConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, false, antes, hoy)) {
+								logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+
+								if("3001".equals(td.getTranCode()) || "1001".equals(td.getTranCode()) ){
+									if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
+										logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+										if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
+											logger.info("agregar compra");
+											Compra compra = new Compra();
+											compra.setCuenta(cuenta);
+											compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
+											compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+											compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
+											compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
+											compra.setNumRefTran(td.getRefNbr().getValue());
+											compra.setTipoTransaccion("IPS");
+											compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+											compra.setDateStmtBegin(td.getDateStmtBegin());
+											compra.setDatePost(td.getDatePost());
+											compra.setTimePost(td.getTimePost());
+											for (Promocion promo : promosCampExt) {
+
+												if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
+													if("si".equalsIgnoreCase(promo.getProgramaCero())){
+														if(prog0 && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
+															compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
+														}
+													}else{
+
+														compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
+													}
+
+													
+												}
+											}
+											compras.add(compra);
+
+										}
+									}
+
+								}
 							}
-							try {
-								calendarFin = DatatypeFactory.newInstance().newXMLGregorianCalendar(hoy);
-								cycleRange.setTo(calendarFin);  
-							} catch (DatatypeConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+						
+						//fin compras Ext
+						Date diahoy = new Date();
+						List<Campania> lcampMasivas=campaniaService.getCampaniaProdTs2(diahoy,diahoy,"masiva",prodts2);
+						if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
+							logger.info("tamMasivas "+lcampMasivas.size());
+							Set<Campania>  setMasivas = new HashSet<Campania>(lcampMasivas);
+							logger.info("setMasivas "+setMasivas.size());
+							lcampMasivas = new ArrayList<Campania>(setMasivas);
+						}
+					
+						List<Double> montos=new ArrayList<Double>();
+						for (Campania camp : lcampMasivas) {
+							Set<Promocion> setPromos=camp.getPromociones();
+							for (Promocion promocion : setPromos) {
+								montos.add(promocion.getMonto());
+							}
+						}
+						Collections.sort(montos);
+						if(prog0){
+							//obtener cmapaña prog 0 compras nacionales
+							List<Campania> campProgCero=campaniaService.getCampaniaByTipo("campania.prog0.ts2");
+							Set<Promocion> promosProg0=null;
+							montoMinCompras = 0;
+							
+							montos=new ArrayList<Double>();
+							for (Campania campania : campProgCero) {
+								
+								numDiasProg0=campania.getNumMaxDiasRegistro();
+								
+								promosProg0= campania.getPromociones();
+
+
+								for (Promocion promo : promosProg0) {
+									montos.add(promo.getMonto());
+									//montoMinCompras = promo.getMonto();
+									//break;
+								}
+								if (!montos.isEmpty()) {
+									Collections.sort(montos);
+									for (Promocion promo : promosProg0) {
+
+										montoMinCompras = promo.getMonto();
+										break;
+									}
+								}
+
 							}
 							
-							        
-						reqInqTrans2.setCycleRange(cycleRange);
-		                 igrala.setInqTransRequest(reqInqTrans2);
-		                 
-		                 resp= cts2.inqTrans(tp, igrala);
-		                 logger.info("Compras prog 0 corte actual");
-		                 for (ITRtranDetailResponseDataType td : resp.getInqTransResult().getTranDetail()) {
-		                	 logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
 
-		                	 if("7146".equals(td.getTranCode())){
-		                		 if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
-		                			 logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-		                			 if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
+							//obternr compras prog 0
+							antes = new GregorianCalendar();
+							antes.set(Calendar.HOUR_OF_DAY, 0);
+							antes.set(Calendar.MINUTE, 0);
+							antes.set(Calendar.SECOND, 0);
+							antes.set(Calendar.MILLISECOND, 0);
+							
 
-		                				 Compra compra = new Compra();
-		                				 compra.setCuenta(cuenta);
-		                				 compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-		                				 compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-		                				 compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-		                				 compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-		                				 compra.setNumRefTran(td.getRefNbr().getValue());
-		                				 compra.setTipoTransaccion("IPS");
-		                				 compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-		                					compra.setDateStmtBegin(td.getDateStmtBegin());
-		                					compra.setDatePost(td.getDatePost());
-		                					compra.setTimePost(td.getTimePost());
-		                				 for (Promocion promo : promosProg0) {
-
-		                					 if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-
-
-		                						 compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-		                						 //ver masivas
-		                						 if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
-		                							 //si hay cmap masivas actuales com promo pra prog 0 hay que agragarlas a las compras
-		                							 for (Campania camp : lcampMasivas) {
-		                								 Calendar calFechaIn = Calendar.getInstance();
-		                								 calFechaIn.setTime(camp.getFechaInicial());
-		                								 Calendar calFechaFin = Calendar.getInstance();
-		                								 calFechaFin.setTime(camp.getFechaFinal());
-		                								 Calendar calFechaCompra = td.getDateTran().getValue().getValue().toGregorianCalendar();
-		                								 logger.info("fecha compra "+calFechaCompra.getTime() +" fecha in "+calFechaIn.getTime() +" fecha fin "+ calFechaFin.getTime() );
-		                									if(calFechaCompra.compareTo(calFechaIn)==0 || calFechaCompra.compareTo(calFechaFin)==0||(calFechaCompra.after(calFechaIn) && calFechaCompra.before(calFechaFin))){
-		                									 logger.info("en tra en promo masiva");
-		                									 for(Promocion promoMas:camp.getPromociones()){
-		                										 logger.info("promoMas progCero "+promoMas.getProgramaCero());
-		                										 if("si".equalsIgnoreCase(promoMas.getProgramaCero())){
-		                											 logger.info("se agrega promo al combo camp masiva "+promoMas.getDescripcion());
-		                											 if(compra.getMonto().doubleValue()>= promoMas.getMonto().doubleValue()){
-		                												 compra.addComboPromo(promoMas.getPlazoMeses()+" "+promoMas.getDescripcion(), promoMas);
-		                											 }
-		                										 }
-		                									 }
-
-		                								 }
-		                							 }
-		                						 }
-		                						 compras.add(compra);
-		                					 }
-		                				 }
-
-		                			 }
-		                		 }
-
-		                	 }
-		                 }//for compras corte anteriorr
+							antes.add(Calendar.DAY_OF_YEAR, -numDiasProg0);
+							logger.info("antes "+antes.getTime());
 						
+							//compras = new ArrayList<Compra>();
+							logger.info("Compras nal corte actual prog 0");
+							
+								for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, true, null, null)) {
+									logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+									if("7146".equals(td.getTranCode()) ){
+										if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
+											if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
+												Compra compra = new Compra();
+												compra.setCuenta(cuenta);
+												compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
+												compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+												compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
+												compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
+												compra.setNumRefTran(td.getRefNbr().getValue());
+												compra.setTipoTransaccion("ITA");
+												compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+												compra.setDateStmtBegin(td.getDateStmtBegin());
+												compra.setDatePost(td.getDatePost());
+												compra.setTimePost(td.getTimePost());
+												for (Promocion promo : promosProg0) {
+
+													if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
+
+														compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
+
+														//ver masivas
+														if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
+															//si hay cmap masivas actuales com promo pra prog 0 hay que agragarlas a las compras
+															for (Campania camp : lcampMasivas) {
+																Calendar calFechaIn = Calendar.getInstance();
+																calFechaIn.setTime(camp.getFechaInicial());
+																Calendar calFechaFin = Calendar.getInstance();
+																calFechaFin.setTime(camp.getFechaFinal());
+																Calendar calFechaCompra = td.getDateTran().getValue().getValue().toGregorianCalendar();
+																logger.info("fecha compra "+calFechaCompra.getTime() +" fecha in "+calFechaIn.getTime() +" fecha fin "+ calFechaFin.getTime() );
+																if(calFechaCompra.compareTo(calFechaIn)==0 || calFechaCompra.compareTo(calFechaFin)==0||(calFechaCompra.after(calFechaIn) && calFechaCompra.before(calFechaFin))){
+																	logger.info("en tra en promo masiva");
+																	for(Promocion promoMas:camp.getPromociones()){
+																		 logger.info("promoMas progCero "+promoMas.getProgramaCero());
+																		if("si".equalsIgnoreCase(promoMas.getProgramaCero())){
+																			logger.info("se agrega promo al combo camp masiva "+promoMas.getDescripcion());
+																			if(compra.getMonto().doubleValue()>= promoMas.getMonto().doubleValue()){
+																				compra.addComboPromo(promoMas.getPlazoMeses()+" "+promoMas.getDescripcion(), promoMas);
+																			}
+																		}
+																	}
+
+																}
+															}
+														}
+														compras.add(compra);
+													}
+												}
+
+
+											}
+										}
+									}
+								}
+							
+							
+					         logger.info("Compras prog 0 corte actual");
+					        
+								for (ITRtranDetailResponseDataType td : ClientTS2.getTrans(cuenta, false, antes,hoy)) {
+									 logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
+
+									 if("7146".equals(td.getTranCode())){
+										 if(montoMinCompras<= td.getAmtTran().getValue().getValue().doubleValue()){
+											 logger.info("fecha compra "+td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+											 if((td.getDateTran().getValue().getValue().toGregorianCalendar().after(antes) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(antes)==0) ){
+
+												 Compra compra = new Compra();
+												 compra.setCuenta(cuenta);
+												 compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
+												 compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
+												 compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
+												 compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
+												 compra.setNumRefTran(td.getRefNbr().getValue());
+												 compra.setTipoTransaccion("IPS");
+												 compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
+													compra.setDateStmtBegin(td.getDateStmtBegin());
+													compra.setDatePost(td.getDatePost());
+													compra.setTimePost(td.getTimePost());
+												 for (Promocion promo : promosProg0) {
+
+													 if(compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
+
+
+														 compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
+														 //ver masivas
+														 if(lcampMasivas!= null && !lcampMasivas.isEmpty()){
+															 //si hay cmap masivas actuales com promo pra prog 0 hay que agragarlas a las compras
+															 for (Campania camp : lcampMasivas) {
+																 Calendar calFechaIn = Calendar.getInstance();
+																 calFechaIn.setTime(camp.getFechaInicial());
+																 Calendar calFechaFin = Calendar.getInstance();
+																 calFechaFin.setTime(camp.getFechaFinal());
+																 Calendar calFechaCompra = td.getDateTran().getValue().getValue().toGregorianCalendar();
+																 logger.info("fecha compra "+calFechaCompra.getTime() +" fecha in "+calFechaIn.getTime() +" fecha fin "+ calFechaFin.getTime() );
+																	if(calFechaCompra.compareTo(calFechaIn)==0 || calFechaCompra.compareTo(calFechaFin)==0||(calFechaCompra.after(calFechaIn) && calFechaCompra.before(calFechaFin))){
+																	 logger.info("en tra en promo masiva");
+																	 for(Promocion promoMas:camp.getPromociones()){
+																		 logger.info("promoMas progCero "+promoMas.getProgramaCero());
+																		 if("si".equalsIgnoreCase(promoMas.getProgramaCero())){
+																			 logger.info("se agrega promo al combo camp masiva "+promoMas.getDescripcion());
+																			 if(compra.getMonto().doubleValue()>= promoMas.getMonto().doubleValue()){
+																				 compra.addComboPromo(promoMas.getPlazoMeses()+" "+promoMas.getDescripcion(), promoMas);
+																			 }
+																		 }
+																	 }
+
+																 }
+															 }
+														 }
+														 compras.add(compra);
+													 }
+												 }
+
+											 }
+										 }
+
+									 }
+								 }
+							
+							
+
+						}//if prog cero
 						
 
-					}//if prog cero
-					
-//					else{
-//						
-//
-//
-//						//obtener compras ita nacionales y extranjeras
-//						for (Campania camp : lcampMasivas) {
-//							logger.info("camp activa "+camp.getNombre());
-//							fechaIn= camp.getFechaInicial();
-//							fechaFin= camp.getFechaFinal();
-//							Calendar calIn= Calendar.getInstance();
-//							calIn.setTime(fechaIn);
-//							Calendar calFin = Calendar.getInstance();
-//							calFin.setTime(fechaFin);
-//
-//							InqTransRequestType reqInqTrans4 = new InqTransRequestType();
-//							reqInqTrans4.setVersion("1.9.0");
-//							reqInqTrans4.setKey(cuenta);
-//							reqInqTrans4.setKeyType("cardNbr");
-//							reqInqTrans4.setPageItems(300);
-//							reqInqTrans4.setOnlyCurr(true);
-//							InqTrans inqTrans4 = new InqTrans();
-//							inqTrans4.setInqTransRequest(reqInqTrans4);
-//							InqTransResponse respInqTrans4= cts2.inqTrans(tp, inqTrans4);
-//
-//
-//
-//							if(!"000".equals( respInqTrans4.getInqTransResult().getStatus())){
-//								logger.info( respInqTrans4.getInqTransResult().getStatusMsg());
-//								TSYSfaultType fault = respInqTrans4.getInqTransResult().getFaults();
-//								List<TSYSfault> lfaulta =fault.getFault();
-//								for (TSYSfault sfault : lfaulta) {
-//									logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-//								}
-//							}
-//
-//							montos.clear();
-//							Set<Promocion> promos = camp.getPromociones();
-//							for (Promocion promo : promos) {
-//								montos.add(promo.getMonto());
-//								//montoMinCompras = promo.getMonto();
-//								//break;
-//							}
-//							if (!montos.isEmpty()) {
-//								Collections.sort(montos);
-//								for (Promocion promo : promos) {
-//
-//									montoMinCompras = promo.getMonto();
-//									break;
-//								}
-//							}
-//							
-//							
-//							for (ITRtranDetailResponseDataType td : respInqTrans4.getInqTransResult().getTranDetail()) {
-//								logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-//
-//
-//								if("7146".equals(td.getTranCode()) ){
-//									Compra compra = new Compra();
-//									compra.setCuenta(cuenta);
-//									compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-//									compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-//									compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-//									compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-//									compra.setNumRefTran(td.getRefNbr().getValue());
-//									compra.setTipoTransaccion("ITA");
-//									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-//									for (Campania cam : lcampMasivas) {
-//										//obtener rango fecha
-//										fechaIn= cam.getFechaInicial();
-//										fechaFin= cam.getFechaFinal();
-//										Calendar calIn2= Calendar.getInstance();
-//										calIn2.setTime(fechaIn);
-//										Calendar calFin2 = Calendar.getInstance();
-//										calFin2.setTime(fechaFin);
-//										//ver si esta en rango
-//										if(compra.getMonto().doubleValue()>= montoMinCompras && (td.getDateTran().getValue().getValue().toGregorianCalendar().after(calIn2) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(calIn2)==0) 
-//												&& (td.getDateTran().getValue().getValue().toGregorianCalendar().before(calFin2) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(calFin2)==0)){
-//											//obtener promos
-//											for (Promocion promo : cam.getPromociones()) {
-//												if("no".equalsIgnoreCase(promo.getProgramaCero()) && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-//													compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-//												}
-//											}
-//											compras.add(compra);
-//										}
-//
-//									}
-//
-//
-//								}
-//
-//
-//							}
-//
-//
-//							InqTransRequestType reqInqTrans3 = new InqTransRequestType();
-//							InqTrans igrala2 = new InqTrans();
-//
-//							reqInqTrans3.setVersion("1.9.0");
-//							reqInqTrans3.setKey(cuenta);
-//							reqInqTrans3.setKeyType("cardNbr");
-//
-//							com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange cycleRange2 = new  com.tsys.xmlmessaging.ch.InqTransRequestType.CycleRange();
-//							XMLGregorianCalendar calendarIn2=null;
-//							try {
-//								calendarIn2 = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-//							} catch (DatatypeConfigurationException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							calendarIn2.setYear(calIn.get(Calendar.YEAR));
-//							calendarIn2.setMonth(calIn.get(Calendar.MONTH)+1);
-//
-//							XMLGregorianCalendar calendarFin2=null;
-//							try {
-//								calendarFin2 = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-//							} catch (DatatypeConfigurationException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							calendarFin2.setYear(calFin.get(Calendar.YEAR));
-//							calendarFin2.setMonth(calFin.get(Calendar.MONTH)+1);
-//
-//							cycleRange2.setFrom(calendarIn2);
-//							cycleRange2.setTo(calendarFin2);          
-//							reqInqTrans3.setCycleRange(cycleRange2);
-//							reqInqTrans3.setOnlyForeign(false);
-//							reqInqTrans3.setPageItems(300);
-//							igrala2.setInqTransRequest(reqInqTrans3);
-//
-//							InqTransResponse respInqTrans= cts2.inqTrans(tp, igrala2);
-//							logger.info("InqTrans 3");
-//							if(!"000".equals( respInqTrans.getInqTransResult().getStatus())){
-//								logger.info( respInqTrans.getInqTransResult().getStatusMsg());
-//								TSYSfaultType fault = respInqTrans.getInqTransResult().getFaults();
-//								List<TSYSfault> lfaulta =fault.getFault();
-//								for (TSYSfault sfault : lfaulta) {
-//									logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-//								}
-//							}
-//
-//							//obtener nacionales ips
-//							logger.info("comrpas nacionales corte anterior");
-//							for (ITRtranDetailResponseDataType td : respInqTrans.getInqTransResult().getTranDetail()) {
-//								logger.info("CT "+td.getTranCode() + " monto "+td.getAmtTran().getValue().getValue().doubleValue()+" tran date "+td.getDateTran().getValue().getValue() +" desc "+td.getMerchantInfo().getValue().getDBAName().getValue());
-//
-//
-//								if("7146".equals(td.getTranCode()) ){
-//									Compra compra = new Compra();
-//									compra.setCuenta(cuenta);
-//									compra.setCodigoTransaccion(Integer.parseInt(td.getTranCode()));
-//									compra.setFechaCompra(td.getDateTran().getValue().getValue().toGregorianCalendar().getTime());
-//									compra.setMonto(td.getAmtTran().getValue().getValue().doubleValue());
-//									compra.setDescripcion(td.getMerchantInfo().getValue().getDBAName().getValue());
-//									compra.setNumRefTran(td.getRefNbr().getValue());
-//									compra.setTipoTransaccion("IPS");
-//									compra.setIdEdoPromocion(compraService.getStatusCompraItau(compra));
-//									for (Campania cam : lcampMasivas) {
-//										//obtener rango fecha
-//										fechaIn= cam.getFechaInicial();
-//										fechaFin= cam.getFechaFinal();
-//										Calendar calIn2= Calendar.getInstance();
-//										calIn2.setTime(fechaIn);
-//										Calendar calFin2 = Calendar.getInstance();
-//										calFin2.setTime(fechaFin);
-//										//ver si esta en rango
-//										if(compra.getMonto().doubleValue()>= montoMinCompras && (td.getDateTran().getValue().getValue().toGregorianCalendar().after(calIn2) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(calIn2)==0) 
-//												&& (td.getDateTran().getValue().getValue().toGregorianCalendar().before(calFin2) || td.getDateTran().getValue().getValue().toGregorianCalendar().compareTo(calFin2)==0)){
-//											//obtener promos
-//											for (Promocion promo : cam.getPromociones()) {
-//												if("no".equalsIgnoreCase(promo.getProgramaCero()) && compra.getMonto().doubleValue()>= promo.getMonto().doubleValue()){
-//													compra.addComboPromo(promo.getPlazoMeses()+" "+promo.getDescripcion(), promo);
-//												}
-//											}
-//											compras.add(compra);
-//										}
-//
-//									}
-//
-//
-//								}
-//
-//
-//							}
-//
-//
-//
-//						}//fin fot
-//					}//fin if prog cero
-						Set<Compra> setCompras = new HashSet<Compra>();
-						setCompras.addAll(compras);
-						compras= new ArrayList<Compra>();
-						compras.addAll(setCompras);
-						logger.info("compras "+compras.size());
-						for (Compra compra : compras) {
-							logger.info(compra.getCodigoTransaccion()+""+compra.getFechaCompra()+ " "+compra.getMonto()+ " "+compra.getMonto());
-						}
+							Set<Compra> setCompras = new HashSet<Compra>();
+							setCompras.addAll(compras);
+							compras= new ArrayList<Compra>();
+							compras.addAll(setCompras);
+							logger.info("compras "+compras.size());
+							for (Compra compra : compras) {
+								logger.info(compra.getCodigoTransaccion()+""+compra.getFechaCompra()+ " "+compra.getMonto()+ " "+compra.getMonto());
+							}
 
-						List<CompraWSDTO> lcomprasDto= new ArrayList<CompraWSDTO>();
-						for (Compra compra : setCompras) {
-							lcomprasDto.add(MSIHelper.getCompraWSDTO(compra));
-						}
-						comprasWSRespDTO.setCompras(lcomprasDto);
+							List<CompraWSDTO> lcomprasDto= new ArrayList<CompraWSDTO>();
+							for (Compra compra : setCompras) {
+								lcomprasDto.add(MSIHelper.getCompraWSDTO(compra));
+							}
+							comprasWSRespDTO.setCompras(lcomprasDto);
+				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					comprasWSRespDTO.setStatus(2);
+					comprasWSRespDTO.setMsgError("ERROR al Aplicar promociones "+e.getMessage());
+					return comprasWSRespDTO;
+				}
 			}else{
 		//obtener si es prog 0
 		Parametro param= parametroService.getParamById(MSIConstants.TSYSWS_ENDPOINT);

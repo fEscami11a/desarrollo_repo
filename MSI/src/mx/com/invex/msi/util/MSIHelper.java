@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,17 +20,10 @@ import java.util.Set;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.tsys.xmlmessaging.ch.InqGeneralAcct;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
-import com.tsys.xmlmessaging.ch.InqGeneralAcctResponseType;
-import com.tsys.xmlmessaging.ch.TSYSfault;
-import com.tsys.xmlmessaging.ch.TSYSfaultType;
-import com.tsys.xmlmessaging.ch.TSYSprofileType;
+import com.tsys.xmlmessaging.ch.IGAacctGeneralInfoResponseDataType;
 
-import mx.com.invex.msi.model.AplicarComprasWSRespDTO;
 import mx.com.invex.msi.model.Compra;
 import mx.com.invex.msi.model.CompraWSDTO;
-import mx.com.invex.msi.model.InfoEnviadaDTO;
 import mx.com.invex.msi.model.Promocion;
 import mx.com.invex.msi.ws.ClientTS2;
 
@@ -662,29 +654,10 @@ public class MSIHelper {
 //si es itau
 			if(isItau){
 				
-				ClientTS2 cts2= new ClientTS2();
-				 TSYSprofileType tp = new TSYSprofileType();
-				 tp.setClientID("7401");
-				 tp.setUserID("invdev");
-				 tp.setVendorID("00000000");
-				InqGeneralAcctRequestType req = new InqGeneralAcctRequestType();
-	           	 req.setVersion("2.19.0");
-	           	 req.setKey(cuenta);
-	           	 req.setKeyType("cardNbr");
-	           	 InqGeneralAcct inqGeneralAcct = new InqGeneralAcct();
-	           	 inqGeneralAcct.setInqGeneralAcctRequest(req);
-					InqGeneralAcctResponseType res= cts2.inqGeneralAcct(tp,inqGeneralAcct).getInqGeneralAcctResult();
-				
-						if("999".equals(res.getStatus())){
-						
-							TSYSfaultType fault =res.getFaults();
-							List<TSYSfault> lfaulta =fault.getFault();
-							for (TSYSfault sfault : lfaulta) {
-								//logger.info(sfault.getStatus()+" "+ sfault.getFaultDesc());
-							}
-						}
+			
+						IGAacctGeneralInfoResponseDataType acctGral=ClientTS2.getGeneralAcct(cuenta);
 					
-					String tpc = res.getAcctGeneralInfo().getValue().getTSYSProductCode() == null?"": res.getAcctGeneralInfo().getValue().getTSYSProductCode() ;
+					String tpc = acctGral.getTSYSProductCode() == null?"": acctGral.getTSYSProductCode() ;
 					if("VP".equals(tpc) || "VG".equals(tpc)){
 						//volaris
 						//crear correo volaris

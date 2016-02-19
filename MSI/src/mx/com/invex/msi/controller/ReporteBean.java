@@ -104,7 +104,7 @@ public class ReporteBean extends MessagesMBean  implements Serializable{
 				criteria.add(Restrictions.between("fechaAplicacionPromocion", getFechaInicio(), maxDate));
 			}
 		
-		
+	
 		List<Object[]>reporte =compraService.getReporte(criteria);
 		 repRegs = new ArrayList<RepConcentradoDTO>();
 		for (Object[] objects : reporte) {

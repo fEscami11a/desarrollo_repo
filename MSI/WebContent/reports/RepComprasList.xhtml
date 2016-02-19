@@ -49,7 +49,9 @@
 						</h:commandLink>
 
 <h:commandButton action="/reports/ReporteComprasForm.xhtml" value="Regresar"></h:commandButton>
-
+<h:commandButton value="Ver Detalle"
+						action="#{repConcDetalle.consultarCompras(reporteBean.fechaInicio,reporteBean.fechaFin)}"
+						onclick="#{rich:component('popup')}.show()" />
 					</h:panelGrid>
 				</h:form>
 			</rich:panel>
