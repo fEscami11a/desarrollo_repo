@@ -1,0 +1,140 @@
+<html>
+<head>
+ <title>mailing</title>
+ <meta http-equiv='Content-Type' content='text/html; charset='utf-8'>
+ </head>
+ <body bgcolor='#FFFFFF' topmargin='0'>
+ 
+ <table width='628' border='0' align='center' cellpadding='0' cellspacing='0'>
+ 	<tr>
+ 		<td width='650' align='right' bgcolor='#a30234' colspan='3'>
+ 			<table width='650' border='0' cellspacing='0' cellpadding='0'>
+ 				<tr>
+ 					<td width='299' bgcolor='#a30234'><img src='http://www.invextarjetas.com.mx/msi/head02.jpg' width='299' height='87' border='0'></td>
+ 					<td width='351' valign='top'><table width='351' border='0' cellspacing='0' cellpadding='0'>
+ 							<tr>
+ 								<td height='87' valign='middle' bgcolor='#a30234'><p style='font-size:15px; text-align:right; color:#FFF; font-family:Arial, Helvetica, sans-serif; margin-right:20px; margin-top:5px; margin-bottom:4px;'>${mailParams.fecha}</p>
+ 									<p style='font-size:15px; text-align:right; color:#FFF; font-family:Arial, Helvetica, sans-serif; margin-right:20px; margin-top:0px; margin-bottom:1px'>Apreciable ${mailParams.nombre}: </p></td>
+ 							</tr>
+ 						</table>
+ 					</td>
+ 				</tr>
+ 			</table>
+ 		</td>
+ 	</tr>
+ 	<tr>
+ 		<td bgcolor='#68000b' colspan='3' height='8'></td>
+ 	</tr>
+ 	
+ 	<tr>
+		<td bgcolor='#D0D1D3' width='10'></td>
+ 		<td bgcolor='#ffffff' width='630'>
+ 			<table width='630' border='0' cellspacing='0' cellpadding='0'>
+ 				<tr>
+ 					<td><img src='http://www.invextarjetas.com.mx/msi/foto-invex.jpg' width='630' height='234'></td>
+ 				</tr>
+ 				<tr>
+ <td><p style='color:000; font-family:Arial, Helvetica, sans-serif; font-size:26px; margin:30 0px 25 0px; text-align:center;'>Se han registrado las compras de su<br> tarjeta terminaci&oacute;n ${mailParams.terminacion} a<br> <span style='color:#A30234;'><b>meses sin intereses</b></span> con el folio: ${mailParams.folio}</p></td>
+ 				</tr>
+ 				<tr>
+ 					<td align='center'><table width='500' border='0' cellspacing='0' cellpadding='0'>
+				<tr>
+				<td height='30' width='90' style='background:#A30134;'>
+ 						<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Fecha</p>
+				</td>
+					<td height='30' width='90' style='background:#A30134;'>
+					<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Descripci&oacute;n</p>
+				</td>
+					<td height='30' width='90' style='background:#A30134;'>
+						<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Monto</p>
+					</td>
+					<td height='30' width='90' style='background:#A30134;'>
+					<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Monto a promoci&oacute;n</p>
+				</td>
+					<td height='30' width='90' style='background:#A30134;'>
+						<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Plazo</p>
+					</td>
+ 					<td height='30' width='140' style='background:#A30134;'>
+						<p style='color: #FFF; font-family:Arial, Helvetica, sans-serif; font-size:16px; margin:5 0px 5 0px; text-align:center;'>Pago mensual</p>
+ 					</td>
+			</tr>
+			
+#foreach( ${compra} in ${mailParams.compras} )
+			
+ <tr>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.fechaCompra}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.descripcion}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.montoOriginal}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.monto}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.meses}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${compra.pagoMensual}</p>
+ 	</td>
+ </tr>
+ #end
+ <tr>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>TOTALES</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${mailParams.montoTotal}</p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:15px; margin:5 0px 5 0px; text-align:center;'></p>
+ 	</td>
+ 	<td>
+ 		<p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin:5 0px 5 0px; text-align:center;'>${mailParams.montoAPagar}</p>
+ 	</td>
+ </tr>
+ </table>
+ 	</td>
+ </tr>
+ <tr>
+ 	<td>
+ 		<p style='color:000; font-family:Arial, Helvetica, sans-serif; 	font-size:19px; margin:30 0px 30 0px; text-align:center;'><b>Su pago para no generar intereses ahora es de ${mailParams.saldoNoInt}</b><br />Para cualquier duda o aclaraci&oacute;n de la notificaci&oacute;n<br />comuniquese con nosotros.
+ 			<br /><br />
+ 			&iexcl;Aproveche todos los beneficios que su tarjeta le ofrece!
+ 		</p>
+ 	</td>
+ </tr>
+ </table>
+ </td>
+ <td bgcolor='#D0D1D3' width='10'></td>
+ </tr>
+ <tr>
+ <td bgcolor='#FFFFFF' colspan='3'><img src='https://www.invextarjetas.com.mx/msi/footer%20invex.jpg' width='650' height='202' border='0'></td>
+ </tr>
+ <tr>
+ <td bgcolor='#FFFFFF' colspan='3'>
+ </td>
+ </tr>
+ <tr>
+<td>
+ </td>
+ <td>
+ <p style='color:#000; font-family:Arial, Helvetica, sans-serif; font-size:7.5px;'>
+ <b>CAT Promedio 0.0% sin IVA</b> para meses sin intereses. Informativo. Fecha de c&aacute;lculo: abril 2014. Tasa Variable. Tasa Anual. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas SíCard Plus 58.6%, comisi&oacute;n anual $610 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas S&iacute;Card Plus INVEX 47.2%, comisi&oacute;n anual $610 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas S&iacute;Card Platinum 57.3%, comisi&oacute;n anual $1,350 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas S&iacute;Card Platinum INVEX 39.3%, comisi&oacute;n anual $1,350 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas SiCard Plus MC 46.5%, comisi&oacute;n anual $610 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas BAM 32.4%, comisi&oacute;n anual $595 pesos sin IVA. Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas Manchester United INVEX 30.5%, comisi&oacute;n anual $595 pesos sin IVA Tasa de inter&eacute;s promedio ponderada por saldo para tarjetas Volaris INVEX 45.9%, comisi&oacute;n anual $1,200 pesos sin IVA. Consulta requisitos de contrataci&oacute;n y comisiones en www.invextarjetas.com.mx
+ <br /><br />
+ Banco INVEX S.A., Instituci&oacute;n de Banca M&uacute;ltiple, INVEX Grupo Financiero.
+</p>
+ </td>
+ </tr>
+ </table>
+ </body>
+ </html>
