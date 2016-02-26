@@ -33,36 +33,36 @@
 
 							<h:outputText value="Nombre: " />
 							<h:outputText
-								value="#{infoCuentaBean.nombreCompleto}" converter="nameConverter"/>
+								value="#{infoCuentaBean.info.nombreCompleto}" converter="nameConverter"/>
 
 							<h:outputText value="RFC: " />
-							<h:outputText value="#{infoCuentaBean.rfc}" />
+							<h:outputText value="#{infoCuentaBean.info.rfc}" />
 
 							<h:outputText value="Fecha nacimiento: " />
 							<h:outputText
-								value="#{infoCuentaBean.fechaNacimiento}"/>
+								value="#{infoCuentaBean.info.fechaNacimiento}"/>
 
 
 							<h:outputText value="Calle numero: " />
-							<h:outputText value="#{infoCuentaBean.calleNum}" />
+							<h:outputText value="#{infoCuentaBean.info.calleNum}" />
 
 							<h:outputText value="Colonia: " />
-							<h:outputText value="#{infoCuentaBean.colonia}" />
+							<h:outputText value="#{infoCuentaBean.info.colonia}" />
 
 							<h:outputText value="Municipo/Estado: " />
 							<h:column>
-								<h:outputText value="#{infoCuentaBean.munEdo}" />
+								<h:outputText value="#{infoCuentaBean.info.munEdo}" />
 								
 							</h:column>
 							<h:outputText value="Codigo postal: " />
 							<h:outputText
-								value="#{infoCuentaBean.codigoPostal}" />
+								value="#{infoCuentaBean.info.codigoPostal}" />
 
 							<h:outputText value="Email: " />
-							<h:outputText value="#{infoCuentaBean.email}" />
+							<h:outputText value="#{infoCuentaBean.info.email}" />
 
 							<h:outputText value="Tel Celular: " />
-							<h:outputText value="#{infoCuentaBean.telCel}" />
+							<h:outputText value="#{infoCuentaBean.info.telCel}" />
 
 						</h:panelGrid>
 					</rich:panel>
@@ -74,7 +74,7 @@
 
 							<h:outputText value="Linea de Credito: " />
 							<h:outputText
-								value="#{infoCuentaBean.creditLimit}">
+								value="#{infoCuentaBean.info.creditLimit}">
 									<f:converter converterId="strCurrency" />
 							</h:outputText>
 							<h:outputText value="Banco: " />
@@ -82,16 +82,16 @@
 
 							<h:outputText value="Disponible: " />
 							<h:outputText
-								value="#{infoCuentaBean.creditoDisponible}">
+								value="#{infoCuentaBean.info.creditoDisponible}">
 								<f:converter converterId="strCurrency" />
 							</h:outputText>
 							<h:outputText value="Pago mínimo: " />
-							<h:outputText value="#{infoCuentaBean.pagoMinimo}">
+							<h:outputText value="#{infoCuentaBean.info.pagoMinimo}">
 								<f:converter converterId="strCurrency" />
 							</h:outputText>
 
 							<h:outputText value="Saldo al día: " />
-							<h:outputText value="#{infoCuentaBean.saldoAlDia}">
+							<h:outputText value="#{infoCuentaBean.info.saldoAlDia}">
 								<f:converter converterId="strCurrency" />
 							</h:outputText>
 							<h:outputText value="Pago no interes: " />
@@ -102,7 +102,7 @@
 
 							<h:outputText value="Fecha límite pago: " />
 							<h:outputText
-								value="#{infoCuentaBean.fechaLimitePago}" converter="fechaConverter" />
+								value="#{infoCuentaBean.info.fechaLimitePago}" converter="fechaConverter" />
 
 							<h:outputText value="Programa Cero: " />
 							<h:outputText value="Si" rendered="#{infoCuentaBean.prog0}" />
