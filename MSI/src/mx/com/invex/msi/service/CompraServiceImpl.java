@@ -90,8 +90,8 @@ public class CompraServiceImpl implements CompraService{
 
 
 	@Transactional(readOnly=true)
-	public List<Object[]> getReporteDias(Date fechaIn, Date fechaFin) {
-		return compraDao.getReporteDias(fechaIn, fechaFin);
+	public List<Object[]> getReporteDias(Date fechaInicio, Date fechaFin) {
+		return compraDao.getReporteDias(fechaInicio, fechaFin);
 	}
 
 }
