@@ -13,6 +13,7 @@ import mx.com.invex.bmovil.exception.WSSeguridadException;
 import mx.com.invex.seguridad.entidades.Usuario;
 import mx.com.invex.seguridad.sevice.UsuarioService;
 import mx.com.invex.seguridad.utils.CryptoAES;
+import mx.com.invex.seguridad.utils.SegConstants;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -32,7 +33,7 @@ public class UsrPortalWeb {
 		UsuarioService usrDao = (UsuarioService) contexta.getBean("usuarioServiceImpl");
 		String usrnamecrypt = null;
 		try {
-			usrnamecrypt = CryptoAES.encrypt(username.trim());
+			usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(username.trim()),SegConstants.HSM_KEY_USR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new WSSeguridadException("Error al encriptar username "

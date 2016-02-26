@@ -92,4 +92,9 @@
  <security-role>
   <role-name>USR_TSYS</role-name>
  </security-role>
+ <context-param>
+ 	<description>Si no truena con castException Resaeasyfactory</description>
+ 	<param-name>resteasy.use.deployment.sensitive.factory</param-name>
+ 	<param-value>false</param-value>
+ </context-param>
 </web-app>

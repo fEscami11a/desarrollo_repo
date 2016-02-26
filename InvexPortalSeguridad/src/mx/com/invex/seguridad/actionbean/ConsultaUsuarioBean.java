@@ -12,6 +12,8 @@ import mx.com.invex.seguridad.dto.UsuarioDTO;
 import mx.com.invex.seguridad.entidades.Usuario;
 import mx.com.invex.seguridad.sevice.UsuarioService;
 import mx.com.invex.seguridad.utils.CryptoAES;
+import mx.com.invex.seguridad.utils.SegConstants;
+import mx.com.invex.seguridad.ws.ClientHSM;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
@@ -116,7 +118,8 @@ public class ConsultaUsuarioBean implements Serializable {
 //			UsuarioDAO usrDao = (UsuarioDAO) context.getBean("userDao");
 		if (webuser != null && !webuser.trim().isEmpty()) {
 			try {
-				String usrnamecrypt = CryptoAES.encrypt(webuser.trim());
+				
+				String usrnamecrypt = ClientHSM.encript(CryptoAES.encrypt(webuser.trim()), SegConstants.HSM_KEY_USR);
 				DetachedCriteria usrCrit = DetachedCriteria.forClass(Usuario.class);
 				usrCrit.add(Restrictions.eq("nombreusuario", usrnamecrypt));
 				usrCrit.add(Restrictions.eq("estatus",true));
@@ -158,7 +161,7 @@ public class ConsultaUsuarioBean implements Serializable {
 			for (Usuario usuario : users) {
 				UsuarioDTO usrDTO = new UsuarioDTO();
 				try {
-					String usrnamedecrypt = CryptoAES.decrypt(usuario.getNombreusuario());
+					String usrnamedecrypt =CryptoAES.decrypt(ClientHSM.decript(usuario.getNombreusuario(), SegConstants.HSM_KEY_USR));
 					usrDTO.setWebuser(usrnamedecrypt);
 				} catch (Exception e) {
 					logger.error("Error al desencriptar: "+e.getMessage());
@@ -193,7 +196,7 @@ public class ConsultaUsuarioBean implements Serializable {
 			for (Usuario usuario : users) {
 				UsuarioDTO usrDTO = new UsuarioDTO();
 				try {
-					String usrnamedecrypt = CryptoAES.decrypt(usuario.getNombreusuario());
+					String usrnamedecrypt = CryptoAES.decrypt(ClientHSM.decript(usuario.getNombreusuario(), SegConstants.HSM_KEY_USR));
 					usrDTO.setWebuser(usrnamedecrypt);
 				} catch (Exception e) {
 					logger.error("Error al desencriptar: "+e.getMessage());
@@ -205,7 +208,7 @@ public class ConsultaUsuarioBean implements Serializable {
 				usrDTO.setNombre(usuario.getNombre() +" "+usuario.getApellidopaterno() +" "+usuario.getApellidomaterno());
 				usrDTO.setRfc(usuario.getRfc());
 				usrDTO.setIdentificador(usuario.getIdentificador());
-				String webuser = CryptoAES.decrypt(usuario.getNombreusuario());
+				String webuser = CryptoAES.decrypt(ClientHSM.decript(usuario.getNombreusuario(), SegConstants.HSM_KEY_USR));
 				usrDTO.setWebuser(webuser);
 				String numTarjeta= CryptoAES.decrypt2(usuario.getData4u1());
 				usrDTO.setCuenta(numTarjeta);
@@ -320,7 +323,7 @@ public class ConsultaUsuarioBean implements Serializable {
 							UsuarioDTO usrDTO = new UsuarioDTO();
 							try {
 								String usrnamedecrypt = CryptoAES
-										.decrypt(usuario.getNombreusuario());
+										.decrypt(ClientHSM.decript(usuario.getNombreusuario(), SegConstants.HSM_KEY_USR));
 								usrDTO.setWebuser(usrnamedecrypt);
 							} catch (Exception e) {
 								logger.error("Error al desencriptar: "
@@ -352,7 +355,7 @@ public class ConsultaUsuarioBean implements Serializable {
 					List<Usuario> users =usuarioService.findByCriteria(usrCrit);
 					if (!users.isEmpty()) {
 					Usuario user =users.isEmpty()?null:users.get(0);
-					String webuser = CryptoAES.decrypt(user.getNombreusuario());
+					String webuser = CryptoAES.decrypt(ClientHSM.decript(user.getNombreusuario(), SegConstants.HSM_KEY_USR));
 					UsuarioDTO usrDTO = new UsuarioDTO();
 					usrDTO.setWebuser(webuser);
 					usrDTO.setCuenta(numTarjeta);
