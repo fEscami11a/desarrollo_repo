@@ -57,4 +57,5 @@ public static final String MXP_SERVICE_ENDPOINT = "MXP_SERVICE_ENDPOINT";
 public static final String ITH_SERVICE_ENDPOINT = "ITH_SERVICE_ENDPOINT";
 public static final String MSI_PPNGI_SERVICE_ENDPOINT = "MSI_PPNGI_SERVICE_ENDPOINT";
 public static final String TS2_MSG_ENDPOINT="TS2_MSG_ENDPOINT";
+public static final String PROM_COMERCIO_APLICADO = "C";
 }

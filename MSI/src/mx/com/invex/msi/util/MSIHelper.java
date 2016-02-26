@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,9 +22,17 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.tsys.xmlmessaging.ch.IGAacctGeneralInfoResponseDataType;
+import com.tsys.xmlmessaging.ch.InqGeneralAcct;
+import com.tsys.xmlmessaging.ch.InqGeneralAcctRequestType;
+import com.tsys.xmlmessaging.ch.InqGeneralAcctResponseType;
+import com.tsys.xmlmessaging.ch.TSYSfault;
+import com.tsys.xmlmessaging.ch.TSYSfaultType;
+import com.tsys.xmlmessaging.ch.TSYSprofileType;
 
+import mx.com.invex.msi.model.AplicarComprasWSRespDTO;
 import mx.com.invex.msi.model.Compra;
 import mx.com.invex.msi.model.CompraWSDTO;
+import mx.com.invex.msi.model.InfoEnviadaDTO;
 import mx.com.invex.msi.model.Promocion;
 import mx.com.invex.msi.ws.ClientTS2;
 
@@ -654,8 +663,8 @@ public class MSIHelper {
 //si es itau
 			if(isItau){
 				
-			
-						IGAacctGeneralInfoResponseDataType acctGral=ClientTS2.getGeneralAcct(cuenta);
+			ClientTS2 cts2 = new ClientTS2();
+						IGAacctGeneralInfoResponseDataType acctGral=cts2.getGeneralAcct(cuenta);
 					
 					String tpc = acctGral.getTSYSProductCode() == null?"": acctGral.getTSYSProductCode() ;
 					if("VP".equals(tpc) || "VG".equals(tpc)){
