@@ -157,7 +157,7 @@
 					<br></br>
 					<h:panelGrid columns="2">
 					<h:commandButton value="Aceptar"  onclick="#{rich:component('popup')}.show()" 
-							action="#{aplicarPromosBean.aplicarPromos2(resPromosBean.compras,resPromosBean.folio,infoCuentaBean.email,infoCuentaBean.nombreCompleto,resPromosBean.msgICM,resPromosBean.msgICM2)}"  >
+							action="#{aplicarPromosBean.aplicarPromos2(resPromosBean.compras,resPromosBean.folio,infoCuentaBean.info.email,infoCuentaBean.info.nombreCompleto,resPromosBean.msgICM,resPromosBean.msgICM2)}"  >
 									 <f:setPropertyActionListener target="#{aplicarPromosBean.saldoNoInt}" value="#{resPromosBean.sldoNoInt}" />
 									  <f:setPropertyActionListener target="#{aplicarPromosBean.tipoProd}" value="#{infoCuentaBean.tipoProd}" />
 						</h:commandButton>
