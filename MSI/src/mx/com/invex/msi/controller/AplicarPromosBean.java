@@ -289,25 +289,49 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 					return null;
 				}
 			}
-
+			ClientTS2 cts2= new ClientTS2();
+			String res=null;
+			//String pattern = "###.##";
+			//DecimalFormat decimalFormat = new DecimalFormat(pattern);
 			for(Compra compra:compras){
 				compra.setMontoOriginal(compra.getMonto());
 				compra.setMonto(compra.getMontoPromo());
 				compra.setFechaAplicacionPromocion(new Date());
-			
+				//compraService.save(compra);
+				
 					logger.info("inqAcctAvailTLPOpt assesfee false tlptype Installment tbal code 0001 amtToMove "+compra.getMontoPromo());
+					try {
+						cts2.aplicarCompra(compra);
+						res="OK";
+					} catch (Exception e) {
+						logger.error("ERROR al aplicar compra "+compra.getCuenta() +" monto "+ compra.getMonto() +" err: "+e.getMessage());
+						e.printStackTrace();
+						sendErrorMessageToUser("ERROR al aplicar compra "+compra.getCuenta() +" monto "+ compra.getMonto() +" err: "+e.getMessage());
+						return null;
+					}
 					
-					ClientTS2.aplicarCompra(compra);
+					
+					
+				if("OK".equalsIgnoreCase(res)){
 					compra.setEnPromocion(true);
 					compra.setFechaAplicacionPromocion(new Date());
 					compra.setIdEdoPromocion(MSIConstants.PROM_ESTATUS_ENVIADO);
 					compraService.save(compra);
+
+				}else{
+					compra.setEnPromocion(false);
+					sendErrorMessageToUser("Error Tsys al aplicar la promocion cuenta "+compra.getCuenta() +" monto "+ compra.getMontoPromo()+" a  fecha "+compra.getFechaCompra()+" msg: "+res);
+					logger.error("Error Tsys al aplicar la promocion cuenta "+compra.getCuenta()
+							+" monto "+ compra.getMonto()+" meses  fecha "+compra.getFechaCompra() +" res "+res );
+					return null;
+				}
+
 						
 					}
 					
-			 
+			
 			 String custId= null;
-			 List<ICIcustInfoResponseDataType> listCustInfos =ClientTS2.getCustInfo(cuenta);
+			 List<ICIcustInfoResponseDataType> listCustInfos =cts2.getCustInfo(cuenta);
 			 logger.info("tam custinfos "+listCustInfos.size());
             for (ICIcustInfoResponseDataType custInfo : listCustInfos) {
                             logger.info("custInfo custiyer "+custInfo.getCustType());
@@ -331,7 +355,7 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 				email="fescamilla@invex.com";
 			}
 			
-				IGBgeneralBalInfoResponseDataType gralBal=ClientTS2.getGeneralBal(cuenta);
+				IGBgeneralBalInfoResponseDataType gralBal=cts2.getGeneralBal(cuenta);
 				
 				String msg= null;
 				 if(gralBal.getPmtInfo()!= null){
@@ -390,8 +414,8 @@ public class AplicarPromosBean extends MessagesMBean implements Serializable{
 //si es itau
 			if(productoTs2Service.cuentaITAU(cuenta)){
 				
-			
-						IGAacctGeneralInfoResponseDataType  acctGral=ClientTS2.getGeneralAcct(cuenta);
+			ClientTS2 cts2 = new ClientTS2();
+						IGAacctGeneralInfoResponseDataType acctGral=cts2.getGeneralAcct(cuenta);
 						
 					String cpc = acctGral.getTSYSProductCode() == null?"": acctGral.getClientProductCode().getValue() ;
 					//if("VL2".equals(cpc)){
