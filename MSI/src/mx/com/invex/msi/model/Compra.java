@@ -196,6 +196,8 @@ public class Compra implements Serializable {
 			return "Aplicada";
 		}else if(MSIConstants.PROM_ESTATUS_PENDIENTE.equalsIgnoreCase(idEdoPromocion) ){
 			return "Pendiente";
+		}else if(MSIConstants.PROM_COMERCIO_APLICADO.equalsIgnoreCase(idEdoPromocion) ){
+			return "Aplicada Comercio";
 		}
 		return statusDesc;
 	}
